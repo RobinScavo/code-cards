@@ -1,0 +1,12 @@
+.loginModal {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 20rem;
+    width: 40rem;
+    background-color: aliceblue;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

@@ -2,8 +2,6 @@ const express = require('express');
 const { ObjectId } = require('mongodb');
 const { connectToDb, getDb } = require('./db')
 
-
-
 // init app and middleware
 const app = express()
 app.use(express.json())
@@ -51,7 +49,7 @@ app.get('/privateDecks', (req, res) => {
 
     db.collection('privateDecks')
         .find() // cursor toArray forEach
-        // .sort({ likes: 1 })
+        // sort by timestamp
         .skip(page * decksPerPage)
         .limit(decksPerPage)
         .forEach(deck => decks.push(deck))

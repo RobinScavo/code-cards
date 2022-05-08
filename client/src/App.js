@@ -1,23 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import { useRef } from 'react';
+
+import Header from './components/header/Header';
+import Footer from './components/footer/Footer.js';
+import LoginModal from './components/loginModal/LoginModal.js';
+
+import './app.css';
 
 function App() {
+  const container = useRef('App');
+  console.log(container.current)
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div ref={container} className="App">
+      <div className="overlay hidden"></div>
+      <LoginModal />
+      <Header />
+      <div className="content">
+        <h1>Public Decks</h1>
+      </div>
+      <Footer />
     </div>
   );
 }
