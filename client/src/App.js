@@ -1,23 +1,23 @@
-import { useRef } from 'react';
-
 import Header from './components/header/Header';
 import Footer from './components/footer/Footer.js';
-import LoginModal from './components/loginModal/LoginModal.js';
+import DeckContainer from './components/deckContainer/DeckContainer';
+import FilterContainer from './components/filterContainer/FilterContainer'
+// import LoginModal from './components/loginModal/LoginModal.js';
 
 import './app.css';
 
 function App() {
-  const container = useRef('App');
-  console.log(container.current)
 
   return (
-    <div ref={container} className="App">
-      <div className="overlay hidden"></div>
-      <LoginModal />
+    <div className="App">
+      {/* <div className="overlay hidden"></div> */}
+      {/* <LoginModal /> */}
       <Header />
-      <div className="content">
+      <FilterContainer />
+      <DeckContainer />
+      {/* <div className="content">
         <h1>Public Decks</h1>
-      </div>
+      </div> */}
       <Footer />
     </div>
   );

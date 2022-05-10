@@ -1,8 +1,6 @@
 import './header.css'
 
-const Header = (container) => {
-    console.log(container.current)
-
+const Header = () => {
     const openLoginModal = () => {
         // overlay.classList.remove('hidden');
     }

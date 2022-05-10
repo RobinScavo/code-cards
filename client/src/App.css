@@ -4,6 +4,7 @@
     font-family: 'Lato', sans-serif;
     font-family: 'Open Sans', sans-serif;
     font-family: 'Orbitron', sans-serif;
+    box-sizing: border-box;
 }
 
 .App {
@@ -35,11 +36,11 @@
     color: blue;
 }
 
-.content {
+/* .content {
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: aliceblue;
     height: 86vh;
     width: 100%;
-}
+} */
