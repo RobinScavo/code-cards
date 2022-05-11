@@ -6,3 +6,8 @@
     background-color: violet;
     padding: 10px;
 }
+
+.loading-text {
+    color: blue;
+    font-size: 20px;
+}

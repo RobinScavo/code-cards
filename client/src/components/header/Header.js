@@ -1,14 +1,16 @@
-import './header.css'
+import React from 'react';
 
-const Header = () => {
-    const openLoginModal = () => {
-        // overlay.classList.remove('hidden');
-    }
+import './header.css';
+
+const Header = ({ toggleModal }) => {
 
     return (
         <div className="header">
             <h1 className='title'>Code Cards</h1>
-            <button className='btn loginButton' onClick={openLoginModal}>Log In</button>
+            <button
+                className='btn loginButton'
+                onClick={toggleModal}
+            >Log In</button>
         </div>
      );
 }

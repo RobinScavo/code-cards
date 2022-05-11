@@ -1,3 +1,5 @@
+import React from 'react';
+
 import './filterContainer.css'
 
 const FilterContainer = () => {
