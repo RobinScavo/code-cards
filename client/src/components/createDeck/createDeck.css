@@ -1,0 +1,27 @@
+.create-deck {
+    height: 81vh;
+    width: 100%;
+    background-color: violet;
+    padding: 10px;
+}
+
+.create-form {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.create-label {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.create-input {
+    height: 30px;
+    width: 60vw;
+}
+
+.create-button {
+    width: 200px;
+    margin-top: 20px;
+}
