@@ -6,6 +6,15 @@ import './loginModal.css'
 const LoginModal = ({ toggleModal }) => {
     const [signupVisible, setSignupVisible] = useState(false);
 
+    const handleLogin = (e) => {
+        e.preventDefault();
+        window.location.href = "/privateDecks";
+    }
+
+    const handleSignup = (e) => {
+        e.preventDefault();
+    }
+
     return (
         <div className="login-modal-overlay">
             <div className="login-modal">
@@ -18,11 +27,13 @@ const LoginModal = ({ toggleModal }) => {
                     <>
                     <form className='login-form' action="">
                         <label htmlFor="" className='login-label'>User Name</label>
-                        <input type="text" className='login-input'/>
+                        <input type="text" className='login-input' required/>
                         <label htmlFor="" className='login-label'>Password</label>
-                        <input type="password" className='login-input'/>
+                        <input type="password" className='login-input' required/>
                         <button
+                            id='login-button'
                             className="btn"
+                            onClick={handleLogin}
                         >Log In</button>
                     </form>
                     <h1>Not a member yet?</h1>
@@ -36,13 +47,15 @@ const LoginModal = ({ toggleModal }) => {
                     <>
                     <form action="" className="login-form">
                     <label htmlFor="" className='login-label'>User Name</label>
-                        <input type="text" className='login-input'/>
+                        <input type="text" className='login-input' required/>
                         <label htmlFor="" className='login-label'>Password</label>
-                        <input type="password" className='login-input'/>
+                        <input type="password" className='login-input' required/>
                         <label htmlFor="" className='login-label'>Confirm Password</label>
-                        <input type="password" className='login-input'/>
+                        <input type="password" className='login-input' required/>
                         <button
+                            id='register-button'
                             className="btn"
+                            onClick={handleSignup}
                         >Register</button>
                     </form>
                     </>

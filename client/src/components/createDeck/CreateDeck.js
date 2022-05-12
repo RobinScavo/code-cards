@@ -1,5 +1,6 @@
 import  React  from 'react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import './createDeck.css';
 
@@ -10,24 +11,47 @@ const CreateDeck = () => {
     const [question, setQuestion] = useState('');
     const [answer, setAnswer] = useState('');
     const [cards, setCards] = useState([]);
+    const [isPending, setIsPending] = useState(false);
+    const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
         if (question && answer) {
-            handleAddCard();
+            handleAddCard(e);
         }
-        const deck = { author, title, subject, cards }
+        const deck = { author, title, subject, cards, 'likes': 0 }
 
-        console.log(deck)
+        setIsPending(true)
+
+        fetch('http://localhost:3000/privateDecks', {
+            method: 'POST',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(deck)
+        }).then(() => {
+            console.log('new deck added');
+            setIsPending(false);
+            navigate('/privateDecks')
+        })
     }
 
-    const handleAddCard = () => {
+    const handleAddCard = (e) => {
+        const questionInput = document.querySelectorAll('.QA');
+
+        e.preventDefault()
         if (!question || !answer) {
             alert('Please fill out the current card first.')
         } else {
-            console.log(question, answer)
-            //Spread
-            setCards(...cards, {'question': question, 'answer': answer})
+            const newCard = {'question': question, 'answer': answer};
+            const cardsCopy = cards;
+            cardsCopy.push(newCard);
+
+            questionInput.forEach(input => {
+                input.value = '';
+            });
+
+            setCards(cardsCopy);
+            setAnswer('');
+            setQuestion('');
         }
     }
 
@@ -70,7 +94,7 @@ const CreateDeck = () => {
 
                 <label className='create-label'>Question</label>
                 <input
-                    className='create-input'
+                    className='create-input QA'
                     type="text"
                     required
                     value={question}
@@ -79,22 +103,28 @@ const CreateDeck = () => {
 
                 <label className='create-label'>Answer</label>
                 <input
-                    className='create-input'
+                    className='create-input QA'
                     type="text"
                     required
                     value={answer}
                     onChange={(e) => setAnswer(e.target.value)}
                 />
 
-                <button
+                {!isPending && <button
                     className="btn create-button"
                     onClick={handleAddCard}
-                >Add Card</button>
+                >Add Card</button>}
 
-                <button
+                {!isPending && <button
                     className="btn create-button"
                     onClick={handleSubmit}
-                >Submit Deck</button>
+                >Submit Deck</button>}
+
+                {isPending && <button
+                    className="btn create-button"
+                    disabled
+                >Sending...</button>}
+
             </form>
         </div>
      );

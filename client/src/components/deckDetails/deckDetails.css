@@ -1,0 +1,8 @@
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    height: 81vh;
+    width: 100%;
+    background-color: violet;
+    padding: 10px;
+}
