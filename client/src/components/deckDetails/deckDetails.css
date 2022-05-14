@@ -3,6 +3,10 @@
     flex-wrap: wrap;
     height: 81vh;
     width: 100%;
-    background-color: violet;
+    background-color: rgb(125, 221, 125);
     padding: 10px;
+}
+
+.deck-detail {
+    width: 100vw;
 }

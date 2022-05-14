@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 import './loginModal.css'
 
-const LoginModal = ({ toggleModal }) => {
+const LoginModal = ({ toggleLoginModal }) => {
     const [signupVisible, setSignupVisible] = useState(false);
 
     const handleLogin = (e) => {
@@ -21,7 +21,7 @@ const LoginModal = ({ toggleModal }) => {
                 <button
                     id='close-modal-button'
                     className="btn"
-                    onClick={toggleModal}
+                    onClick={toggleLoginModal}
                 >Cancel</button>
                 {!signupVisible &&
                     <>

@@ -1,4 +1,4 @@
-.login-modal-overlay {
+.edit-modal-overlay {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -8,13 +8,13 @@
     background-color: rgb(0, 0, 0, 0.3);
 }
 
-.login-modal {
+.edit-modal {
     position: absolute;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
-    height: 70vw;
+    height: 70vh;
     width: 80vw;
     background-color: aliceblue;
     top: 42%;
@@ -23,25 +23,12 @@
     padding: 20px;
 }
 
-.login-form {
+.card-toggle-div {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
-    height: 80%;
-}
-
-#close-modal-button {
-    position: absolute;
-    top: 15px;
-    left: 15px;
-}
-
-.login-label {
-    margin-bottom: 10px;
-}
-
-.login-input {
-    margin-bottom: 30px;
-    height: 30px;
+    width: 50vw;
+    height: 50px;
+    margin-top: 20px;
+    font-size: 20px;
 }

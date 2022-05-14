@@ -10,19 +10,3 @@
 .title {
     font-size: 30px;
 }
-
-.loginButton {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-}
-
-#home-button {
-    position: absolute;
-    top: 15px;
-    left: 15px;
-}
-
-#create-button {
-    top: 50px;
-}

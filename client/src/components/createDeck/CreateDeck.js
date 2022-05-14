@@ -1,6 +1,6 @@
 import  React  from 'react';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 import './createDeck.css';
 
@@ -57,7 +57,13 @@ const CreateDeck = () => {
 
     return (
         <div className="create-deck">
-            <h2>Create a new deck:</h2>
+            {!isPending && <Link
+                className="btn"
+                to='/privateDecks'
+            >Cancel</Link>}
+
+            <h2 className='create-title'>Create a new deck:</h2>
+
             <form className='create-form' onSubmit={handleSubmit}>
                 <label className='create-label'>Author</label>
                 <input
