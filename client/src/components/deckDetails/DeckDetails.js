@@ -10,6 +10,7 @@ import './deckDetails.css'
 const DeckDetails = () => {
     const location = useLocation();
     const navigate = useNavigate();
+    const deckLocation = location.pathname.slice(1).split('/')[0];
 
     const { data: deck, error, isPending } = useFetch(`http://localhost:3000${location.pathname}`);
 
@@ -21,34 +22,12 @@ const DeckDetails = () => {
         })
     }
 
-    const handleEditCard = ({ editQuestionValue, editAnswerValue }) => {
-        const newCard = {'question': editQuestionValue, 'answer': editAnswerValue};
-        console.log(newCard)
-
-        fetch(`http://localhost:3000${location.pathname}`, {
-            method: 'PATCH',
-            headers: { "Content-Type": "application/json" },
-            // body: JSON.stringify(edit)
-        })
-    }
-
-    const handleEditDeck = (newDeck) => {
-        // console.log(newDeck)
-
-        // fetch(`http://localhost:3000${location.pathname}`, {
-        //     method: 'PATCH',
-        //     headers: { "Content-Type": "application/json" },
-        //     body: JSON.stringify(newDeck)
-        // })
-    }
-
     return (
         <div className="deck-detail">
 
             <ControlPanel
                 handleDelete={handleDelete}
-                handleEditDeck={handleEditDeck}
-                deckControls={true}
+                deckControls={deckLocation === 'privateDecks'}
                 deck={deck}
             />
 
@@ -59,7 +38,6 @@ const DeckDetails = () => {
                     <Card
                         key={`${deck._id}index${index}`}
                         card={card}
-                        handleEditCard={handleEditCard}
                     />
                 ))}
             </div>

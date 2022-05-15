@@ -1,15 +1,27 @@
 import  React  from 'react';
 import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import './card.css'
 
-const Card = ({ card, handleEdit }) => {
+const Card = ({ card }) => {
     const [editQuestionValue, setEditQuestionValue] = useState(card.question);
     const [editAnswerValue, setEditAnswerValue] = useState(card.answer);
     const [editMode, setEditMode] = useState(false);
+    const location = useLocation();
 
     const handleEditMode = () => {
         setEditMode(true)
+    }
+
+    const handleEditCard = ({ editQuestionValue, editAnswerValue }) => {
+        const newCard = {'question': editQuestionValue, 'answer': editAnswerValue};
+        console.log(newCard)
+
+        fetch(`http://localhost:3000${location.pathname}`, {
+            method: 'PATCH',
+            headers: { "Content-Type": "application/json" },
+        })
     }
 
     return (
@@ -31,10 +43,10 @@ const Card = ({ card, handleEdit }) => {
             />}
             {editMode && <button
                 className="edit-button"
-                onClick={() => (
-                    handleEdit({ editQuestionValue, editAnswerValue }),
+                onClick={() => {
+                    handleEditCard ({ editQuestionValue, editAnswerValue })
                     setEditMode(false)
-                )}
+                }}
             >Save Changes</button>}
         </div>
      );

@@ -1,58 +1,89 @@
 import  React  from 'react';
 import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import './editModal.css';
 
-const EditModal = ({ toggleEditModal, deck }) => {
+const EditModal = ({ deck, toggleEditModal }) => {
     const [author, setAuthor] = useState(deck.author);
     const [title, setTitle] = useState(deck.title);
     const [subject, setSubject] = useState(deck.subject);
-    const [question, setQuestion] = useState('');
-    const [answer, setAnswer] = useState('');
     const [cards, setCards] = useState(deck.cards);
-    const [isPending, setIsPending] = useState(false);
-    const navigate = useNavigate();
     const [cardIndex, setCardIndex ] = useState(0);
+    const [currentQuestion, setCurrentQuestion] = useState(cards[cardIndex].question);
+    const [currentAnswer, setCurrentAnswer] = useState(cards[cardIndex].answer);
+    const [cardWasEdited, setCardWasEdited] = useState(false);
+    const [addingNewCard, setAddingNewCard] = useState(false);
+    const [isPending, setIsPending] = useState(false);
+    const location = useLocation();
+    const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (question && answer) {
-            handleAddCard(e);
+
+        if (addingNewCard && currentQuestion && currentAnswer) {
+            handleAddCard(true)
         }
-        const deck = { author, title, subject, cards, 'likes': 0 }
 
-        setIsPending(true)
+        const deck = { author, title, subject, cards };
 
-        fetch('http://localhost:3000/privateDecks', {
+        setIsPending(true);
+
+        fetch(`http://localhost:3000${location.pathname}`, {
             method: 'PATCH',
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(deck)
         }).then(() => {
             setIsPending(false);
-            navigate('/privateDecks')
+            alert('Changes saved');
+            toggleEditModal();
+            navigate(`${location.pathname}`)
         })
     }
 
-    const handleAddCard = (e) => {
-        const questionInput = document.querySelectorAll('.QA');
+    const handleAddCard = (submitting) => {
+        let newCards;
 
-        e.preventDefault()
-        if (!question || !answer) {
-            alert('Please fill out the current card first.')
+        if (!currentAnswer || !currentQuestion) {
+            alert('Please complete the current card first.');
+            return;
         } else {
-            const newCard = {'question': question, 'answer': answer};
-            const cardsCopy = cards;
-            cardsCopy.push(newCard);
-
-            questionInput.forEach(input => {
-                input.value = '';
-            });
-
-            setCards(cardsCopy);
-            setAnswer('');
-            setQuestion('');
+            setAddingNewCard(true)
         }
+
+        if (addingNewCard) {handleCardWasEdited()};
+
+        if (!submitting) {
+            let newCard = {'question': '', 'answer': ''};
+            newCards = cards;
+            newCards.push(newCard);
+        }
+
+
+        setCards(newCards)
+        setCardIndex(cards.length-1);
+        setCurrentQuestion('');
+        setCurrentAnswer('');
+    }
+
+    const handleDeleteCard = () => {
+        if (!cards.length) return;
+
+        let newCards = cards;
+        newCards.splice(cardIndex, 1)
+        console.log(newCards, cardIndex)
+        setCardIndex(cardIndex -1)
+        setCards(newCards);
+        setCurrentQuestion(cards[cardIndex -1].question);
+        setCurrentAnswer(cards[cardIndex -1].answer);
+    }
+
+    const handleCardWasEdited = () => {
+        if (!cardWasEdited) return
+        let newCards = cards;
+        newCards = newCards.splice(cardIndex, 1, {'question': currentQuestion, 'answer': currentAnswer})
+        setCards(newCards);
+        setCardWasEdited(false)
     }
 
     return (
@@ -65,7 +96,7 @@ const EditModal = ({ toggleEditModal, deck }) => {
 
                 <h2 className='create-title'>Edit deck:</h2>
 
-                <form className='create-form' onSubmit={handleSubmit}>
+                <form className='create-form'>
                     <label className='create-label'>Author</label>
                     <input
                         className='create-input'
@@ -101,8 +132,28 @@ const EditModal = ({ toggleEditModal, deck }) => {
 
                     <div className="card-toggle-div">
                         <h2>Card {cardIndex + 1}</h2>
-                        {cardIndex > 0 && <button onClick={() => setCardIndex(cardIndex -1)} className='btn card-toggle-button'>Previous</button>}
-                        {cardIndex < cards.length-1 && <button onClick={() => setCardIndex(cardIndex +1)} className="btn card-toggle-button">Next</button>}
+
+                        {cardIndex > 0 && <button
+                            className='btn card-toggle-button'
+                            onClick = {(e) => {
+                                e.preventDefault()
+                                setCardIndex(cardIndex -1)
+                                setCurrentQuestion(cards[cardIndex -1].question)
+                                setCurrentAnswer(cards[cardIndex -1].answer)
+                                handleCardWasEdited()
+                            }}
+                        >Previous</button>}
+
+                        {cardIndex < cards.length-1 && <button
+                            className='btn card-toggle-button'
+                            onClick = {(e) => {
+                                e.preventDefault()
+                                setCardIndex(cardIndex +1)
+                                setCurrentQuestion(cards[cardIndex +1].question)
+                                setCurrentAnswer(cards[cardIndex +1].answer)
+                                handleCardWasEdited()
+                            }}
+                        >Next</button>}
                     </div>
 
                     <label className='create-label'>Question</label>
@@ -110,8 +161,11 @@ const EditModal = ({ toggleEditModal, deck }) => {
                         className='create-input QA'
                         type="text"
                         required
-                        value={cards[cardIndex].question}
-                        onChange={(e) => setQuestion(e.target.value)}
+                        value={currentQuestion}
+                        onChange={(e) => {
+                            setCurrentQuestion(e.target.value)
+                            setCardWasEdited(true)
+                        }}
                     />
 
                     <label className='create-label'>Answer</label>
@@ -119,14 +173,28 @@ const EditModal = ({ toggleEditModal, deck }) => {
                         className='create-input QA'
                         type="text"
                         required
-                        value={cards[cardIndex].answer}
-                        onChange={(e) => setAnswer(e.target.value)}
+                        value={currentAnswer}
+                        onChange={(e) => {
+                            setCurrentAnswer(e.target.value)
+                            setCardWasEdited(true)
+                        }}
                     />
 
                     {!isPending && <button
                         className="btn create-button"
-                        onClick={handleAddCard}
+                        onClick={(e) => {
+                            e.preventDefault()
+                            handleAddCard()
+                        }}
                     >Add Card</button>}
+
+                    {!isPending && cards.length > 1 && <button
+                        className="btn create-button"
+                        onClick={(e) => {
+                            e.preventDefault()
+                            handleDeleteCard()
+                        }}
+                    >Remove Card</button>}
 
                     {!isPending && <button
                         className="btn create-button"

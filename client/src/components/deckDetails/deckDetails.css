@@ -5,6 +5,7 @@
     width: 100%;
     background-color: rgb(125, 221, 125);
     padding: 10px;
+    overflow-y: scroll;
 }
 
 .deck-detail {
