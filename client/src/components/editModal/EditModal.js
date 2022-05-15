@@ -1,6 +1,6 @@
 import  React  from 'react';
 import { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 import './editModal.css';
 
@@ -16,18 +16,18 @@ const EditModal = ({ deck, toggleEditModal }) => {
     const [addingNewCard, setAddingNewCard] = useState(false);
     const [isPending, setIsPending] = useState(false);
     const location = useLocation();
-    const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
         if (addingNewCard && currentQuestion && currentAnswer) {
-            handleAddCard(true)
+            handleAddCard();
         }
 
-        const deck = { author, title, subject, cards };
-
         setIsPending(true);
+
+        const newDeckCards = cards.filter((card => card.question && card.answer));
+        const deck = { author, title, subject, cards: newDeckCards };
 
         fetch(`http://localhost:3000${location.pathname}`, {
             method: 'PATCH',
@@ -35,13 +35,12 @@ const EditModal = ({ deck, toggleEditModal }) => {
             body: JSON.stringify(deck)
         }).then(() => {
             setIsPending(false);
-            alert('Changes saved');
             toggleEditModal();
-            navigate(`${location.pathname}`)
+            window.location.reload();
         })
     }
 
-    const handleAddCard = (submitting) => {
+    const handleAddCard = () => {
         let newCards;
 
         if (!currentAnswer || !currentQuestion) {
@@ -53,17 +52,14 @@ const EditModal = ({ deck, toggleEditModal }) => {
 
         if (addingNewCard) {handleCardWasEdited()};
 
-        if (!submitting) {
-            let newCard = {'question': '', 'answer': ''};
-            newCards = cards;
-            newCards.push(newCard);
-        }
-
+        let newCard = {'question': '', 'answer': ''};
+        newCards = cards;
+        newCards.push(newCard);
 
         setCards(newCards)
-        setCardIndex(cards.length-1);
         setCurrentQuestion('');
         setCurrentAnswer('');
+        setCardIndex(cards.length-1);
     }
 
     const handleDeleteCard = () => {
@@ -71,7 +67,6 @@ const EditModal = ({ deck, toggleEditModal }) => {
 
         let newCards = cards;
         newCards.splice(cardIndex, 1)
-        console.log(newCards, cardIndex)
         setCardIndex(cardIndex -1)
         setCards(newCards);
         setCurrentQuestion(cards[cardIndex -1].question);

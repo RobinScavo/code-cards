@@ -1,34 +1,21 @@
 import  React  from 'react';
 import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
 
 import './card.css'
 
-const Card = ({ card }) => {
+const Card = ({ card, quickEdit, index }) => {
     const [editQuestionValue, setEditQuestionValue] = useState(card.question);
     const [editAnswerValue, setEditAnswerValue] = useState(card.answer);
     const [editMode, setEditMode] = useState(false);
-    const location = useLocation();
 
-    const handleEditMode = () => {
-        setEditMode(true)
-    }
-
-    const handleEditCard = ({ editQuestionValue, editAnswerValue }) => {
-        const newCard = {'question': editQuestionValue, 'answer': editAnswerValue};
-        console.log(newCard)
-
-        fetch(`http://localhost:3000${location.pathname}`, {
-            method: 'PATCH',
-            headers: { "Content-Type": "application/json" },
-        })
-    }
+    const handleEditMode = () => setEditMode(true);
 
     return (
         <div className="card">
             {!editMode && <h1>{card.question}</h1>}
             {!editMode && <h1>{card.answer}</h1>}
             {!editMode && <button
+                index={index}
                 className="edit-button"
                 onClick={handleEditMode}
             >Edit Card</button>}
@@ -44,7 +31,7 @@ const Card = ({ card }) => {
             {editMode && <button
                 className="edit-button"
                 onClick={() => {
-                    handleEditCard ({ editQuestionValue, editAnswerValue })
+                    quickEdit ({ editQuestionValue, editAnswerValue, index })
                     setEditMode(false)
                 }}
             >Save Changes</button>}

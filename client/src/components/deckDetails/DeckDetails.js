@@ -22,6 +22,22 @@ const DeckDetails = () => {
         })
     }
 
+    const quickEdit = ({ editQuestionValue, editAnswerValue, index }) => {
+        const newCard = {'question': editQuestionValue, 'answer': editAnswerValue};
+        const newCards = deck.cards;
+        newCards.splice(index, 1, newCard);
+        const replacementCards = {"cards": newCards}
+        console.log(replacementCards)
+
+        fetch(`http://localhost:3000${location.pathname}`, {
+            method: 'PATCH',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(replacementCards)
+        }).then (() => {
+            window.location.reload();
+        })
+    }
+
     return (
         <div className="deck-detail">
 
@@ -36,8 +52,10 @@ const DeckDetails = () => {
                 { isPending && <h1 className='loading-text'>Loading...</h1>}
                 {deck.cards && deck.cards.map((card, index) => (
                     <Card
+                        index={index}
                         key={`${deck._id}index${index}`}
                         card={card}
+                        quickEdit={quickEdit}
                     />
                 ))}
             </div>
