@@ -2,7 +2,10 @@ const express = require('express');
 const { ObjectId } = require('mongodb');
 const { connectToDb, getDb } = require('./db');
 const cors = require("cors");
-
+// const { mongoose } = require('mongoose');
+// require("dotenv").config({ path: "./config.env" });
+// const port = process.env.PORT || 5000;
+const User = require('./models/User');
 // init app and middleware
 const app = express()
 app.use(cors())
@@ -10,6 +13,7 @@ app.use(express.json())
 
 // db connection
 let db;
+
 
 connectToDb((err) => {
     if(!err) {
@@ -19,6 +23,13 @@ connectToDb((err) => {
         db = getDb()
     }
 })
+
+// const dbo = require("./db")
+
+// const dbURI= 'mongodb+srv://admin:b1agDX2mqb4M7TCz@code-cards.re9gn.mongodb.net/code-cards?retryWrites=true&w=majority';
+// mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
+//     .then((result) => app.listen(3000))
+//     .catch((err) => console.log(err));
 
 
 
@@ -165,3 +176,30 @@ app.patch('/privateDecks/:id', (req, res) => {
         res.status(500).json({error: 'Not a valid deck ID.'})
     }
 })
+
+app.post('/signup', async (req, res) => {
+    const { userName, password } = req.body;
+
+    // console.log('22222', userName, password)
+
+    // try {
+    //     const user = await User.create({ userName, password });
+    //     res.status(201).json(user)
+    // }
+    // catch (err) {
+    //     console.log(err);
+    //     res.status(400).send('error, user not created')
+    // }
+
+    db.collection('users')
+    .insertOne({ userName, password })
+    .then(result => {
+        res.status(201).json(result)
+    })
+    .catch(err => {
+        res.status(500).json({err: 'Could not create user'})
+    })
+});
+
+app.get('/login', () => {});
+app.post('/login', () => {});

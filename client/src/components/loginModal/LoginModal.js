@@ -1,10 +1,16 @@
 import React from 'react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import './loginModal.css'
 
+
 const LoginModal = ({ toggleLoginModal }) => {
     const [signupVisible, setSignupVisible] = useState(false);
+    const [userName, setUserName] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const navigate = useNavigate();
 
     const handleLogin = (e) => {
         e.preventDefault();
@@ -13,6 +19,19 @@ const LoginModal = ({ toggleLoginModal }) => {
 
     const handleSignup = (e) => {
         e.preventDefault();
+        if (password !== confirmPassword) {alert('Passwords must match')}
+
+        const user = { userName, password };
+        console.log(user)
+
+        fetch('http://localhost:3000/signup', {
+            method: 'POST',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(user)
+        }).then(() => {
+            console.log('new user added');
+            navigate('/privateDecks')
+        })
     }
 
     return (
@@ -36,6 +55,7 @@ const LoginModal = ({ toggleLoginModal }) => {
                             onClick={handleLogin}
                         >Log In</button>
                     </form>
+
                     <h1>Not a member yet?</h1>
                     <button
                         className="btn"
@@ -43,22 +63,39 @@ const LoginModal = ({ toggleLoginModal }) => {
                     >Sign Up</button>
                     </>
                 }
+
                 {signupVisible &&
-                    <>
-                    <form action="" className="login-form">
-                    <label htmlFor="" className='login-label'>User Name</label>
-                        <input type="text" className='login-input' required/>
+                    <form className="login-form">
+                        <label htmlFor="" className='login-label'>User Name</label>
+                        <input
+                            type="text"
+                            className='login-input'
+                            onChange={(e) => setUserName(e.target.value)}
+                            required
+                        />
+
                         <label htmlFor="" className='login-label'>Password</label>
-                        <input type="password" className='login-input' required/>
+                        <input
+                            type="password"
+                            className='login-input'
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
+
                         <label htmlFor="" className='login-label'>Confirm Password</label>
-                        <input type="password" className='login-input' required/>
+                        <input
+                            type="password"
+                            className='login-input'
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            required
+                        />
+
                         <button
                             id='register-button'
                             className="btn"
                             onClick={handleSignup}
                         >Register</button>
                     </form>
-                    </>
                 }
             </div>
         </div>

@@ -9,6 +9,7 @@ import CreateDeck from './components/createDeck/CreateDeck';
 
 
 import './app.css';
+import NotFound from './components/notFound/NotFound';
 
 function App() {
 
@@ -21,7 +22,7 @@ function App() {
           <Route exact path='/publicDecks' element = {
             <DeckContainer collection='publicDecks' />
           } />
-          <Route path='/privateDecks' element = {
+          <Route exact path='/privateDecks' element = {
             <DeckContainer collection='privateDecks' />
           } />
           <Route path={`/publicDecks/:id`} element = {
@@ -32,9 +33,10 @@ function App() {
           } />
           <Route path='/createDeck' element = {
             <CreateDeck />
-          }>
-
-          </Route>
+          } />
+          <Route path='*' element = {
+            <NotFound />
+          }/>
         </Routes>
 
         <Footer />
