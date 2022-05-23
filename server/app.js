@@ -2,14 +2,18 @@ const express = require('express');
 const { ObjectId } = require('mongodb');
 const { connectToDb, getDb } = require('./db');
 const cors = require("cors");
-// const { mongoose } = require('mongoose');
+const { mongoose } = require('mongoose');
 // require("dotenv").config({ path: "./config.env" });
 // const port = process.env.PORT || 5000;
 const User = require('./models/User');
+const authRoutes = require('./routes/authRoutes');
+const cookieParser = require('cookie-parser');
+
 // init app and middleware
 const app = express()
 app.use(cors())
 app.use(express.json())
+app.use(cookieParser())
 
 // db connection
 let db;
@@ -17,21 +21,19 @@ let db;
 
 connectToDb((err) => {
     if(!err) {
-        app.listen(3000, () => {
-            console.log('app listening on port 3000')
+        app.listen(3003, () => {
+            console.log('app listening on port 3003')
         })
         db = getDb()
     }
 })
 
-// const dbo = require("./db")
+const dbo = require("./db")
 
-// const dbURI= 'mongodb+srv://admin:b1agDX2mqb4M7TCz@code-cards.re9gn.mongodb.net/code-cards?retryWrites=true&w=majority';
-// mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
-//     .then((result) => app.listen(3000))
-//     .catch((err) => console.log(err));
-
-
+const dbURI= 'mongodb+srv://admin:b1agDX2mqb4M7TCz@code-cards.re9gn.mongodb.net/code-cards?retryWrites=true&w=majority';
+mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then((result) => app.listen(3000))
+    .catch((err) => console.log(err));
 
 // routes
 app.get('/publicDecks', (req, res) => {
@@ -177,29 +179,41 @@ app.patch('/privateDecks/:id', (req, res) => {
     }
 })
 
-app.post('/signup', async (req, res) => {
-    const { userName, password } = req.body;
+app.get('/set-cookies', (req, res) => {
 
-    // console.log('22222', userName, password)
+    // res.setHeader('Set-Cookie', 'newUser=true');
 
-    // try {
-    //     const user = await User.create({ userName, password });
-    //     res.status(201).json(user)
-    // }
-    // catch (err) {
-    //     console.log(err);
-    //     res.status(400).send('error, user not created')
-    // }
+    res.cookie('newUser', false);
+    res.cookie('isEmployee', true, { maxAge: 1000 * 60 * 60 * 24, httpOnly: true });
 
-    db.collection('users')
-    .insertOne({ userName, password })
-    .then(result => {
-        res.status(201).json(result)
-    })
-    .catch(err => {
-        res.status(500).json({err: 'Could not create user'})
-    })
-});
+    res.send('you got the cookies!');
 
-app.get('/login', () => {});
-app.post('/login', () => {});
+  });
+
+  app.get('/read-cookies', (req, res) => {
+
+    const cookies = req.cookies;
+    console.log(cookies.newUser);
+
+    res.json(cookies);
+
+  });
+
+
+
+// app.post('/signup', async (req, res) => {
+//     const { userName, password } = req.body;
+
+//     db.collection('users')
+//     .insertOne({ userName, password })
+//     .then(result => {
+//         res.status(201).json(result)
+//     })
+//     .catch(err => {
+//         res.status(500).json({err: 'Could not create user'})
+//     })
+// });
+
+// app.get('/login', () => {});
+// app.post('/login', () => {});
+app.use(authRoutes);

@@ -6,10 +6,9 @@ import Footer from './components/footer/Footer.js';
 import DeckContainer from './components/deckContainer/DeckContainer';
 import DeckDetails from './components/deckDetails/DeckDetails';
 import CreateDeck from './components/createDeck/CreateDeck';
-
+import NotFound from './components/notFound/NotFound';
 
 import './app.css';
-import NotFound from './components/notFound/NotFound';
 
 function App() {
 

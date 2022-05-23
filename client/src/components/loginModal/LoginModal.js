@@ -14,7 +14,9 @@ const LoginModal = ({ toggleLoginModal }) => {
 
     const handleLogin = (e) => {
         e.preventDefault();
-        window.location.href = "/privateDecks";
+        const user = { userName, password };
+
+        // fetch('http://localhost:3000/login')
     }
 
     const handleSignup = (e) => {
@@ -22,14 +24,12 @@ const LoginModal = ({ toggleLoginModal }) => {
         if (password !== confirmPassword) {alert('Passwords must match')}
 
         const user = { userName, password };
-        console.log(user)
 
-        fetch('http://localhost:3000/signup', {
+        fetch('http://localhost:3003/signup', {
             method: 'POST',
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(user)
         }).then(() => {
-            console.log('new user added');
             navigate('/privateDecks')
         })
     }
@@ -45,10 +45,22 @@ const LoginModal = ({ toggleLoginModal }) => {
                 {!signupVisible &&
                     <>
                     <form className='login-form' action="">
-                        <label htmlFor="" className='login-label'>User Name</label>
-                        <input type="text" className='login-input' required/>
-                        <label htmlFor="" className='login-label'>Password</label>
-                        <input type="password" className='login-input' required/>
+                        <label className='login-label'>User Name</label>
+                        <input
+                            type="text"
+                            className='login-input'
+                            onChange={(e) => setUserName(e.target.value)}
+                            required
+                        />
+
+                        <label className='login-label'>Password</label>
+                        <input
+                            type="password"
+                            className='login-input'
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
+
                         <button
                             id='login-button'
                             className="btn"
