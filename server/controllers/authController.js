@@ -24,12 +24,12 @@ const handleErrors = (err) => {
     return errors;
 }
 
-const maxAge = 3 * 24 * 60 * 60;
-const createToken = (id) => {
-    return jwt.sign({ id }, 'secretkey', {
-        expiresIn: maxAge
-    });
-}
+// const maxAge = 3 * 24 * 60 * 60;
+// const createToken = (id) => {
+//     return jwt.sign({ id }, 'secretkey', {
+//         expiresIn: maxAge
+//     });
+// }
 // controller actions
 
 module.exports.signup_post = async (req, res) => {
