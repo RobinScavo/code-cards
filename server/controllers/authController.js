@@ -33,10 +33,10 @@ const handleErrors = (err) => {
 // controller actions
 
 module.exports.signup_post = async (req, res) => {
-    const { userName, password } = req.body;
+    const { name, password } = req.body;
 
     try {
-        const user = await User.create({ userName, password });
+        const user = await User.create({ name, password });
         // const token = createToken(user._id);
         console.log(user)
         // res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 })
@@ -49,9 +49,9 @@ module.exports.signup_post = async (req, res) => {
 }
 
 module.exports.login_post = async (req, res) => {
-    const { userName, password } = req.body;
+    const { name, password } = req.body;
 
-    console.log(userName, password);
+    console.log(name, password);
     res.send('user login')
 }
 

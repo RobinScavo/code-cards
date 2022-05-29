@@ -1,8 +1,14 @@
 const mongoose = require('mongoose');
 
 const deckSchema = mongoose.Schema({
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'User'
+    },
     author: {
         type: String,
+        required: true,
     },
     subject: {
         type: String,
@@ -28,4 +34,4 @@ const deckSchema = mongoose.Schema({
 })
 
 
-module.exports = mongoose.model('Deck', deckSchema)
+module.exports = mongoose.model('publicDecks', deckSchema)

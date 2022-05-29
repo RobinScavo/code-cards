@@ -1,11 +1,11 @@
 const asyncHandler = require('express-async-handler')
 
-const Deck = require('../models/deck');
+const Deck = require('../models/publicDeckModel');
 
 // @desc Get public Decks
 // @route GET /publicDecks
 // @access Public
-const getPublicDecks = asyncHandler(async (req, res) => {
+const getDecks = asyncHandler(async (req, res) => {
     const decks = await Deck.find();
 
     res.status(200).json(decks)
@@ -14,7 +14,7 @@ const getPublicDecks = asyncHandler(async (req, res) => {
 // @desc Set public deck
 // @route POST /publicDecks
 // @access Public
-const setPublicDeck = asyncHandler(async (req, res) => {
+const setDeck = asyncHandler(async (req, res) => {
     if(!req.body) {
         res.status(400)
         throw new Error('Please add a text field')
@@ -28,7 +28,7 @@ const setPublicDeck = asyncHandler(async (req, res) => {
 // @desc Update deck
 // @route PUT /publicDecks/:id
 // @access Public
-const updatePublicDeck = asyncHandler(async (req, res) => {
+const updateDeck = asyncHandler(async (req, res) => {
     const deck = await Deck.findById(req.params.id);
 
     if(!deck) {
@@ -46,7 +46,7 @@ const updatePublicDeck = asyncHandler(async (req, res) => {
 // @desc Get goals
 // @route DELETE /publicDecks/:id
 // @access Public
-const deletePublicDeck = asyncHandler(async (req, res) => {
+const deleteDeck = asyncHandler(async (req, res) => {
     const deck = await Deck.findById(req.params.id);
 
     if(!deck) {
@@ -60,8 +60,8 @@ const deletePublicDeck = asyncHandler(async (req, res) => {
 })
 
 module.exports = {
-    getPublicDecks,
-    setPublicDeck,
-    updatePublicDeck,
-    deletePublicDeck
+    getDecks,
+    setDeck,
+    updateDeck,
+    deleteDeck
 }
