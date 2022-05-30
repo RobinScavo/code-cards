@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import Header from './components/header/Header';
-import Footer from './components/footer/Footer.js';
+import Footer from './components/footer/Footer';
 import DeckContainer from './components/deckContainer/DeckContainer';
 import DeckDetails from './components/deckDetails/DeckDetails';
 import CreateDeck from './components/createDeck/CreateDeck';

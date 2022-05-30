@@ -1,6 +1,9 @@
 # Code Cards
 - App for creating and reviewing flash cards which are collecting in decks with specific themes. Users can search public decks and store them in a private deck directory and individual cards can be added to private decks. Custom decks can be kept private or published.
 
+## To run in local development
+
+
 ## Development
 
 ```js
@@ -21,3 +24,6 @@
 - Express
 - JSON Web Tokens
 - MVC
+- Redux
+- Redux Toolkit
+- NPM React Icons
