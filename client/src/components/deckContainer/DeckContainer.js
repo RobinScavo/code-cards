@@ -9,7 +9,7 @@ import ControlPanel from '../controlPanel/ControlPanel';
 import './deckContainer.css'
 
 const DeckContainer = ({ collection }) => {
-    const { data, isPending, error } = useFetch(`http://localhost:3000/${collection}`);
+    const { data, isPending, error } = useFetch(`http://localhost:8080/${collection}`);
 
     return (
         <div className="deck-detail">

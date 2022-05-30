@@ -12,10 +12,10 @@ const DeckDetails = () => {
     const navigate = useNavigate();
     const deckLocation = location.pathname.slice(1).split('/')[0];
 
-    const { data: deck, error, isPending } = useFetch(`http://localhost:3000${location.pathname}`);
+    const { data: deck, error, isPending } = useFetch(`http://localhost:8080${location.pathname}`);
 
     const handleDelete = () => {
-        fetch(`http://localhost:3000${location.pathname}`, {
+        fetch(`http://localhost:8080${location.pathname}`, {
             method: 'DELETE'
         }).then(() => {
             navigate('/privateDecks')
@@ -29,7 +29,7 @@ const DeckDetails = () => {
         const replacementCards = {"cards": newCards}
         console.log(replacementCards)
 
-        fetch(`http://localhost:3000${location.pathname}`, {
+        fetch(`http://localhost:8080${location.pathname}`, {
             method: 'PATCH',
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(replacementCards)
