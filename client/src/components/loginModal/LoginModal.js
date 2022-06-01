@@ -1,6 +1,7 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 
 import './loginModal.css'
 
@@ -11,6 +12,8 @@ const LoginModal = ({ toggleLoginModal }) => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const navigate = useNavigate();
+
+
 
     const handleLogin = (e) => {
         e.preventDefault();

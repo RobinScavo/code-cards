@@ -36,6 +36,49 @@
     color: blue;
 }
 
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+    height: 86vh;
+    background-color: blueviolet;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    background-color: green;
+    height: 100%;
+    width: 100%;
+}
+
+.form-heading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    height: 20%;
+    width: 100%;
+    background-color: wheat;
+}
+
+.form-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10rem;
+    width: 20rem;
+}
+
+.form-control {
+    height: 2rem;
+    text-align: center;
+}
+
 /* .content {
     display: flex;
     justify-content: center;

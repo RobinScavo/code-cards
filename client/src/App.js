@@ -7,6 +7,8 @@ import DeckContainer from './components/deckContainer/DeckContainer';
 import DeckDetails from './components/deckDetails/DeckDetails';
 import CreateDeck from './components/createDeck/CreateDeck';
 import NotFound from './components/notFound/NotFound';
+import Register from './pages/Register';
+import Login from './pages/Login';
 
 import './app.css';
 
@@ -24,18 +26,12 @@ function App() {
           <Route exact path='/privateDecks' element = {
             <DeckContainer collection='privateDecks' />
           } />
-          <Route path={`/publicDecks/:id`} element = {
-            <DeckDetails />
-          } />
-          <Route path={`/privateDecks/:id`} element = {
-            <DeckDetails />
-          } />
-          <Route path='/createDeck' element = {
-            <CreateDeck />
-          } />
-          <Route path='*' element = {
-            <NotFound />
-          }/>
+          <Route path={`/publicDecks/:id`} element = {<DeckDetails />} />
+          <Route path={`/privateDecks/:id`} element = {<DeckDetails />} />
+          <Route path='/createDeck' element = {<CreateDeck />} />
+          <Route path='/signup' element={<Register />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='*' element = {<NotFound />}/>
         </Routes>
 
         <Footer />
