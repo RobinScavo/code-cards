@@ -2,6 +2,8 @@ import {useState} from 'react';
 import { Link } from 'react-router-dom'
 import { FaSignInAlt } from 'react-icons/fa';
 
+import ControlPanel from '../components/controlPanel/ControlPanel'
+
 
 function Login() {
     const [formData, setFormData] = useState({
@@ -29,6 +31,7 @@ function Login() {
 
     return (
         <section className="form-container">
+            <ControlPanel />
             <section className="form-heading">
                 <h1>
                     <FaSignInAlt /> Log In

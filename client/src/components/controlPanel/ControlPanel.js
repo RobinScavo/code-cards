@@ -1,30 +1,55 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { logout, reset } from '../../features/auth/authSlice'
 // import { FaSignInAlt, FaSignOutAlt, FaUser } from 'react-icons/fa'
 
-import LoginModal from '../loginModal/LoginModal';
+// import LoginModal from '../loginModal/LoginModal';
 import EditModal from '../editModal/EditModal'
 
 import './controlPanel.css';
 
 const ControlPanel = ({ handleDelete, handleEditDeck, deckControls, deck }) => {
-    const [loginModalVisible, setLoginModalVisible] =  useState(false);
+    // const [loginModalVisible, setLoginModalVisible] =  useState(false);
     const [editModalVisible, setEditModalVisible] =  useState(false);
 
-    const toggleLoginModal = () => setLoginModalVisible(!loginModalVisible);
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const {user} = useSelector(state) => state.auth
+
+    // const toggleLoginModal = () => setLoginModalVisible(!loginModalVisible);
     const toggleEditModal = () => setEditModalVisible(!editModalVisible);
+
+    const handleLogout = () => {
+        dispatch(logout())
+        dispatch(reset())
+        navigate('/publicDecks')
+    }
 
     return (
         <div className="control-panel">
-            {loginModalVisible && <LoginModal toggleLoginModal={toggleLoginModal} />}
+            {/* {loginModalVisible && <LoginModal toggleLoginModal={toggleLoginModal} />} */}
             {editModalVisible && <EditModal toggleEditModal={toggleEditModal} deck={deck}/>}
+
 
             <Link className='btn control-button' to='/publicDecks'>Home</Link>
 
-            <button
+            {user &&
+                <button
+                    className='btn'
+                    onCLick={handleLogout}
+                >Log Out</button>
+            }
+
+            {!user &&
+                <Link className='btn control-button' to='/login'>Log In</Link>
+            }
+
+
+            {/* <button
                 className='btn loginButton control-button'
                 onClick={toggleLoginModal}
-            >Log In</button>
+            >Log In</button> */}
 
             {deckControls &&
                 <Link className='btn control-button' to='/createDeck'>Create Deck</Link>

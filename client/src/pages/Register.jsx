@@ -1,6 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify'
 import { FaUser } from 'react-icons/fa';
+import { register, reset } from '../features/auth/authSlice';
+
+import ControlPanel from '../components/controlPanel/ControlPanel';
+import Spinner from '../components/spinner/Spinner';
 
 
 function Register() {
@@ -13,6 +19,23 @@ function Register() {
 
     const { name, password, confirmPassword } = formData;
 
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const {user, isLoading, isError, isSuccess, message } = useSelector((state) => state.auth)
+
+    useEffect(() => {
+        if(isError) {
+            toast.error(message)
+        }
+
+        if (isSuccess || user) {
+            navigate('/publicDecks')
+        }
+
+        dispatch(reset())
+    }, [user, isError, isSuccess, message, navigate, dispatch])
+
     const handleInput = (e) => {
         setFormData((prevState) => ({
             ...prevState,
@@ -24,15 +47,19 @@ function Register() {
         e.preventDefault()
 
         if (password !== confirmPassword) {
-            alert('Passwords must match.')
+            toast.error('Passwords must match.')
         } else  {
             const userData = { name, password }
+            dispatch(register(userData))
         }
+
     }
 
 
         return (
+            <>
             <section className='form-container'>
+                <ControlPanel />
                 <section className="form-heading">
                     <h1>
                         < FaUser /> Sign Up
@@ -83,6 +110,7 @@ function Register() {
                     </form>
                 </section>
             </section>
+            </>
     )
 }
 
