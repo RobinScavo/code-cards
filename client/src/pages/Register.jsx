@@ -16,7 +16,6 @@ function Register() {
         confirmPassword: ''
     })
 
-
     const { name, password, confirmPassword } = formData;
 
     const navigate = useNavigate();
@@ -53,6 +52,10 @@ function Register() {
             dispatch(register(userData))
         }
 
+    }
+
+    if (isLoading) {
+        return <Spinner />
     }
 
 

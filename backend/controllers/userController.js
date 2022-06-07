@@ -3,49 +3,10 @@ const bcrypt = require('bcryptjs');
 const asyncHandler = require('express-async-handler');
 const User = require('../models/userModel')
 
-// @desc Authenticate user
-// @route POST /users/login
-// @access Public
-const loginUser = asyncHandler(async(req, res) => {
-    const { name, password } = req.body
-
-    // Check for user name
-    const user = await User.findOne({name})
-
-    if (user && (await bcrypt.compare(password, user.password))) {
-        res.json({
-            _id: user.id,
-            name: user.name,
-            token: generateToken(user._id)
-        })
-    } else {
-        res.status(400)
-        throw new Error('Invalid credentials.')
-    }
-})
-
-// @desc Get user data
-// @route GET /users/me
-// @access Private
-const getUser = asyncHandler(async(req, res) => {
-    const { _id, name } = await User.findById(req.user.id)
-
-    res.status(200).json({
-        id: _id,
-        name
-    })
-})
-
-const generateToken = (id) => {
-    return jwt.sign({ id }, process.env.JWT_SECRET, {
-        expiresIn: '30d'
-    })
-}
-
 // @desc Register new user
 // @route POST /users
 // @access Public
-const registerUser = asyncHandler(async(req, res) => {
+const registerUser = asyncHandler(async (req, res) => {
     const { name, password } = req.body
 
     if(!name || !password) {
@@ -82,6 +43,42 @@ const registerUser = asyncHandler(async(req, res) => {
         throw new Error('Invalid user data.')
     }
 })
+
+// @desc Authenticate user
+// @route POST /users/login
+// @access Public
+const loginUser = asyncHandler(async(req, res) => {
+    const { name, password } = req.body
+
+    // Check for user name
+    const user = await User.findOne({name})
+
+    if (user && (await bcrypt.compare(password, user.password))) {
+        res.json({
+            _id: user.id,
+            name: user.name,
+            token: generateToken(user._id)
+        })
+    } else {
+        res.status(400)
+        throw new Error('Invalid credentials.')
+    }
+})
+
+// @desc Get user data
+// @route GET /users/me
+// @access Private
+const getUser = asyncHandler(async(req, res) => {
+    res.status(200).json(req.user)
+})
+
+const generateToken = (id) => {
+    return jwt.sign({ id }, process.env.JWT_SECRET, {
+        expiresIn: '30d'
+    })
+}
+
+
 
 module.exports = {
     registerUser,

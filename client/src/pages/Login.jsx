@@ -1,7 +1,12 @@
-import {useState} from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom'
 import { FaSignInAlt } from 'react-icons/fa';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { login, reset } from '../features/auth/authSlice';
 
+import  Spinner from '../components/spinner/Spinner';
 import ControlPanel from '../components/controlPanel/ControlPanel'
 
 
@@ -12,6 +17,23 @@ function Login() {
     })
 
     const { name, password } = formData;
+
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+
+    const { user, isLoading, isError, isSuccess, message } = useSelector((state) => state.auth)
+
+    useEffect(() => {
+        if (isError) {
+            toast.error(message)
+        }
+
+        if(isSuccess || user) {
+            navigate('/privateDecks')
+        }
+
+        dispatch(reset())
+    }, [user, isError, isSuccess, message, navigate, dispatch])
 
     const handleInput = (e) => {
         setFormData((prevState) => ({
@@ -27,6 +49,12 @@ function Login() {
             name,
             password
         }
+
+        dispatch(login(userData))
+    }
+
+    if (isLoading) {
+        return <Spinner />
     }
 
     return (

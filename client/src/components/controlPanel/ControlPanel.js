@@ -5,7 +5,7 @@ import { logout, reset } from '../../features/auth/authSlice'
 // import { FaSignInAlt, FaSignOutAlt, FaUser } from 'react-icons/fa'
 
 // import LoginModal from '../loginModal/LoginModal';
-import EditModal from '../editModal/EditModal'
+import EditModal from '../editModal/EditModal';
 
 import './controlPanel.css';
 
@@ -13,9 +13,9 @@ const ControlPanel = ({ handleDelete, handleEditDeck, deckControls, deck }) => {
     // const [loginModalVisible, setLoginModalVisible] =  useState(false);
     const [editModalVisible, setEditModalVisible] =  useState(false);
 
-    const navigate = useNavigate()
-    const dispatch = useDispatch()
-    const {user} = useSelector(state) => state.auth
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const {user} = useSelector((state) => state.auth);
 
     // const toggleLoginModal = () => setLoginModalVisible(!loginModalVisible);
     const toggleEditModal = () => setEditModalVisible(!editModalVisible);
@@ -37,19 +37,16 @@ const ControlPanel = ({ handleDelete, handleEditDeck, deckControls, deck }) => {
             {user &&
                 <button
                     className='btn'
-                    onCLick={handleLogout}
+                    onClick={handleLogout}
                 >Log Out</button>
             }
 
             {!user &&
-                <Link className='btn control-button' to='/login'>Log In</Link>
+                <Link
+                    className='btn control-button'
+                    to='/login'
+                >Log In</Link>
             }
-
-
-            {/* <button
-                className='btn loginButton control-button'
-                onClick={toggleLoginModal}
-            >Log In</button> */}
 
             {deckControls &&
                 <Link className='btn control-button' to='/createDeck'>Create Deck</Link>
