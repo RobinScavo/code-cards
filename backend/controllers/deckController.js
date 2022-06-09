@@ -38,9 +38,9 @@ const setDeck = asyncHandler(async (req, res) => {
 // @route PUT /publicDecks/:id
 // @access Public
 const updateDeck = asyncHandler(async (req, res) => {
-    const deck = await Deck.findById(req.params.id);
+    // const deck = await Deck.findById(req.params.id);
 
-    if(!deck) {
+    if(!req.deck) {
         res.status(400)
         throw new Error('Deck not found')
     }

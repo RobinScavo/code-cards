@@ -7,6 +7,7 @@ const User = require('../models/userModel')
 // @route GET /privateDecks
 // @access private
 const getPrivateDecks = asyncHandler(async (req, res) => {
+    console.log('!!!!!!', req.user.id)
     const decks = await Deck.find({ user: req.user.id });
 
     res.status(200).json(decks)

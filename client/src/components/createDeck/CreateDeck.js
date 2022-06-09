@@ -1,6 +1,8 @@
 import  React  from 'react';
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { createDeck } from '../../features/decks/decksSlice';
 
 import './createDeck.css';
 
@@ -12,7 +14,9 @@ const CreateDeck = () => {
     const [answer, setAnswer] = useState('');
     const [cards, setCards] = useState([]);
     const [isPending, setIsPending] = useState(false);
+
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -23,15 +27,17 @@ const CreateDeck = () => {
 
         setIsPending(true)
 
-        fetch('http://localhost:3000/privateDecks', {
-            method: 'POST',
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(deck)
-        }).then(() => {
-            console.log('new deck added');
-            setIsPending(false);
-            navigate('/privateDecks')
-        })
+        dispatch(createDeck({deck}))
+
+        // fetch('http://localhost:3000/privateDecks', {
+        //     method: 'POST',
+        //     headers: { "Content-Type": "application/json" },
+        //     body: JSON.stringify(deck)
+        // }).then(() => {
+        //     console.log('new deck added');
+        //     setIsPending(false);
+        //     navigate('/privateDecks')
+        // })
     }
 
     const handleAddCard = (e) => {
@@ -122,6 +128,7 @@ const CreateDeck = () => {
                 >Add Card</button>}
 
                 {!isPending && <button
+                    type='submit'
                     className="btn create-button"
                     onClick={handleSubmit}
                 >Submit Deck</button>}
