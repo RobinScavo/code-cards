@@ -1,14 +1,15 @@
 const asyncHandler = require('express-async-handler')
 
-const Deck = require('../models/privateDeckModel');
+const Deck = require('../models/deckModel');
 const User = require('../models/userModel')
 
 // @desc Get private Decks
 // @route GET /privateDecks
 // @access private
 const getPrivateDecks = asyncHandler(async (req, res) => {
-    console.log('!!!!!!', req.user.id)
+    console.log('UsER ID%%%%', req.user.id)
     const decks = await Deck.find({ user: req.user.id });
+    // const decks = await Deck.find();
 
     res.status(200).json(decks)
 })
@@ -23,6 +24,7 @@ const setPrivateDeck = asyncHandler(async (req, res) => {
     }
 
     const deck = await Deck.create(req.body)
+    console.log('BBBBBBB', deck)
 
     res.status(200).json(deck)
 })

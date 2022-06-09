@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { logout, reset } from '../../features/auth/authSlice'
+import { logout, reset } from '../../features/auth/authSlice';
+import { deleteDeck } from '../../features/decks/decksSlice';
 // import { FaSignInAlt, FaSignOutAlt, FaUser } from 'react-icons/fa'
 
 // import LoginModal from '../loginModal/LoginModal';
@@ -9,7 +10,7 @@ import EditModal from '../editModal/EditModal';
 
 import './controlPanel.css';
 
-const ControlPanel = ({ handleDelete, handleEditDeck, deckControls, deck }) => {
+const ControlPanel = ({ deck }) => {
     // const [loginModalVisible, setLoginModalVisible] =  useState(false);
     const [editModalVisible, setEditModalVisible] =  useState(false);
 
@@ -26,6 +27,10 @@ const ControlPanel = ({ handleDelete, handleEditDeck, deckControls, deck }) => {
         navigate('/publicDecks')
     }
 
+    const handleDelete = () => {
+        dispatch(deleteDeck(deck._id))
+    }
+
     return (
         <div className="control-panel">
             {/* {loginModalVisible && <LoginModal toggleLoginModal={toggleLoginModal} />} */}
@@ -35,11 +40,23 @@ const ControlPanel = ({ handleDelete, handleEditDeck, deckControls, deck }) => {
             <Link className='btn control-button' to='/publicDecks'>Home</Link>
 
             {user &&
+                <>
                 <button
                     className='btn'
                     onClick={handleLogout}
                 >Log Out</button>
+                <button
+                    className='btn'
+                    onClick={handleDelete}
+                >Delete Deck</button>
+                <Link
+                    className='btn'
+                    to='/createDeck'
+                >Create Deck</Link>
+                </>
             }
+
+            {}
 
             {!user &&
                 <Link
@@ -47,25 +64,6 @@ const ControlPanel = ({ handleDelete, handleEditDeck, deckControls, deck }) => {
                     to='/login'
                 >Log In</Link>
             }
-
-            {deckControls &&
-                <Link className='btn control-button' to='/createDeck'>Create Deck</Link>
-            }
-
-            {deckControls &&
-                <button
-                    className='btn'
-                    onClick={handleDelete}
-                >Delete Deck</button>
-            }
-
-            {deckControls &&
-                <button
-                    className='btn'
-                    onClick={toggleEditModal}
-                >Edit Deck</button>
-            }
-
 
         </div>
      );

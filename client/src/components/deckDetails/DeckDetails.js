@@ -14,13 +14,13 @@ const DeckDetails = () => {
 
     const { data: deck, error, isPending } = useFetch(`http://localhost:8080${location.pathname}`);
 
-    const handleDelete = () => {
-        fetch(`http://localhost:8080${location.pathname}`, {
-            method: 'DELETE'
-        }).then(() => {
-            navigate('/privateDecks')
-        })
-    }
+    // const handleDelete = () => {
+    //     fetch(`http://localhost:8080${location.pathname}`, {
+    //         method: 'DELETE'
+    //     }).then(() => {
+    //         navigate('/privateDecks')
+    //     })
+    // }
 
     const quickEdit = ({ editQuestionValue, editAnswerValue, index }) => {
         const newCard = {'question': editQuestionValue, 'answer': editAnswerValue};
@@ -41,11 +41,7 @@ const DeckDetails = () => {
     return (
         <div className="deck-detail">
 
-            <ControlPanel
-                handleDelete={handleDelete}
-                deckControls={deckLocation === 'privateDecks'}
-                deck={deck}
-            />
+            <ControlPanel deck={deck} />
 
             <div className="card-container">
                 { error && <div>Could not fetch data</div>}

@@ -12,11 +12,11 @@ const deckSchema = mongoose.Schema({
     },
     subject: {
         type: String,
-        required: [true, 'Please add a subject']
+        // required: [true, 'Please add a subject']
     },
     title: {
         type: String,
-        require: [true, 'Please add a title']
+        // require: [true, 'Please add a title']
     },
     likes: {
         type: Number,
@@ -34,4 +34,4 @@ const deckSchema = mongoose.Schema({
 })
 
 
-module.exports = mongoose.model('publicDecks', deckSchema)
+module.exports = mongoose.model('privateDecks', deckSchema)

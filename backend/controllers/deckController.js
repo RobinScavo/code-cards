@@ -1,6 +1,6 @@
 const asyncHandler = require('express-async-handler')
 
-const Deck = require('../models/publicDeckModel');
+const Deck = require('../models/deckModel');
 
 // @desc Get public Decks
 // @route GET /publicDecks

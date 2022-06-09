@@ -1,22 +1,54 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8080/publicDecks/'
+const PRIVATE_URL = 'http://localhost:8080/privateDecks/'
 
-const fetchDecks = async () => {
-    const response = await axios.get(API_URL)
+const getPublicDecks = async () => {
+    const response = await axios.get('http://localhost:8080/publicDecks/')
 
+    console.log('PUBLIC SERVICE', response.data)
     return response.data;
 }
 
-const addDeck = async (deckData) => {
-    const response = await axios.post(API_URL, deckData)
+const getPrivateDecks = async (token) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const response = await axios.get(PRIVATE_URL, config);
+    console.log('DECK SERVICE', response.data)
+
+    return response.data
+}
+
+const createDeck = async (deckData, token) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    console.log('******', deckData, config)
+    const response = await axios.post(PRIVATE_URL, deckData, config)
+
+    return response.data
+}
+
+const deleteDeck = async (deckId, token) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const response = await axios.delete(PRIVATE_URL + deckId, config)
 
     return response.data
 }
 
 const decksService = {
-    fetchDecks,
-    addDeck
+    getPublicDecks,
+    getPrivateDecks,
+    createDeck,
+    deleteDeck
 }
 
 export default decksService

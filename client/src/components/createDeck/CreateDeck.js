@@ -1,13 +1,15 @@
 import  React  from 'react';
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createDeck } from '../../features/decks/decksSlice';
 
 import './createDeck.css';
 
 const CreateDeck = () => {
-    const [author, setAuthor] = useState('');
+    const {user} = useSelector((state) => state.auth);
+
+    const [author, setAuthor] = useState(user.name);
     const [title, setTitle] = useState('');
     const [subject, setSubject] = useState('Javascript');
     const [question, setQuestion] = useState('');
@@ -24,20 +26,23 @@ const CreateDeck = () => {
             handleAddCard(e);
         }
         const deck = { author, title, subject, cards, 'likes': 0 }
+        console.log('!!!!!', deck)
 
         setIsPending(true)
 
-        dispatch(createDeck({deck}))
+        // dispatch(createDeck({deck}))
 
-        // fetch('http://localhost:3000/privateDecks', {
-        //     method: 'POST',
-        //     headers: { "Content-Type": "application/json" },
-        //     body: JSON.stringify(deck)
-        // }).then(() => {
-        //     console.log('new deck added');
-        //     setIsPending(false);
-        //     navigate('/privateDecks')
-        // })
+        fetch('http://localhost:3000/privateDecks', {
+            method: 'POST',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(deck)
+        }).then(() => {
+            console.log('new deck added');
+            setIsPending(false);
+            navigate('/privateDecks')
+        })
+        navigate('/privateDecks')
+
     }
 
     const handleAddCard = (e) => {

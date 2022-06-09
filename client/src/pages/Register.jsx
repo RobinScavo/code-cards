@@ -29,7 +29,7 @@ function Register() {
         }
 
         if (isSuccess || user) {
-            navigate('/publicDecks')
+            navigate('/privateDecks')
         }
 
         dispatch(reset())
