@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {getPrivateDecks, getPublicDecks, reset} from '../../features/decks/decksSlice'
@@ -13,12 +13,14 @@ import Spinner from '../spinner/Spinner'
 import './deckContainer.css'
 
 const DeckContainer = ({ collection }) => {
-    const navigate = useNavigate()
-    const dispatch = useDispatch()
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const location = useLocation();
+    const deckLocation = location.pathname.slice(1).split('/')[0];
+    console.log(deckLocation)
 
     const {user} = useSelector((state) => state.auth)
     const {decks, isLoading, isError, message} = useSelector((state) => state.decks)
-    console.log('@@@@@', decks)
 
     useEffect(() => {
         if (isError) {
@@ -31,21 +33,15 @@ const DeckContainer = ({ collection }) => {
 
         if (collection === 'publicDecks') {
             dispatch(getPublicDecks())
-        }
-        else if (collection === 'privateDecks') {
+        } else if (collection === 'privateDecks') {
             dispatch(getPrivateDecks())
         }
 
         return () => {
             dispatch(reset())
         }
-    }, [user, navigate, isError, message, dispatch])
+    }, [user, navigate, isError, message, dispatch, collection])
 
-    // const { data, isPending, error } = useFetch(`http://localhost:8080/${collection}`);
-    // if (collection === 'privateDecks') {
-
-    // } else {
-    // }
 
     if (isLoading) {
         return <Spinner />
@@ -56,8 +52,18 @@ const DeckContainer = ({ collection }) => {
             <ControlPanel />
 
             <section className='deck-container-heading'>
-                <h1 className='deck-container-name'>Welcome {user && user.name}!</h1>
-                <p className='deck-container-title'>~ Your library ~</p>
+                {deckLocation === 'privateDecks' &&
+                    <>
+                    <h1 className='deck-container-name'>Welcome {user && user.name}!</h1>
+                    <p className='deck-container-title'>~ Your private library ~</p>
+                    </>
+                }
+                {deckLocation === 'publicDecks' &&
+                    <>
+                    <h1 className='deck-container-name'>Welcome to OpenBook!</h1>
+                    <p className='deck-container-title'>~ Your public library ~</p>
+                    </>
+                }
             </section>
 
             <div className="deck-container">

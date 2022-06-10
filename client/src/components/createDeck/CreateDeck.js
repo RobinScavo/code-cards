@@ -15,7 +15,6 @@ const CreateDeck = () => {
     const [question, setQuestion] = useState('');
     const [answer, setAnswer] = useState('');
     const [cards, setCards] = useState([]);
-    const [isPending, setIsPending] = useState(false);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -25,24 +24,11 @@ const CreateDeck = () => {
         if (question && answer) {
             handleAddCard(e);
         }
-        const deck = { author, title, subject, cards, 'likes': 0 }
-        console.log('!!!!!', deck)
+        const deck = { user, author, title, subject, cards, 'likes': 0 }
 
-        setIsPending(true)
+        dispatch(createDeck(deck))
 
-        // dispatch(createDeck({deck}))
-
-        fetch('http://localhost:3000/privateDecks', {
-            method: 'POST',
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(deck)
-        }).then(() => {
-            console.log('new deck added');
-            setIsPending(false);
-            navigate('/privateDecks')
-        })
         navigate('/privateDecks')
-
     }
 
     const handleAddCard = (e) => {
@@ -68,10 +54,10 @@ const CreateDeck = () => {
 
     return (
         <div className="create-deck">
-            {!isPending && <Link
+            <Link
                 className="btn"
                 to='/privateDecks'
-            >Cancel</Link>}
+            >Cancel</Link>
 
             <h2 className='create-title'>Create a new deck:</h2>
 
@@ -127,21 +113,16 @@ const CreateDeck = () => {
                     onChange={(e) => setAnswer(e.target.value)}
                 />
 
-                {!isPending && <button
+                <button
                     className="btn create-button"
                     onClick={handleAddCard}
-                >Add Card</button>}
+                >Add Card</button>
 
-                {!isPending && <button
+                <button
                     type='submit'
                     className="btn create-button"
                     onClick={handleSubmit}
-                >Submit Deck</button>}
-
-                {isPending && <button
-                    className="btn create-button"
-                    disabled
-                >Sending...</button>}
+                >Submit Deck</button>
 
             </form>
         </div>

@@ -7,11 +7,18 @@ const User = require('../models/userModel')
 // @route GET /privateDecks
 // @access private
 const getPrivateDecks = asyncHandler(async (req, res) => {
-    console.log('UsER ID%%%%', req.user.id)
     const decks = await Deck.find({ user: req.user.id });
-    // const decks = await Deck.find();
 
     res.status(200).json(decks)
+})
+
+// @desc Get public Deck
+// @route GET /publicDecks/:id
+// @access Public
+const getPrivateDeck = asyncHandler(async (req, res) => {
+    const deck = await Deck.findById(req.params.id);
+
+    res.status(200).json(deck)
 })
 
 // @desc Set private deck
@@ -24,7 +31,6 @@ const setPrivateDeck = asyncHandler(async (req, res) => {
     }
 
     const deck = await Deck.create(req.body)
-    console.log('BBBBBBB', deck)
 
     res.status(200).json(deck)
 })
@@ -34,7 +40,6 @@ const setPrivateDeck = asyncHandler(async (req, res) => {
 // @access private
 
 const updatePrivateDeck = asyncHandler(async (req, res) => {
-    // const user = await User.findById(req.user.id);
     const deck = await Deck.findById(req.params.id);
 
 // Check for user
@@ -92,6 +97,7 @@ const deletePrivateDeck = asyncHandler(async (req, res) => {
 
 module.exports = {
     getPrivateDecks,
+    getPrivateDeck,
     setPrivateDeck,
     updatePrivateDeck,
     deletePrivateDeck

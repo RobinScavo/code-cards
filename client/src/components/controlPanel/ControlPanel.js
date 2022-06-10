@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout, reset } from '../../features/auth/authSlice';
 import { deleteDeck } from '../../features/decks/decksSlice';
@@ -17,6 +17,10 @@ const ControlPanel = ({ deck }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const {user} = useSelector((state) => state.auth);
+    const location = useLocation();
+    const userLocation = location.pathname.slice(1).split('/')[0];
+    const privateLocation = location.pathname.slice(1).split('/')[1];
+    console.log(privateLocation)
 
     // const toggleLoginModal = () => setLoginModalVisible(!loginModalVisible);
     const toggleEditModal = () => setEditModalVisible(!editModalVisible);
@@ -45,10 +49,6 @@ const ControlPanel = ({ deck }) => {
                     className='btn'
                     onClick={handleLogout}
                 >Log Out</button>
-                <button
-                    className='btn'
-                    onClick={handleDelete}
-                >Delete Deck</button>
                 <Link
                     className='btn'
                     to='/createDeck'
@@ -56,7 +56,26 @@ const ControlPanel = ({ deck }) => {
                 </>
             }
 
-            {}
+            {user && privateLocation &&
+                <button
+                    className='btn'
+                    onClick={handleDelete}
+                >Delete Deck</button>
+            }
+
+            {user && userLocation === 'publicDecks' &&
+                <Link
+                    className='btn'
+                    to='/privateDecks'
+                >Your Decks</Link>
+            }
+
+            {user && userLocation === 'publicDecks' &&
+                <Link
+                    className='btn'
+                    to='/privateDecks'
+                >Your Decks</Link>
+            }
 
             {!user &&
                 <Link
