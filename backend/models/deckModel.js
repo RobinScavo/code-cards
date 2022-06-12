@@ -34,4 +34,4 @@ const deckSchema = mongoose.Schema({
 })
 
 
-module.exports = mongoose.model('privateDecks', deckSchema)
+module.exports = mongoose.model('decks', deckSchema)

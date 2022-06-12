@@ -1,57 +1,75 @@
-import  React  from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import useFetch from '../../useFetch';
+import  React, { useEffect }  from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { getPrivateDeck, getPublicDeck, reset } from '../../features/decks/decksSlice'
 
 import Card from '../card/Card';
 import ControlPanel from '../controlPanel/ControlPanel';
+import Spinner from '../spinner/Spinner';
 
 import './deckDetails.css'
 
-const DeckDetails = () => {
-    const location = useLocation();
+const DeckDetails = ({ privateDeck }) => {
     const navigate = useNavigate();
-    const deckLocation = location.pathname.slice(1).split('/')[0];
+    const dispatch = useDispatch();
+    const deckID = useParams().id;
 
-    const { data: deck, error, isPending } = useFetch(`http://localhost:8080${location.pathname}`);
+    const {user} = useSelector((state) => state.auth)
+    const {decks, isLoading, isError, message} = useSelector((state) => state.decks)
 
-    // const handleDelete = () => {
+    useEffect(() => {
+        if (isError) {
+            console.log(message)
+        }
+
+        if (privateDeck && !user) {
+            navigate('/login')
+        }
+
+        if (!privateDeck) {
+            dispatch(getPublicDeck(deckID))
+        } else if (privateDeck) {
+            dispatch(getPrivateDeck(deckID))
+        }
+
+        return () => {
+            dispatch(reset())
+        }
+    }, [user, navigate, isError, message, dispatch, deckID, privateDeck])
+
+    // const quickEdit = ({ editQuestionValue, editAnswerValue, index }) => {
+    //     const newCard = {'question': editQuestionValue, 'answer': editAnswerValue};
+    //     const newCards = deck.cards;
+    //     newCards.splice(index, 1, newCard);
+    //     const replacementCards = {"cards": newCards}
+    //     console.log(replacementCards)
+
     //     fetch(`http://localhost:8080${location.pathname}`, {
-    //         method: 'DELETE'
-    //     }).then(() => {
-    //         navigate('/privateDecks')
+    //         method: 'PATCH',
+    //         headers: { "Content-Type": "application/json" },
+    //         body: JSON.stringify(replacementCards)
+    //     }).then (() => {
+    //         window.location.reload();
     //     })
     // }
 
-    const quickEdit = ({ editQuestionValue, editAnswerValue, index }) => {
-        const newCard = {'question': editQuestionValue, 'answer': editAnswerValue};
-        const newCards = deck.cards;
-        newCards.splice(index, 1, newCard);
-        const replacementCards = {"cards": newCards}
-        console.log(replacementCards)
-
-        fetch(`http://localhost:8080${location.pathname}`, {
-            method: 'PATCH',
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(replacementCards)
-        }).then (() => {
-            window.location.reload();
-        })
+    if (isLoading) {
+        return <Spinner />
     }
 
     return (
         <div className="deck-detail">
 
-            <ControlPanel deck={deck} />
+            <ControlPanel deck={decks}/>
 
             <div className="card-container">
-                { error && <div>Could not fetch data</div>}
-                { isPending && <h1 className='loading-text'>Loading...</h1>}
-                {deck.cards && deck.cards.map((card, index) => (
+                {decks.cards && decks.cards.map((card, index) => (
                     <Card
                         index={index}
-                        key={`${deck._id}index${index}`}
+                        key={`${decks._id}index${index}`}
                         card={card}
-                        quickEdit={quickEdit}
+                        // quickEdit={quickEdit}
                     />
                 ))}
             </div>

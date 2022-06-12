@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
 
 import Header from './components/header/Header';
 import Footer from './components/footer/Footer';
@@ -12,7 +13,6 @@ import Register from './pages/Register';
 import Login from './pages/Login';
 
 import './app.css';
-import 'react-toastify/dist/ReactToastify.css'
 
 function App() {
 
@@ -23,14 +23,20 @@ function App() {
         <Header/>
 
         <Routes>
-          <Route exact path='/publicDecks' element = {
-            <DeckContainer collection='publicDecks' />
+          {/* Public Decks */}
+          <Route exact path='/decks' element = {
+            <DeckContainer />
           } />
-          <Route exact path='/privateDecks' element = {
-            <DeckContainer collection='privateDecks' />
+          <Route path={`/decks/:id`} element = {<DeckDetails />} />
+
+          {/* Private Decks */}
+          <Route exact path='/decks/privateDecks' element = {
+            <DeckContainer privateDecks={true} />
           } />
-          <Route path={`/publicDecks/:id`} element = {<DeckDetails />} />
-          <Route path={`/privateDecks/:id`} element = {<DeckDetails />} />
+          <Route path={`/decks/privateDecks/:id`} element = {
+            <DeckDetails privateDeck={true}/>
+          } />
+
           <Route path='/createDeck' element = {<CreateDeck />} />
           <Route path='/signup' element={<Register />} />
           <Route path='/login' element={<Login />} />

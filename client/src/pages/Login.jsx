@@ -29,7 +29,7 @@ function Login() {
         }
 
         if(isSuccess || user) {
-            navigate('/privateDecks')
+            navigate('/decks/privateDecks')
         }
 
         dispatch(reset())

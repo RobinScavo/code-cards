@@ -1,6 +1,8 @@
 import  React  from 'react';
 import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { editDeck } from '../../features/decks/decksSlice';
 
 import './editModal.css';
 
@@ -14,8 +16,8 @@ const EditModal = ({ deck, toggleEditModal }) => {
     const [currentAnswer, setCurrentAnswer] = useState(cards[cardIndex].answer);
     const [cardWasEdited, setCardWasEdited] = useState(false);
     const [addingNewCard, setAddingNewCard] = useState(false);
-    const [isPending, setIsPending] = useState(false);
-    const location = useLocation();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -24,20 +26,12 @@ const EditModal = ({ deck, toggleEditModal }) => {
             handleAddCard();
         }
 
-        setIsPending(true);
-
         const newDeckCards = cards.filter((card => card.question && card.answer));
-        const deck = { author, title, subject, cards: newDeckCards };
+        const newDeck = { _id: deck._id, user: deck.user, author, title, subject, cards: newDeckCards };
 
-        fetch(`http://localhost:3000${location.pathname}`, {
-            method: 'PATCH',
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(deck)
-        }).then(() => {
-            setIsPending(false);
-            toggleEditModal();
-            window.location.reload();
-        })
+        dispatch(editDeck(newDeck));
+        toggleEditModal()
+        navigate(`/privateDecks/${deck._id}`)
     }
 
     const handleAddCard = () => {
@@ -84,10 +78,10 @@ const EditModal = ({ deck, toggleEditModal }) => {
     return (
         <div className="edit-modal-overlay">
             <div className="edit-modal">
-                {!isPending && <button
+                <button
                     className="btn"
                     onClick={toggleEditModal}
-                >Cancel</button>}
+                >Cancel</button>
 
                 <h2 className='create-title'>Edit deck:</h2>
 
@@ -175,15 +169,15 @@ const EditModal = ({ deck, toggleEditModal }) => {
                         }}
                     />
 
-                    {!isPending && <button
+                    <button
                         className="btn create-button"
                         onClick={(e) => {
                             e.preventDefault()
                             handleAddCard()
                         }}
-                    >Add Card</button>}
+                    >Add Card</button>
 
-                    {!isPending && cards.length > 1 && <button
+                    {cards.length > 1 && <button
                         className="btn create-button"
                         onClick={(e) => {
                             e.preventDefault()
@@ -191,15 +185,10 @@ const EditModal = ({ deck, toggleEditModal }) => {
                         }}
                     >Remove Card</button>}
 
-                    {!isPending && <button
+                    <button
                         className="btn create-button"
                         onClick={handleSubmit}
-                    >Save Changes</button>}
-
-                    {isPending && <button
-                        className="btn create-button"
-                        disabled
-                    >Sending...</button>}
+                    >Save Changes</button>
 
                 </form>
             </div>

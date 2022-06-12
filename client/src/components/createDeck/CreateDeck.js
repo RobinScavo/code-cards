@@ -24,11 +24,12 @@ const CreateDeck = () => {
         if (question && answer) {
             handleAddCard(e);
         }
-        const deck = { user, author, title, subject, cards, 'likes': 0 }
+        const deck = { user: user._id, author, title, subject, cards, 'likes': 0, 'published': false }
+        console.log('CREATE DECK', deck)
 
         dispatch(createDeck(deck))
 
-        navigate('/privateDecks')
+        navigate('/decks/privateDecks')
     }
 
     const handleAddCard = (e) => {
@@ -121,7 +122,7 @@ const CreateDeck = () => {
                 <button
                     type='submit'
                     className="btn create-button"
-                    onClick={handleSubmit}
+                    // onClick={handleSubmit}
                 >Submit Deck</button>
 
             </form>

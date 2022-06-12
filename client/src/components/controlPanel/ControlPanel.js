@@ -2,53 +2,85 @@ import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout, reset } from '../../features/auth/authSlice';
-import { deleteDeck } from '../../features/decks/decksSlice';
-// import { FaSignInAlt, FaSignOutAlt, FaUser } from 'react-icons/fa'
+import { deleteDeck, editDeck } from '../../features/decks/decksSlice';
+import { toast } from 'react-toastify';
 
-// import LoginModal from '../loginModal/LoginModal';
 import EditModal from '../editModal/EditModal';
 
 import './controlPanel.css';
 
 const ControlPanel = ({ deck }) => {
-    // const [loginModalVisible, setLoginModalVisible] =  useState(false);
     const [editModalVisible, setEditModalVisible] =  useState(false);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const {user} = useSelector((state) => state.auth);
     const location = useLocation();
-    const userLocation = location.pathname.slice(1).split('/')[0];
-    const privateLocation = location.pathname.slice(1).split('/')[1];
-    console.log(privateLocation)
+    const userLocation = location.pathname.split('/')[2];
+    const userSubLocation = location.pathname.split('/')[3];
 
-    // const toggleLoginModal = () => setLoginModalVisible(!loginModalVisible);
     const toggleEditModal = () => setEditModalVisible(!editModalVisible);
 
     const handleLogout = () => {
         dispatch(logout())
         dispatch(reset())
-        navigate('/publicDecks')
+        navigate('/decks')
     }
 
     const handleDelete = () => {
-        dispatch(deleteDeck(deck._id))
+        dispatch(deleteDeck(deck._id));
+        navigate('/decks/privateDecks')
+    }
+
+    const handleEdit = () => {
+        setEditModalVisible(true)
+    }
+
+    const handlePublish = () => {
+        const copyDeck = {...deck}
+        copyDeck.published = true
+        toast.success('This deck has been published!')
+        dispatch(editDeck(copyDeck))
+        dispatch(reset())
+    }
+
+    const handleUpload = () => {
+        const theirCopy = {...deck}
+        theirCopy.likes = theirCopy.likes + 1;
+
+        const myCopy = {...deck}
+        myCopy.user = user._id
+        delete myCopy._id
+
+        console.log('CONTROL PANEL', theirCopy, myCopy)
+        dispatch(editDeck(theirCopy))
+        dispatch(reset())
     }
 
     return (
         <div className="control-panel">
-            {/* {loginModalVisible && <LoginModal toggleLoginModal={toggleLoginModal} />} */}
-            {editModalVisible && <EditModal toggleEditModal={toggleEditModal} deck={deck}/>}
+            {editModalVisible &&
+                <EditModal
+                    toggleEditModal={toggleEditModal}
+                    deck={deck}/>
+            }
 
+            {/* HOME */}
+            {userLocation  &&
+                <Link
+                    className='btn control-button'
+                    to='/decks'
+                >Home</Link>
+            }
 
-            <Link className='btn control-button' to='/publicDecks'>Home</Link>
-
+            {/* LOG OUT/ CREATE DECK */}
             {user &&
                 <>
                 <button
                     className='btn'
                     onClick={handleLogout}
                 >Log Out</button>
+
                 <Link
                     className='btn'
                     to='/createDeck'
@@ -56,32 +88,52 @@ const ControlPanel = ({ deck }) => {
                 </>
             }
 
-            {user && privateLocation &&
+            {/* LOG IN */}
+            {!user &&
+                <Link
+                    className='btn control-button'
+                    to='/login'
+                >Log In</Link>
+            }
+
+            {/* DELETE DECK */}
+            {userSubLocation &&
                 <button
                     className='btn'
                     onClick={handleDelete}
                 >Delete Deck</button>
             }
 
-            {user && userLocation === 'publicDecks' &&
+            {/* EDIT DECK */}
+            {userSubLocation  &&
+                <button
+                    className='btn'
+                    onClick={handleEdit}
+                >Edit Deck</button>
+            }
+
+            {/* PRIVATE DECKS */}
+            {user && (userLocation !== 'privateDecks' || userSubLocation) &&
                 <Link
                     className='btn'
-                    to='/privateDecks'
+                    to='/decks/privateDecks'
                 >Your Decks</Link>
             }
 
-            {user && userLocation === 'publicDecks' &&
-                <Link
-                    className='btn'
-                    to='/privateDecks'
-                >Your Decks</Link>
+            {/* PUBLISH */}
+            {deck && !deck.published &&
+                <button
+                    className="btn"
+                    onClick={handlePublish}
+                >Publish</button>
             }
 
-            {!user &&
-                <Link
-                    className='btn control-button'
-                    to='/login'
-                >Log In</Link>
+            {/* UPLOAD DECK */}
+            {userLocation && userLocation !== 'privateDecks' && user._id !== deck.user &&
+                <button
+                    className="btn"
+                    onClick={handleUpload}
+                >Upload</button>
             }
 
         </div>
