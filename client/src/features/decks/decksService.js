@@ -59,31 +59,17 @@ const deleteDeck = async (deckId, token) => {
     return response.data
 }
 
-const editDeck = async (newDeck, token) => {
-    const deckId = newDeck._id
-    console.log('DECK SERVICE', deckId)
+const editDeck = async (pojo, token) => {
+    const { id, data } = pojo;
     const config = {
         headers: {
             Authorization: `Bearer ${token}`
         }
     }
-    const response = await axios.put(PRIVATE_URL + deckId, newDeck, config)
+    const response = await axios.patch(PRIVATE_URL + id, data, config)
 
     return response.data
 }
-
-// const incrementUpload = async (newDeck, token) => {
-//     const deckId = newDeck._id
-//     console.log('DECK SERVICE', deckId)
-//     const config = {
-//         headers: {
-//             Authorization: `Bearer ${token}`
-//         }
-//     }
-//     const response = await axios.put(PRIVATE_URL + 'increment/' + deckId, newDeck, config)
-
-//     return response.data
-// }
 
 const decksService = {
     getPublicDecks,
@@ -93,7 +79,6 @@ const decksService = {
     createDeck,
     deleteDeck,
     editDeck,
-    // incrementUpload
 }
 
 export default decksService

@@ -51,10 +51,10 @@ export const getPrivateDeck = createAsyncThunk('decks/getPrivateDeck', async (id
 })
 
 
-export const createDeck = createAsyncThunk('decks/create', async (id, thunkAPI) => {
+export const createDeck = createAsyncThunk('decks/create', async (deckData, thunkAPI) => {
     try {
         const token = thunkAPI.getState().auth.user.token
-        return await decksService.createDeck(id, token)
+        return await decksService.createDeck(deckData, token)
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
         return thunkAPI.rejectWithValue(message)
@@ -71,31 +71,10 @@ export const deleteDeck = createAsyncThunk('decks/delete', async (id, thunkAPI) 
     }
 })
 
-export const editDeck = createAsyncThunk('decks/edit', async (newDeck, thunkAPI) => {
+export const editDeck = createAsyncThunk('decks/edit', async (pojo, thunkAPI) => {
     try {
         const token = thunkAPI.getState().auth.user.token
-        return await decksService.editDeck(newDeck, token)
-    } catch (error) {
-        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-        return thunkAPI.rejectWithValue(message)
-    }
-})
-
-// export const incrementUpload = createAsyncThunk('decks/increment', async (newDeck, thunkAPI) => {
-//     try {
-//         const token = thunkAPI.getState().auth.user.token
-//         return await decksService.incrementUpload(newDeck, token)
-//     } catch (error) {
-//         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-//         return thunkAPI.rejectWithValue(message)
-//     }
-// })
-
-export const publishDeck = createAsyncThunk('decks/publish', async (newDeck, thunkAPI) => {
-
-    try {
-        const token = thunkAPI.getState().auth.user.token
-        return await decksService.editDeck(newDeck, token)
+        return await decksService.editDeck(pojo, token)
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
         return thunkAPI.rejectWithValue(message)
@@ -207,27 +186,14 @@ export const decksSlice = createSlice({
             .addCase(editDeck.fulfilled, (state, action) => {
                 state.isLoading = false
                 state.isSuccess = true
-                // state.decks.push(action.payload)
+                state.decks = state.decks.filter((deck) => deck._id !== action.payload.id)
+                state.decks.push(action.payload.updatedDeck)
             })
             .addCase(editDeck.rejected, (state, action) => {
                 state.isLoading = false
                 state.isError = true
                 state.message = action.payload
             })
-
-            // INCREMENT UPLOAD
-            // .addCase(incrementUpload.pending, (state) => {
-            //     state.isLoading = true
-            // })
-            // .addCase(incrementUpload.fulfilled, (state, action) => {
-            //     state.isLoading = false
-            //     state.isSuccess = true
-            // })
-            // .addCase(incrementUpload.rejected, (state, action) => {
-            //     state.isLoading = false
-            //     state.isError = true
-            //     state.message = action.payload
-            // })
     }
 })
 

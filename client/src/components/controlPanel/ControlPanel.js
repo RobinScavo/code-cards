@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout, reset } from '../../features/auth/authSlice';
-import { deleteDeck, editDeck } from '../../features/decks/decksSlice';
+import { deleteDeck, editDeck, createDeck } from '../../features/decks/decksSlice';
 import { toast } from 'react-toastify';
 
 import EditModal from '../editModal/EditModal';
@@ -37,24 +37,38 @@ const ControlPanel = ({ deck }) => {
     }
 
     const handlePublish = () => {
-        const copyDeck = {...deck}
-        copyDeck.published = true
-        toast.success('This deck has been published!')
-        dispatch(editDeck(copyDeck))
-        dispatch(reset())
+        const pojo = { id: deck._id, data: {published: true}}
+
+        try {
+            navigate('/decks/privateDecks')
+            dispatch(editDeck(pojo))
+            dispatch(reset())
+            // window.location.reload()
+            toast.success('This deck has been published!')
+        } catch {
+            toast.error('Publishing failed.')
+        }
     }
 
     const handleUpload = () => {
-        const theirCopy = {...deck}
-        theirCopy.likes = theirCopy.likes + 1;
+        const uploadsPojo = {id: deck._id, data: {likes: deck.likes + 1}};
 
-        const myCopy = {...deck}
-        myCopy.user = user._id
-        delete myCopy._id
+        const myCopy = {...deck};
+        delete myCopy._id;
+        myCopy.likes = 0;
+        myCopy.published = false;
+        myCopy.user = user;
 
-        console.log('CONTROL PANEL', theirCopy, myCopy)
-        dispatch(editDeck(theirCopy))
-        dispatch(reset())
+        navigate('/decks')
+        try {
+            dispatch(editDeck(uploadsPojo))
+            dispatch(reset())
+            dispatch(createDeck(myCopy))
+            dispatch(reset())
+            toast.success('This deck now exists in your library!')
+        } catch {
+            toast.error('Upload failed.')
+        }
     }
 
     return (

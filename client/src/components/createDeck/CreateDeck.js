@@ -57,7 +57,7 @@ const CreateDeck = () => {
         <div className="create-deck">
             <Link
                 className="btn"
-                to='/privateDecks'
+                to='/decks/privateDecks'
             >Cancel</Link>
 
             <h2 className='create-title'>Create a new deck:</h2>
@@ -122,7 +122,6 @@ const CreateDeck = () => {
                 <button
                     type='submit'
                     className="btn create-button"
-                    // onClick={handleSubmit}
                 >Submit Deck</button>
 
             </form>

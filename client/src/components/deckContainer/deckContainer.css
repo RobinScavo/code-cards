@@ -5,7 +5,17 @@
     width: 100%;
     background-color: rgb(125, 221, 125);
     padding: 10px;
+    overflow: scroll;
 }
+
+.deck-container::-webkit-scrollbar {
+    display: none;
+}
+
+.deck-container.scrollbar-hidden {
+    -ms-overflow-style: none;
+    scrollbar-width: none; /* Firefox */
+  }
 
 .loading-text {
     color: blue;

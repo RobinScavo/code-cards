@@ -2,7 +2,8 @@ import  React  from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { editDeck } from '../../features/decks/decksSlice';
+import { editDeck, reset } from '../../features/decks/decksSlice';
+import { toast } from 'react-toastify';
 
 import './editModal.css';
 
@@ -27,11 +28,19 @@ const EditModal = ({ deck, toggleEditModal }) => {
         }
 
         const newDeckCards = cards.filter((card => card.question && card.answer));
-        const newDeck = { _id: deck._id, user: deck.user, author, title, subject, cards: newDeckCards };
+        const newDeck = { id: deck._id, data: {_id: deck._id, user: deck.user, author, title, subject, cards: newDeckCards }};
 
-        dispatch(editDeck(newDeck));
-        toggleEditModal()
-        navigate(`/privateDecks/${deck._id}`)
+        console.log('MODAL', newDeck)
+        try {
+            dispatch(editDeck(newDeck));
+            dispatch(reset())
+            toggleEditModal()
+            dispatch(reset())
+            toast.success('Deck has been updated.')
+            navigate(`/decks/privateDecks`)
+        } catch {
+            toast.error('Something went wrong.')
+        }
     }
 
     const handleAddCard = () => {

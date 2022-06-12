@@ -7,19 +7,17 @@ const {
     getPublicDeck,
     getPrivateDecks,
     getPrivateDeck,
-    addDeck,
+    createDeck,
     updateDeck,
     deleteDeck,
-    // incrementUpload
 } = require('../controllers/deckControllers');
 
 // Protected
-router.route('/privateDecks').get(protect, getPrivateDecks).post(protect, addDeck)
-router.route('/privateDecks/:id').get(protect, getPrivateDeck).put(protect, updateDeck).delete(protect, deleteDeck)
+router.route('/privateDecks').get(protect, getPrivateDecks).post(protect, createDeck)
+router.route('/privateDecks/:id').get(protect, getPrivateDeck).patch(protect, updateDeck).delete(protect, deleteDeck)
 
 // Unprotected
 router.route('/').get(getPublicDecks)
 router.route('/:id').get(getPublicDeck)
-// router.route('/privateDecks/increment/:id').put(incrementUpload)
 
 module.exports = router;

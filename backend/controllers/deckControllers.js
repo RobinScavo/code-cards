@@ -41,7 +41,7 @@ const getPrivateDeck = asyncHandler(async (req, res) => {
 // @desc Set private deck
 // @route POST /privateDecks
 // @access private
-const addDeck = asyncHandler(async (req, res) => {
+const createDeck = asyncHandler(async (req, res) => {
     if(!req.body) {
         res.status(400)
         throw new Error('Please add a text field')
@@ -55,7 +55,6 @@ const addDeck = asyncHandler(async (req, res) => {
 // @desc Update deck
 // @route PUT /privateDecks/:id
 // @access private
-
 const updateDeck = asyncHandler(async (req, res) => {
     const deck = await Deck.findById(req.params.id);
 
@@ -70,18 +69,19 @@ const updateDeck = asyncHandler(async (req, res) => {
         throw new Error('Deck not found')
     }
 
-    const updatedDeck = await Deck.findByIdAndUpdate(req.params.id, req.body, {
-        new: true,
+    await Deck.findByIdAndUpdate(req.params.id, req.body, {
+        new: false,
     })
+    const newDeck = await Deck.findById(req.params.id);
+    console.log(newDeck)
 
-    res.status(200).json(updatedDeck)
+    res.status(200).json({id: req.params.id, updatedDeck: newDeck})
 })
 
 // @desc Delete deck
 // @route DELETE /privateDecks/:id
 // @access private
 const deleteDeck = asyncHandler(async (req, res) => {
-    // const user = await User.findById(req.user.id);
     const deck = await Deck.findById(req.params.id);
 
     // Check for user
@@ -111,7 +111,7 @@ module.exports = {
     getPublicDeck,
     getPrivateDecks,
     getPrivateDeck,
-    addDeck,
+    createDeck,
     updateDeck,
     deleteDeck,
     // incrementUpload
