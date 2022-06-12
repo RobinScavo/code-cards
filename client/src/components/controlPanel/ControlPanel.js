@@ -43,7 +43,6 @@ const ControlPanel = ({ deck }) => {
             navigate('/decks/privateDecks')
             dispatch(editDeck(pojo))
             dispatch(reset())
-            // window.location.reload()
             toast.success('This deck has been published!')
         } catch {
             toast.error('Publishing failed.')

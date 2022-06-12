@@ -72,6 +72,7 @@ export const deleteDeck = createAsyncThunk('decks/delete', async (id, thunkAPI) 
 })
 
 export const editDeck = createAsyncThunk('decks/edit', async (pojo, thunkAPI) => {
+    console.log('SLICE', pojo)
     try {
         const token = thunkAPI.getState().auth.user.token
         return await decksService.editDeck(pojo, token)
@@ -96,7 +97,7 @@ export const decksSlice = createSlice({
             .addCase(getPublicDecks.fulfilled, (state, action) => {
                 state.isLoading = false
                 state.isSuccess = true
-                state.decks = action.payload
+                state.decks = action.payload.sort((a, b) => a.likes > b.likes ? -1 : 1)
             })
             .addCase(getPublicDecks.rejected, (state, action) => {
                 state.isLoading = false

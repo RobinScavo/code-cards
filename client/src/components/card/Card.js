@@ -29,7 +29,7 @@ const Card = ({ card, quickEdit, index }) => {
                 onChange={(e) => setEditAnswerValue(e.target.value)}
             />}
             {editMode && <button
-                className="edit-button"
+                className="edit-button btn"
                 onClick={() => {
                     quickEdit ({ editQuestionValue, editAnswerValue, index })
                     setEditMode(false)

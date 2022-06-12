@@ -2,7 +2,7 @@ import  React, { useEffect }  from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import { getPrivateDeck, getPublicDeck, reset } from '../../features/decks/decksSlice'
+import { getPrivateDeck, getPublicDeck, editDeck, reset } from '../../features/decks/decksSlice'
 
 import Card from '../card/Card';
 import ControlPanel from '../controlPanel/ControlPanel';
@@ -38,21 +38,19 @@ const DeckDetails = ({ privateDeck }) => {
         }
     }, [user, navigate, isError, message, dispatch, deckID, privateDeck])
 
-    // const quickEdit = ({ editQuestionValue, editAnswerValue, index }) => {
-    //     const newCard = {'question': editQuestionValue, 'answer': editAnswerValue};
-    //     const newCards = deck.cards;
-    //     newCards.splice(index, 1, newCard);
-    //     const replacementCards = {"cards": newCards}
-    //     console.log(replacementCards)
+    const quickEdit = ({ editQuestionValue, editAnswerValue, index }) => {
+        const newCard = {'question': editQuestionValue, 'answer': editAnswerValue};
+        const newCards = [...decks.cards];
+        newCards.splice(index, 1, newCard);
+        const pojo = {id: deckID, data: {cards: newCards}}
+        console.log(pojo)
 
-    //     fetch(`http://localhost:8080${location.pathname}`, {
-    //         method: 'PATCH',
-    //         headers: { "Content-Type": "application/json" },
-    //         body: JSON.stringify(replacementCards)
-    //     }).then (() => {
-    //         window.location.reload();
-    //     })
-    // }
+        dispatch(editDeck(pojo))
+        dispatch(reset())
+        window.location.reload()
+
+        //TODO dispatch on window location change
+    }
 
     if (isLoading) {
         return <Spinner />
@@ -69,7 +67,7 @@ const DeckDetails = ({ privateDeck }) => {
                         index={index}
                         key={`${decks._id}index${index}`}
                         card={card}
-                        // quickEdit={quickEdit}
+                        quickEdit={quickEdit}
                     />
                 ))}
             </div>

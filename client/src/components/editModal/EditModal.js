@@ -30,7 +30,6 @@ const EditModal = ({ deck, toggleEditModal }) => {
         const newDeckCards = cards.filter((card => card.question && card.answer));
         const newDeck = { id: deck._id, data: {_id: deck._id, user: deck.user, author, title, subject, cards: newDeckCards }};
 
-        console.log('MODAL', newDeck)
         try {
             dispatch(editDeck(newDeck));
             dispatch(reset())

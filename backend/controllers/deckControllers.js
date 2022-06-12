@@ -7,6 +7,7 @@ const Deck = require('../models/deckModel');
 // @access Public
 const getPublicDecks = asyncHandler(async (req, res) => {
     const decks = await Deck.find();
+    // decks.sort( {likes: 1} )
 
     res.status(200).json(decks)
 })
@@ -73,7 +74,6 @@ const updateDeck = asyncHandler(async (req, res) => {
         new: false,
     })
     const newDeck = await Deck.findById(req.params.id);
-    console.log(newDeck)
 
     res.status(200).json({id: req.params.id, updatedDeck: newDeck})
 })
