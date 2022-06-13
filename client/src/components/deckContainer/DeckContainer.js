@@ -16,29 +16,29 @@ const DeckContainer = ({ privateDecks }) => {
     const location = useLocation();
     const deckLocation = location.pathname.slice(1).split('/')[1];
 
-    const {user} = useSelector((state) => state.auth)
-    const {decks, isLoading, isError, message} = useSelector((state) => state.decks)
-    const route = privateDecks ? 'privateDecks/' : ''
+    const {user} = useSelector((state) => state.auth);
+    const {decks, isLoading, isError, message} = useSelector((state) => state.decks);
+    const route = privateDecks ? 'privateDecks/' : '';
 
     useEffect(() => {
         if (isError) {
-            console.log(message)
+            console.log(message);
         }
 
         if (privateDecks && !user) {
-            navigate('/login')
+            navigate('/login');
         }
 
         if (!privateDecks) {
-            dispatch(getPublicDecks())
+            dispatch(getPublicDecks());
         } else if (privateDecks) {
-            dispatch(getPrivateDecks())
+            dispatch(getPrivateDecks());
         }
 
         return () => {
-            dispatch(reset())
+            dispatch(reset());
         }
-    }, [user, navigate, isError, message, dispatch, privateDecks])
+    }, [user, navigate, isError, message, dispatch, privateDecks]);
 
 
     if (isLoading) {

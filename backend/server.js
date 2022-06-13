@@ -4,9 +4,10 @@ const dotenv = require('dotenv').config();
 const cors = require("cors");
 const { errorHandler } = require('./middleware/error');
 const connectDB = require('./config/db')
-const port = process.env.PORT || 8080;
 const users = require('./routes/usersRoute');
 const decks = require('./routes/decksRoute');
+
+const port = process.env.PORT || 8080;
 
 connectDB();
 

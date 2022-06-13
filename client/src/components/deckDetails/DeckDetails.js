@@ -15,8 +15,8 @@ const DeckDetails = ({ privateDeck }) => {
     const dispatch = useDispatch();
     const deckID = useParams().id;
 
-    const {user} = useSelector((state) => state.auth)
-    const {decks, isLoading, isError, message} = useSelector((state) => state.decks)
+    const {user} = useSelector((state) => state.auth);
+    const {decks, isLoading, isError, message} = useSelector((state) => state.decks);
 
     useEffect(() => {
         if (isError) {
@@ -28,15 +28,15 @@ const DeckDetails = ({ privateDeck }) => {
         }
 
         if (!privateDeck) {
-            dispatch(getPublicDeck(deckID))
+            dispatch(getPublicDeck(deckID));
         } else if (privateDeck) {
-            dispatch(getPrivateDeck(deckID))
+            dispatch(getPrivateDeck(deckID));
         }
 
         return () => {
             dispatch(reset())
         }
-    }, [user, navigate, isError, message, dispatch, deckID, privateDeck])
+    }, [user, navigate, isError, message, dispatch, deckID, privateDeck]);
 
     const quickEdit = ({ editQuestionValue, editAnswerValue, index }) => {
         const newCard = {'question': editQuestionValue, 'answer': editAnswerValue};
@@ -44,9 +44,10 @@ const DeckDetails = ({ privateDeck }) => {
         newCards.splice(index, 1, newCard);
         const pojo = {id: deckID, data: {cards: newCards}};
 
-        dispatch(editDeck(pojo))
-        dispatch(reset())
-        window.location.reload()
+        dispatch(editDeck(pojo));
+        dispatch(reset());
+
+        window.location.reload();
 
         //TODO dispatch on window location change
     }

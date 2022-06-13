@@ -24,20 +24,27 @@ const CreateDeck = () => {
         if (question && answer) {
             handleAddCard(e);
         }
-        const deck = { user: user._id, author, title, subject, cards, 'likes': 0, 'published': false }
-        console.log('CREATE DECK', deck)
+        const deck = {
+            user: user._id,
+            author,
+            title,
+            subject,
+            cards,
+            'likes': 0,
+            'published': false
+        }
 
-        dispatch(createDeck(deck))
+        dispatch(createDeck(deck));
 
-        navigate('/decks/privateDecks')
+        navigate('/decks/privateDecks');
     }
 
     const handleAddCard = (e) => {
         const questionInput = document.querySelectorAll('.QA');
 
-        e.preventDefault()
+        e.preventDefault();
         if (!question || !answer) {
-            alert('Please fill out the current card first.')
+            alert('Please fill out the current card first.');
         } else {
             const newCard = {'question': question, 'answer': answer};
             const cardsCopy = cards;

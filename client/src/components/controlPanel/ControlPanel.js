@@ -58,15 +58,17 @@ const ControlPanel = ({ deck }) => {
         myCopy.published = false;
         myCopy.user = user;
 
-        navigate('/decks')
+        navigate('/decks');
         try {
-            dispatch(editDeck(uploadsPojo))
-            dispatch(reset())
-            dispatch(createDeck(myCopy))
-            dispatch(reset())
-            toast.success('This deck now exists in your library!')
+            dispatch(editDeck(uploadsPojo));
+            dispatch(reset());
+
+            dispatch(createDeck(myCopy));
+            dispatch(reset());
+
+            toast.success('This deck now exists in your library!');
         } catch {
-            toast.error('Upload failed.')
+            toast.error('Upload failed.');
         }
     }
 

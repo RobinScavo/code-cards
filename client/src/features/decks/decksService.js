@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-const PRIVATE_URL = 'http://localhost:8080/decks/privateDecks/'
-const PUBLIC_URL = 'http://localhost:8080/decks/'
+const PRIVATE_URL = 'http://localhost:8080/decks/privateDecks/';
+const PUBLIC_URL = 'http://localhost:8080/decks/';
 
 const getPublicDecks = async () => {
-    const response = await axios.get(PUBLIC_URL)
+    const response = await axios.get(PUBLIC_URL);
 
     return response.data;
 }
@@ -12,7 +12,7 @@ const getPublicDecks = async () => {
 const getPublicDeck = async (ID) => {
     const response = await axios.get(PUBLIC_URL + ID);
 
-    return response.data
+    return response.data;
 }
 
 const getPrivateDecks = async (token) => {
@@ -23,7 +23,7 @@ const getPrivateDecks = async (token) => {
     }
     const response = await axios.get(PRIVATE_URL, config);
 
-    return response.data
+    return response.data;
 }
 
 const getPrivateDeck = async (ID, token) => {
@@ -34,7 +34,7 @@ const getPrivateDeck = async (ID, token) => {
     }
     const response = await axios.get(PRIVATE_URL + ID, config);
 
-    return response.data
+    return response.data;
 }
 
 const createDeck = async (deckData, token) => {
@@ -43,9 +43,9 @@ const createDeck = async (deckData, token) => {
             Authorization: `Bearer ${token}`
         }
     }
-    const response = await axios.post(PRIVATE_URL, deckData, config)
+    const response = await axios.post(PRIVATE_URL, deckData, config);
 
-    return response.data
+    return response.data;
 }
 
 const deleteDeck = async (deckId, token) => {
@@ -54,9 +54,9 @@ const deleteDeck = async (deckId, token) => {
             Authorization: `Bearer ${token}`
         }
     }
-    const response = await axios.delete(PRIVATE_URL + deckId, config)
+    const response = await axios.delete(PRIVATE_URL + deckId, config);
 
-    return response.data
+    return response.data;
 }
 
 const editDeck = async (pojo, token) => {
@@ -66,9 +66,9 @@ const editDeck = async (pojo, token) => {
             Authorization: `Bearer ${token}`
         }
     }
-    const response = await axios.patch(PRIVATE_URL + id, data, config)
+    const response = await axios.patch(PRIVATE_URL + id, data, config);
 
-    return response.data
+    return response.data;
 }
 
 const decksService = {

@@ -18,22 +18,22 @@ function Login() {
 
     const { name, password } = formData;
 
-    const navigate = useNavigate()
-    const dispatch = useDispatch()
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
-    const { user, isLoading, isError, isSuccess, message } = useSelector((state) => state.auth)
+    const { user, isLoading, isError, isSuccess, message } = useSelector((state) => state.auth);
 
     useEffect(() => {
         if (isError) {
-            toast.error(message)
+            toast.error(message);
         }
 
         if(isSuccess || user) {
-            navigate('/decks/privateDecks')
+            navigate('/decks/privateDecks');
         }
 
         dispatch(reset())
-    }, [user, isError, isSuccess, message, navigate, dispatch])
+    }, [user, isError, isSuccess, message, navigate, dispatch]);;
 
     const handleInput = (e) => {
         setFormData((prevState) => ({
@@ -43,14 +43,14 @@ function Login() {
     }
 
     const handleSubmit = (e) => {
-        e.preventDefault()
+        e.preventDefault();
 
         const userData = {
             name,
             password
         }
 
-        dispatch(login(userData))
+        dispatch(login(userData));
     }
 
     if (isLoading) {
