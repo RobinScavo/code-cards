@@ -8,7 +8,7 @@ import Card from '../card/Card';
 import ControlPanel from '../controlPanel/ControlPanel';
 import Spinner from '../spinner/Spinner';
 
-import './deckDetails.css'
+import './deckDetails.css';
 
 const DeckDetails = ({ privateDeck }) => {
     const navigate = useNavigate();
@@ -42,8 +42,7 @@ const DeckDetails = ({ privateDeck }) => {
         const newCard = {'question': editQuestionValue, 'answer': editAnswerValue};
         const newCards = [...decks.cards];
         newCards.splice(index, 1, newCard);
-        const pojo = {id: deckID, data: {cards: newCards}}
-        console.log(pojo)
+        const pojo = {id: deckID, data: {cards: newCards}};
 
         dispatch(editDeck(pojo))
         dispatch(reset())

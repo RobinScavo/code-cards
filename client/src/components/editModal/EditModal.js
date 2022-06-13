@@ -28,17 +28,29 @@ const EditModal = ({ deck, toggleEditModal }) => {
         }
 
         const newDeckCards = cards.filter((card => card.question && card.answer));
-        const newDeck = { id: deck._id, data: {_id: deck._id, user: deck.user, author, title, subject, cards: newDeckCards }};
+        const newDeck = {
+            id: deck._id,
+            data: {
+                _id: deck._id,
+                user: deck.user,
+                author,
+                title,
+                subject,
+                cards: newDeckCards
+            }
+        };
 
         try {
-            dispatch(editDeck(newDeck));
-            dispatch(reset())
-            toggleEditModal()
-            dispatch(reset())
-            toast.success('Deck has been updated.')
-            navigate(`/decks/privateDecks`)
+            dispatch(editDeck(newDeck));;
+            dispatch(reset());
+
+            toggleEditModal();
+            dispatch(reset());
+
+            toast.success('Deck has been updated.');
+            navigate(`/decks/privateDecks`);
         } catch {
-            toast.error('Something went wrong.')
+            toast.error('Something went wrong.');
         }
     }
 
@@ -49,7 +61,7 @@ const EditModal = ({ deck, toggleEditModal }) => {
             alert('Please complete the current card first.');
             return;
         } else {
-            setAddingNewCard(true)
+            setAddingNewCard(true);
         }
 
         if (addingNewCard) {handleCardWasEdited()};
@@ -58,7 +70,7 @@ const EditModal = ({ deck, toggleEditModal }) => {
         newCards = cards;
         newCards.push(newCard);
 
-        setCards(newCards)
+        setCards(newCards);
         setCurrentQuestion('');
         setCurrentAnswer('');
         setCardIndex(cards.length-1);
@@ -68,17 +80,20 @@ const EditModal = ({ deck, toggleEditModal }) => {
         if (!cards.length) return;
 
         let newCards = cards;
-        newCards.splice(cardIndex, 1)
-        setCardIndex(cardIndex -1)
+        newCards.splice(cardIndex, 1);
+
+        setCardIndex(cardIndex -1);
         setCards(newCards);
         setCurrentQuestion(cards[cardIndex -1].question);
         setCurrentAnswer(cards[cardIndex -1].answer);
     }
 
     const handleCardWasEdited = () => {
-        if (!cardWasEdited) return
-        let newCards = cards;
-        newCards = newCards.splice(cardIndex, 1, {'question': currentQuestion, 'answer': currentAnswer})
+        if (!cardWasEdited) return;
+
+        let newCards = [...cards];
+        newCards.splice(cardIndex, 1, {'question': currentQuestion, 'answer': currentAnswer})
+
         setCards(newCards);
         setCardWasEdited(false)
     }
