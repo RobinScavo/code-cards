@@ -109,13 +109,14 @@ const EditModal = ({ deck, toggleEditModal }) => {
                 <h2 className='create-title'>Edit deck:</h2>
 
                 <form className='create-form'>
-                    <label className='create-label'>Author</label>
+                    <label className='create-label' htmlFor='author'>Author</label>
                     <input
                         className='create-input'
                         type="text"
                         required
                         value={author}
                         onChange={(e) => setAuthor(e.target.value)}
+                        id='author'
                     />
 
                     <label className='create-label'>Title</label>

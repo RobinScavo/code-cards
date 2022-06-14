@@ -73,7 +73,7 @@ const ControlPanel = ({ deck }) => {
     }
 
     return (
-        <div className="control-panel">
+        <div className="control-panel" role='navigation'>
             {editModalVisible &&
                 <EditModal
                     toggleEditModal={toggleEditModal}
