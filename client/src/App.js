@@ -12,7 +12,7 @@ import NotFound from './components/notFound/NotFound';
 import Register from './pages/Register';
 import Login from './pages/Login';
 
-import './app.css';
+import './app.scss';
 
 function App() {
 

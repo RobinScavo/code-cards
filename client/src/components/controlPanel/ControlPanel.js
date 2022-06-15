@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 
 import EditModal from '../editModal/EditModal';
 
-import './controlPanel.css';
+import './controlPanel.scss';
 
 const ControlPanel = ({ deck }) => {
     const [editModalVisible, setEditModalVisible] =  useState(false);
@@ -91,10 +91,10 @@ const ControlPanel = ({ deck }) => {
             {/* LOG OUT/ CREATE DECK */}
             {user &&
                 <>
-                <button
+                {/* <button
                     className='btn'
                     onClick={handleLogout}
-                >Log Out</button>
+                >Log Out</button> */}
 
                 <Link
                     className='btn'
@@ -104,12 +104,12 @@ const ControlPanel = ({ deck }) => {
             }
 
             {/* LOG IN */}
-            {!user &&
+            {/* {!user &&
                 <Link
                     className='btn control-button'
                     to='/login'
                 >Log In</Link>
-            }
+            } */}
 
             {/* DELETE DECK */}
             {userSubLocation &&

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 
-import './deck.css';
+import './deck.scss';
 
 const Deck = ({ deck }) => {
     const location = useLocation();

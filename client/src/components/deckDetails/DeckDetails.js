@@ -8,7 +8,7 @@ import Card from '../card/Card';
 import ControlPanel from '../controlPanel/ControlPanel';
 import Spinner from '../spinner/Spinner';
 
-import './deckDetails.css';
+import './deckDetails.scss';
 
 const DeckDetails = ({ privateDeck }) => {
     const navigate = useNavigate();

@@ -31,3 +31,5 @@ npm run test for Jest testing
 - Redux
 - Redux Toolkit
 - NPM React Icons
+- Jest
+- Enzyme

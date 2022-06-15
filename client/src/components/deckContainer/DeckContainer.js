@@ -8,7 +8,7 @@ import Deck from '../deck/Deck';
 import ControlPanel from '../controlPanel/ControlPanel';
 import Spinner from '../spinner/Spinner'
 
-import './deckContainer.css';
+import './deckContainer.scss';
 
 const DeckContainer = ({ privateDecks }) => {
     const navigate = useNavigate();
@@ -51,15 +51,15 @@ const DeckContainer = ({ privateDecks }) => {
             <ControlPanel />
 
             <section className='deck-container-heading'>
-                {user &&
+                {/* {user &&
                     <h1 className='deck-container-name'>Welcome {user && user.name}!</h1>
-                }
+                } */}
                 {deckLocation === 'privateDecks' &&
                     <p className='deck-container-title'>~ Your private library ~</p>
                 }
-                {!user &&
+                {/* {!user &&
                     <h1 className='deck-container-name'>Welcome to OpenBook!</h1>
-                }
+                } */}
                 {deckLocation !== 'privateDecks' &&
                     <p className='deck-container-title'>~ Your public library ~</p>
                 }

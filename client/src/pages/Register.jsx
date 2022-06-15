@@ -8,6 +8,8 @@ import { register, reset } from '../features/auth/authSlice';
 import ControlPanel from '../components/controlPanel/ControlPanel';
 import Spinner from '../components/spinner/Spinner';
 
+import './register.scss';
+
 
 function Register() {
     const [formData, setFormData] = useState({

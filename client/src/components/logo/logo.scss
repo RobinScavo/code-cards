@@ -1,0 +1,28 @@
+
+
+.logo {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 9rem;
+    width: 7rem;
+    // background-color: rgb(244, 242, 238);
+    background-color: rgb(251, 250, 248);
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Great Vibes', cursive;
+
+    .logo-image {
+        font-size: 100px;
+        color: rgb(182, 21, 21);
+    }
+
+    .logo-title {
+        font-family: 'Raleway', sans-serif;
+        font-size: 30px;
+        margin-top: -15px;
+    }
+}

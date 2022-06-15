@@ -7,7 +7,9 @@ import { toast } from 'react-toastify';
 import { login, reset } from '../features/auth/authSlice';
 
 import  Spinner from '../components/spinner/Spinner';
-import ControlPanel from '../components/controlPanel/ControlPanel'
+import ControlPanel from '../components/controlPanel/ControlPanel';
+
+import './register.scss';
 
 
 function Login() {
