@@ -15,7 +15,7 @@ const Deck = ({ deck }) => {
             <h1>{deck.subject}</h1>
             <h2>{deck.title}</h2>
             <p>{deck.author}</p>
-            {deckLocation !== 'publicDecks' &&
+            {deckLocation !== 'decks' &&
                 <p>{publicDeck}</p>
             }
             <p>Uploads: {deck.likes}</p>

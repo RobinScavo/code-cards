@@ -3,6 +3,10 @@
 
 ## To run in local development
 
+## Testing
+npm run test for Jest testing
+
+
 
 ## Development
 

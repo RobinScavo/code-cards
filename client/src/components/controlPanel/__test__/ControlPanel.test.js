@@ -14,10 +14,11 @@ const MockControlPanel = () => {
     )
 }
 
-describe("ControlPanel", () => {
-    test('renders ControlPanel component', () => {
-        render(<MockControlPanel />)
-        const cardElement = screen.getByRole('navigation')
-        expect(cardElement).toBeInTheDocument();
+describe("control panel operation", () => {
+    test('renders login button when no user', () => {
+        render(<MockControlPanel user={null}/>)
+
+        const logInButton = screen.getByRole('link', /log in/i)
+        expect(logInButton).toBeInTheDocument();
     })
 });

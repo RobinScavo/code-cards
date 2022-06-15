@@ -144,7 +144,7 @@ const ControlPanel = ({ deck }) => {
             }
 
             {/* UPLOAD DECK */}
-            {userLocation && userLocation !== 'privateDecks' && user._id !== deck.user &&
+            {user && userLocation && userLocation !== 'privateDecks' && user._id !== deck.user &&
                 <button
                     className="btn"
                     onClick={handleUpload}
