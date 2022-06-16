@@ -1,49 +1,88 @@
-import { render, screen } from '@testing-library/react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import React from "react";
+import { shallow } from 'enzyme';
 import Deck from '../Deck';
+import { mockDeck } from "../../../../tools/utils";
+import { findByTestAtrr } from "../../../../tools/utils";
 
-let deck;
-// const deck = {
-//     _id: "62a48da7d4bc59a6a9e4b218",
-//     user:"62a3e29355b141644ea07f31",
-//     author:"test author",
-//     subject:"test subject",
-//     title:"test title",
-//     likes:6,
-//     published:true,
-//     cards:[{question:"WE",answer:"WE"},{question0:"22",answer:"22"}],
-//     createdAt:{"$date":{"$numberLong":"1654951335406"}},
-//     updatedAt:{"$date":{"$numberLong":"1655066831282"}},
-//     __v:{"$numberInt":"0"}
-// }
-
-const MockDeck = () => {
-    return(
-        <Router>
-            <Deck />
-        </Router>
-    )
+const setUp = (props={}) => {
+    const component = shallow(<Deck {...props} />);
+    return component;
 }
 
-describe('Deck renders text and can be edited', () => {
-    beforeEach(() => {
-       deck =  jest.mock('../../../__mocks__/axios')
-    });
-    console.log('%%%%%%%', deck)
+describe('Private Deck Component', () => {
+    describe('Have correct props: Private', () => {
 
-    test('renders Deck component', () => {
-        render(< MockDeck deck={deck}/>)
+        let wrapper;
+        beforeEach(() => {
+            const props = {
+                deck: {
+                    subject: mockDeck.subject,
+                    title: mockDeck.title,
+                    author: mockDeck.author,
+                    likes: mockDeck.likes
+                },
+                userLocation: 'privateDecks'
+            }
+            wrapper = setUp(props)
+        });
 
-        const subjectText  = screen.getByText(/test subject/i);
-        const titleText  = screen.getByText(/test title/i);
-        const authorText = screen.getByText(/test author/i);
-        const uploadText = screen.getByText(/uploads: 6/i);
+        test('Should render without errors', () => {
+            const deck = wrapper.find('.deck');
+            expect(deck.length).toBe(1)
+        })
 
-        expect(subjectText).toBeInTheDocument();
-        expect(titleText).toBeInTheDocument();
-        expect(authorText).toBeInTheDocument();
-        expect(uploadText).toBeInTheDocument();
+        test('Should render a subject', () => {
+            const subjectText = findByTestAtrr(wrapper, 'subjectText')
+            expect(subjectText.length).toBe(1);
+        })
+
+        test('Should render a title', () => {
+            const titleText = findByTestAtrr(wrapper, 'titleText')
+            expect(titleText.length).toBe(1);
+        })
+
+        test('Should render a author', () => {
+            const authorText = findByTestAtrr(wrapper, 'authorText')
+            expect(authorText.length).toBe(1);
+        })
+
+        test('Should render uploads', () => {
+            const uploadText = findByTestAtrr(wrapper, 'uploadText')
+            expect(uploadText.length).toBe(1);
+        })
+
+        test('Should NOT render "published" prop for private deck', () => {
+            const publishedText = findByTestAtrr(wrapper, 'publishedText')
+            expect(publishedText.length).toBe(0);
+        })
     })
+})
 
-    //TODO test link on test
+describe('Public Deck Component', () => {
+    describe('Have correct props: Public', () => {
+
+        let wrapper;
+        beforeEach(() => {
+            const props = {
+                deck: {
+                    subject: mockDeck.subject,
+                    title: mockDeck.title,
+                    author: mockDeck.author,
+                    likes: mockDeck.likes
+                },
+                userLocation: ''
+            }
+            wrapper = setUp(props)
+        });
+
+        test('Should render without errors', () => {
+            const deck = wrapper.find('.deck');
+            expect(deck.length).toBe(1)
+        })
+
+        test('Should render "published" prop for private deck', () => {
+            const publishedText = findByTestAtrr(wrapper, 'publishedText')
+            expect(publishedText.length).toBe(1);
+        })
+    })
 })

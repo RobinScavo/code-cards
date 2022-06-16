@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { logout, reset } from '../../features/auth/authSlice';
+import { logout, reset } from '../../redux/auth/authSlice';
 
 import Logo from '../logo/Logo'
 
@@ -21,7 +21,7 @@ const Header = () => {
     return (
         <div className="header-container">
             <div className="upper-header">
-                <button className="navigation-icon"><i class="fas fa-bars"></i></button>
+                <button className="navigation-icon"><i className="fas fa-bars"></i></button>
                 {!user &&
                     <Link
                         to='/login'

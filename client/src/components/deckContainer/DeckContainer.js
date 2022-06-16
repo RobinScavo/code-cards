@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import {getPublicDecks, getPrivateDecks, reset} from '../../features/decks/decksSlice'
+import {getPublicDecks, getPrivateDecks, reset} from '../../redux/decks/decksSlice'
 
 import Deck from '../deck/Deck';
 import ControlPanel from '../controlPanel/ControlPanel';
@@ -14,7 +14,8 @@ const DeckContainer = ({ privateDecks }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const location = useLocation();
-    const deckLocation = location.pathname.slice(1).split('/')[1];
+    const userLocation = location.pathname.slice(1).split('/')[1];
+    console.log('&&&&&&', userLocation)
 
     const {user} = useSelector((state) => state.auth);
     const {decks, isLoading, isError, message} = useSelector((state) => state.decks);
@@ -54,13 +55,13 @@ const DeckContainer = ({ privateDecks }) => {
                 {/* {user &&
                     <h1 className='deck-container-name'>Welcome {user && user.name}!</h1>
                 } */}
-                {deckLocation === 'privateDecks' &&
+                {userLocation === 'privateDecks' &&
                     <p className='deck-container-title'>~ Your private library ~</p>
                 }
                 {/* {!user &&
                     <h1 className='deck-container-name'>Welcome to OpenBook!</h1>
                 } */}
-                {deckLocation !== 'privateDecks' &&
+                {userLocation !== 'privateDecks' &&
                     <p className='deck-container-title'>~ Your public library ~</p>
                 }
             </section>
@@ -74,6 +75,7 @@ const DeckContainer = ({ privateDecks }) => {
                         <Deck
                             key={deck._id}
                             deck={deck}
+                            userLocation={userLocation}
                         />
                     </Link>
                 ))}

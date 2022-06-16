@@ -2,7 +2,7 @@ import  React  from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { editDeck, reset } from '../../features/decks/decksSlice';
+import { editDeck, reset } from '../../redux/decks/decksSlice';
 import { toast } from 'react-toastify';
 
 import './editModal.css';

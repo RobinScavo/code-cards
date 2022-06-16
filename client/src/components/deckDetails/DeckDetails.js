@@ -2,7 +2,7 @@ import  React, { useEffect }  from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import { getPrivateDeck, getPublicDeck, editDeck, reset } from '../../features/decks/decksSlice'
+import { getPrivateDeck, getPublicDeck, editDeck, reset } from '../../redux/decks/decksSlice'
 
 import Card from '../card/Card';
 import ControlPanel from '../controlPanel/ControlPanel';

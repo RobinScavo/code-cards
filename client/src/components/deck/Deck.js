@@ -1,24 +1,19 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
 
 import './deck.scss';
 
-const Deck = ({ deck }) => {
-    const location = useLocation();
-    const deckLocation = location.pathname.slice(1).split('/')[0];
+const Deck = ({ deck, userLocation }) => {
     const publicDeck = deck.published ? 'Public' : 'Private';
 
     return (
-        <div
-            className="deck"
-        >
-            <h1>{deck.subject}</h1>
-            <h2>{deck.title}</h2>
-            <p>{deck.author}</p>
-            {deckLocation !== 'decks' &&
-                <p>{publicDeck}</p>
+        <div className="deck">
+            <h1 data-test='subjectText'>{deck.subject}</h1>
+            <h2 data-test='titleText'>{deck.title}</h2>
+            <p data-test='authorText'>{deck.author}</p>
+            {userLocation !== 'privateDecks' &&
+                <p data-test='publishedText'>{publicDeck}</p>
             }
-            <p>Uploads: {deck.likes}</p>
+            <p data-test='uploadText'>Uploads: {deck.likes}</p>
         </div>
      );
 }

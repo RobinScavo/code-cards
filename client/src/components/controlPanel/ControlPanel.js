@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { logout, reset } from '../../features/auth/authSlice';
-import { deleteDeck, editDeck, createDeck } from '../../features/decks/decksSlice';
+import { logout, reset } from '../../redux/auth/authSlice';
+import { deleteDeck, editDeck, createDeck } from '../../redux/decks/decksSlice';
 import { toast } from 'react-toastify';
 
 import EditModal from '../editModal/EditModal';
@@ -21,11 +21,11 @@ const ControlPanel = ({ deck }) => {
 
     const toggleEditModal = () => setEditModalVisible(!editModalVisible);
 
-    const handleLogout = () => {
-        dispatch(logout())
-        dispatch(reset())
-        navigate('/decks')
-    }
+    // const handleLogout = () => {
+    //     dispatch(logout())
+    //     dispatch(reset())
+    //     navigate('/decks')
+    // }
 
     const handleDelete = () => {
         dispatch(deleteDeck(deck._id));

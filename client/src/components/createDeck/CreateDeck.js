@@ -2,7 +2,7 @@ import  React  from 'react';
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { createDeck } from '../../features/decks/decksSlice';
+import { createDeck } from '../../redux/decks/decksSlice';
 
 import './createDeck.css';
 
