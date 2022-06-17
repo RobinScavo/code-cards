@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import './controlPanel.scss';
 
@@ -77,6 +78,20 @@ const ControlPanel = ({
 
         </div>
      );
+}
+
+ControlPanel.propTypes = {
+    showHomeButton: PropTypes.bool,
+    showCreateButton: PropTypes.bool,
+    showEditButton: PropTypes.bool,
+    showUploadButton: PropTypes.bool,
+    showYourDecksButton: PropTypes.bool,
+    showDeleteButton: PropTypes.bool,
+    showPublishButton: PropTypes.bool,
+    handleDelete: PropTypes.func,
+    handleEdit: PropTypes.func,
+    handlePublish: PropTypes.func,
+    handleUpload: PropTypes.func
 }
 
 export default ControlPanel;
