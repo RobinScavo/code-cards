@@ -21,7 +21,7 @@ describe('Private Deck Component', () => {
                     author: mockDeck.author,
                     likes: mockDeck.likes
                 },
-                userLocation: 'privateDecks'
+                userLocation: ''
             }
             wrapper = setUp(props)
         });
@@ -51,7 +51,7 @@ describe('Private Deck Component', () => {
             expect(uploadText.length).toBe(1);
         })
 
-        test('Should NOT render "published" prop for private deck', () => {
+        test('Should NOT render "published" prop for public deck', () => {
             const publishedText = findByTestAtrr(wrapper, 'publishedText')
             expect(publishedText.length).toBe(0);
         })
@@ -70,7 +70,7 @@ describe('Public Deck Component', () => {
                     author: mockDeck.author,
                     likes: mockDeck.likes
                 },
-                userLocation: ''
+                userLocation: 'privateDecks'
             }
             wrapper = setUp(props)
         });

@@ -1,9 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-
-// import EditModal from '../editModal/EditModal';
-
 import './controlPanel.scss';
 
 const ControlPanel = ({
@@ -33,7 +30,7 @@ const ControlPanel = ({
             {/* CREATE DECK */}
             {showCreateButton &&
                 <Link
-                    className='btn'
+                    className='btn control-button'
                     to='/createDeck'
                 >Create Deck</Link>
             }
@@ -41,7 +38,7 @@ const ControlPanel = ({
             {/* DELETE DECK */}
             {showDeleteButton &&
                 <button
-                    className='btn'
+                    className='btn control-button'
                     onClick={handleDelete}
                 >Delete Deck</button>
             }
@@ -49,7 +46,7 @@ const ControlPanel = ({
             {/* EDIT DECK */}
             {showEditButton  &&
                 <button
-                    className='btn'
+                    className='btn control-button'
                     onClick={handleEdit}
                 >Edit Deck</button>
             }
@@ -57,7 +54,7 @@ const ControlPanel = ({
             {/* PRIVATE DECKS */}
             {showYourDecksButton &&
                 <Link
-                    className='btn'
+                    className='btn control-button'
                     to='/decks/privateDecks'
                 >Your Decks</Link>
             }
@@ -65,7 +62,7 @@ const ControlPanel = ({
             {/* PUBLISH */}
             {showPublishButton &&
                 <button
-                    className="btn"
+                    className="btn control-button"
                     onClick={handlePublish}
                 >Publish</button>
             }
@@ -73,7 +70,7 @@ const ControlPanel = ({
             {/* UPLOAD DECK */}
             {showUploadButton &&
                 <button
-                    className="btn"
+                    className="btn control-button"
                     onClick={handleUpload}
                 >Upload</button>
             }

@@ -1,10 +1,15 @@
+.deck-detail {
+    display: flex;
+}
+
 .deck-container {
     display: flex;
     flex-wrap: wrap;
-    height: 74vh;
-    width: 100%;
-    padding: 10px;
+    height: 79vh;
+    width: 100vw;
     overflow: scroll;
+    background-color: rgb(224, 222, 226);
+    padding-left: 11rem;
 }
 
 .deck-container::-webkit-scrollbar {
@@ -14,11 +19,6 @@
 .deck-container.scrollbar-hidden {
     -ms-overflow-style: none;
     scrollbar-width: none; /* Firefox */
-  }
-
-.loading-text {
-    color: blue;
-    font-size: 20px;
 }
 
 .deck-container-heading {
@@ -28,14 +28,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
-    margin-top: 65px;
-    /* background-color: aqua; */
-}
-
-.deck-container-title {
+    margin-top: 15px;
+    font-family: 'Dosis', sans-serif;
     font-size: 20px;
-}
-
-.deck-container-name {
-    font-size: 25px;
 }

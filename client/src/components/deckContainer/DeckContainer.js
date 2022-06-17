@@ -23,7 +23,6 @@ const DeckContainer = ({ showHomeButton, showCreateButton, showMyDecksButton, sh
 
     const userLocation = location.pathname.split('/')[2];
     const route = userLocation ? 'privateDecks/' : '';
-    console.log(userLocation)
 
     useEffect(() => {
         if (isError) {
@@ -61,17 +60,17 @@ const DeckContainer = ({ showHomeButton, showCreateButton, showMyDecksButton, sh
                 user={user}
             />
 
-            <section className='deck-container-heading'>
-                {user && <p className='deck-container-title'
-                    >~ Your private library ~</p>
-                }
-
-                {!user && <p className='deck-container-title'
-                    >~ Your public library ~</p>
-                }
-            </section>
-
             <div className="deck-container">
+                <section className='deck-container-heading'>
+                    {user && <p className='deck-container-title'
+                        >Private Library</p>
+                    }
+
+                    {!user && <p className='deck-container-title'
+                        >Public Library</p>
+                    }
+                </section>
+
                 {decks && decks.length > 0 && decks.map((deck) => (
                     <Link
                         to={`/decks/${route}${deck._id}`}
@@ -80,7 +79,7 @@ const DeckContainer = ({ showHomeButton, showCreateButton, showMyDecksButton, sh
                         <Deck
                             key={deck._id}
                             deck={deck}
-                            privateBool
+                            userLocation={userLocation}
                         />
                     </Link>
                 ))}

@@ -14,15 +14,18 @@
     left: 50%;
     transform: translateX(-50%);
     font-family: 'Great Vibes', cursive;
+    // font-family: 'Sacramento', cursive;
+
 
     .logo-image {
-        font-size: 100px;
-        color: rgb(182, 21, 21);
+        font-size: 80px;
+
     }
 
     .logo-title {
-        font-family: 'Raleway', sans-serif;
+        font-family: 'Dosis', sans-serif;
         font-size: 30px;
         margin-top: -15px;
+        color: rgb(182, 21, 21);
     }
 }

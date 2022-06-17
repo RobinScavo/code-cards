@@ -148,16 +148,6 @@ const DeckDetails = ({
                 handleEdit={handleEdit}
             />
 
-            <section className='deck-container-heading'>
-                {user && <p className='deck-container-title'
-                    >~ Your private library ~</p>
-                }
-
-                {!user && <p className='deck-container-title'
-                    >~ Your public library ~</p>
-                }
-            </section>
-
             {editModalVisible &&
                 <EditModal
                     toggleEditModal={toggleEditModal}
@@ -165,6 +155,16 @@ const DeckDetails = ({
             }
 
             <div className="card-container">
+                <section className='deck-container-heading'>
+                    {user && <p className='deck-container-title'
+                        >Private Library</p>
+                    }
+
+                    {!user && <p className='deck-container-title'
+                        >Public Library</p>
+                    }
+                </section>
+
                 {decks.cards && decks.cards.map((card, index) => (
                     <Card
                         index={index}

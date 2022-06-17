@@ -6,7 +6,7 @@ describe('card renders text and can be edited', () => {
     const card = { question: 'test question', answer: 'test answer'}
 
     test('renders Card component', () => {
-        render(<Card card={card}/>)
+        render(<Card card={card} userLocation='privateDecks'/>)
 
         const questionText = screen.getByText(/test question/i);
         const answerText  = screen.getByText(/test answer/i);
@@ -18,7 +18,7 @@ describe('card renders text and can be edited', () => {
     test('card can be edited', async () => {
         const user = userEvent.setup()
 
-        render(<Card card={card} />)
+        render(<Card card={card} userLocation='privateDecks'/>)
 
         const editButton = screen.getByRole('button', {name: /edit card/i});
         await user.click(editButton)

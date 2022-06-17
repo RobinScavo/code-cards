@@ -1,13 +1,26 @@
 .card-container {
     display: flex;
     flex-wrap: wrap;
-    height: 81vh;
+    align-items: flex-start;
+    justify-content: center;
+    height: 79vh;
     width: 100%;
-    background-color: rgb(251, 250, 248);
-    padding: 10px;
+    background-color: rgb(167, 164, 172);
+    // padding: 10px;
     overflow-y: scroll;
+    padding-left: 11rem;
+}
+
+.card-container::-webkit-scrollbar {
+    display: none;
+}
+
+.card-container.scrollbar-hidden {
+    -ms-overflow-style: none;
+    scrollbar-width: none; /* Firefox */
 }
 
 .deck-detail {
     width: 100vw;
+    display: flex;
 }

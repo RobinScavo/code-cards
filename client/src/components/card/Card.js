@@ -2,7 +2,7 @@ import  React  from 'react';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import './card.css'
+import './card.scss'
 
 const Card = ({ card, handleQuickEdit, index, userLocation }) => {
     const [editQuestionValue, setEditQuestionValue] = useState(card.question);
