@@ -72,7 +72,6 @@ export const deleteDeck = createAsyncThunk('decks/delete', async (id, thunkAPI) 
 })
 
 export const editDeck = createAsyncThunk('decks/edit', async (pojo, thunkAPI) => {
-    console.log('SLICE', pojo)
     try {
         const token = thunkAPI.getState().auth.user.token
         return await decksService.editDeck(pojo, token)

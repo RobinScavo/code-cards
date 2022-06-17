@@ -12,6 +12,8 @@ const ControlPanel = ({
     showYourDecksButton,
     showDeleteButton,
     showPublishButton,
+    user,
+    decks,
     handleDelete,
     handleEdit,
     handlePublish,
@@ -19,12 +21,13 @@ const ControlPanel = ({
 }) => {
 
     return (
-        <div className="control-panel" role='navigation'>
+        <div className="control-panel" data-test='control-panel'>
             {/* HOME */}
             {showHomeButton  &&
                 <Link
                     className='btn control-button'
                     to='/decks'
+                    data-test='home-button'
                 >Home</Link>
             }
 
@@ -33,6 +36,7 @@ const ControlPanel = ({
                 <Link
                     className='btn control-button'
                     to='/createDeck'
+                    data-test='create-button'
                 >Create Deck</Link>
             }
 
@@ -41,6 +45,7 @@ const ControlPanel = ({
                 <button
                     className='btn control-button'
                     onClick={handleDelete}
+                    data-test='delete-button'
                 >Delete Deck</button>
             }
 
@@ -49,22 +54,25 @@ const ControlPanel = ({
                 <button
                     className='btn control-button'
                     onClick={handleEdit}
+                    data-test='edit-button'
                 >Edit Deck</button>
             }
 
             {/* PRIVATE DECKS */}
-            {showYourDecksButton &&
+            {user && showYourDecksButton &&
                 <Link
                     className='btn control-button'
                     to='/decks/privateDecks'
+                    data-test='your-decks-button'
                 >Your Decks</Link>
             }
 
             {/* PUBLISH */}
-            {showPublishButton &&
+            {decks && !decks.published && showPublishButton &&
                 <button
                     className="btn control-button"
                     onClick={handlePublish}
+                    data-test='publish-button'
                 >Publish</button>
             }
 
@@ -73,6 +81,7 @@ const ControlPanel = ({
                 <button
                     className="btn control-button"
                     onClick={handleUpload}
+                    data-test='upload-button'
                 >Upload</button>
             }
 

@@ -58,6 +58,7 @@ const DeckContainer = ({ showHomeButton, showCreateButton, showMyDecksButton, sh
                 showCreateButton={showCreateButton}
                 showYourDecksButton = {showYourDecksButton}
                 user={user}
+                decks={decks}
             />
 
             <div className="deck-container">

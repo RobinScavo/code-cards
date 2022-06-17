@@ -28,7 +28,6 @@ function App() {
           {/* Public Decks */}
           <Route exact path='/decks' element = {
             <DeckContainer
-              showMyDecksButton = {true}
               showCreateButton = {true}
               showYourDecksButton = {true}
             />
@@ -37,9 +36,9 @@ function App() {
           <Route path={`/decks/:id`} element = {
             <DeckDetails
               showHomeButton = {true}
-              showMyDecksButton = {true}
               showCreateButton = {true}
               showYourDecksButton = {true}
+              showUploadButton={true}
             />
           } />
 
@@ -56,7 +55,7 @@ function App() {
               showHomeButton = {true}
               showCreateButton = {true}
               showEditButton = {true}
-              showUploadButton = {true}
+              showUploadButton = {false}
               showYourDecksButton = {true}
               showDeleteButton = {true}
               showPublishButton = {true}
