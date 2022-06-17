@@ -1,44 +1,115 @@
-import  React, { useEffect }  from 'react';
+import  React, { useEffect, useState }  from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import { getPrivateDeck, getPublicDeck, editDeck, reset } from '../../redux/decks/decksSlice'
+import { toast } from 'react-toastify';
+import {
+    getPublicDeck,
+    getPrivateDeck,
+    editDeck,
+    createDeck,
+    deleteDeck,
+    reset
+} from '../../redux/decks/decksSlice';
 
 import Card from '../card/Card';
 import ControlPanel from '../controlPanel/ControlPanel';
 import Spinner from '../spinner/Spinner';
+import EditModal from '../editModal/EditModal'
 
 import './deckDetails.scss';
 
-const DeckDetails = ({ privateDeck }) => {
+const DeckDetails = ({
+    showHomeButton,
+    showCreateButton,
+    showEditButton,
+    showUploadButton,
+    showYourDecksButton,
+    showDeleteButton,
+    showPublishButton
+}) => {
+
+    const [editModalVisible, setEditModalVisible] =  useState(false);
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const location = useLocation();
     const deckID = useParams().id;
 
     const {user} = useSelector((state) => state.auth);
+    const userLocation = location.pathname.split('/')[2];
+
     const {decks, isLoading, isError, message} = useSelector((state) => state.decks);
 
     useEffect(() => {
         if (isError) {
-            console.log(message)
+            console.log(message);
         }
 
-        if (privateDeck && !user) {
-            navigate('/login')
-        }
+        // if (!user) {
+        //     navigate('/login');
+        // }
 
-        if (!privateDeck) {
-            dispatch(getPublicDeck(deckID));
-        } else if (privateDeck) {
-            dispatch(getPrivateDeck(deckID));
+        if (userLocation !== 'privateDecks') {
+          dispatch(getPublicDeck(deckID));
+        } else if (userLocation === 'privateDecks') {
+          dispatch(getPrivateDeck(deckID));
         }
 
         return () => {
-            dispatch(reset())
+            dispatch(reset());
         }
-    }, [user, navigate, isError, message, dispatch, deckID, privateDeck]);
+    }, [user, navigate, isError, message, dispatch, userLocation]);
 
-    const quickEdit = ({ editQuestionValue, editAnswerValue, index }) => {
+    const handleDelete = () => {
+        dispatch(deleteDeck(deckID));
+        navigate('/decks/privateDecks')
+      }
+
+      const handleEdit = () => {
+        setEditModalVisible(true)
+      }
+
+      const handleUpload = () => {
+        const uploadsPojo = {id: deckID, data: {likes: decks.likes + 1}};
+
+        const myCopy = {...decks};
+        delete myCopy._id;
+        myCopy.likes = 0;
+        myCopy.published = false;
+        myCopy.user = user;
+
+        navigate('/decks');
+        try {
+            dispatch(editDeck(uploadsPojo));
+            dispatch(reset());
+
+            dispatch(createDeck(myCopy));
+            dispatch(reset());
+
+            toast.success('This deck now exists in your library!');
+        } catch {
+            toast.error('Upload failed.');
+        }
+      }
+
+      const handlePublish = () => {
+        const pojo = { id: decks._id, data: {published: true}}
+
+        try {
+            navigate('/decks/privateDecks')
+            dispatch(editDeck(pojo))
+            dispatch(reset())
+            toast.success('This deck has been published!')
+        } catch {
+            toast.error('Publishing failed.')
+        }
+      }
+
+      const toggleEditModal = () => setEditModalVisible(!editModalVisible);
+
+
+    const handleQuickEdit = ({ editQuestionValue, editAnswerValue, index }) => {
         const newCard = {'question': editQuestionValue, 'answer': editAnswerValue};
         const newCards = [...decks.cards];
         newCards.splice(index, 1, newCard);
@@ -53,13 +124,45 @@ const DeckDetails = ({ privateDeck }) => {
     }
 
     if (isLoading) {
-        return <Spinner />
+        return (
+            <Spinner />
+        )
     }
 
     return (
         <div className="deck-detail">
 
-            <ControlPanel deck={decks}/>
+            <ControlPanel
+                showHomeButton={showHomeButton}
+                showCreateButton={showCreateButton}
+                showEditButton={showEditButton}
+                showUploadButton={showUploadButton}
+                showYourDecksButton={showYourDecksButton}
+                showDeleteButton={showDeleteButton}
+                showPublishButton={showPublishButton}
+                deck={decks}
+                handleDelete={handleDelete}
+                toggleEditModal={toggleEditModal}
+                handleUpload={handleUpload}
+                handlePublish={handlePublish}
+                handleEdit={handleEdit}
+            />
+
+            <section className='deck-container-heading'>
+                {user && <p className='deck-container-title'
+                    >~ Your private library ~</p>
+                }
+
+                {!user && <p className='deck-container-title'
+                    >~ Your public library ~</p>
+                }
+            </section>
+
+            {editModalVisible &&
+                <EditModal
+                    toggleEditModal={toggleEditModal}
+                    deck={decks}/>
+            }
 
             <div className="card-container">
                 {decks.cards && decks.cards.map((card, index) => (
@@ -67,7 +170,8 @@ const DeckDetails = ({ privateDeck }) => {
                         index={index}
                         key={`${decks._id}index${index}`}
                         card={card}
-                        quickEdit={quickEdit}
+                        userLocation={userLocation}
+                        handleQuickEdit={handleQuickEdit}
                     />
                 ))}
             </div>

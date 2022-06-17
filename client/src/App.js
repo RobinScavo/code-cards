@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'
+import 'react-toastify/dist/ReactToastify.css';
 
 import Header from './components/header/Header';
 import Footer from './components/footer/Footer';
@@ -11,6 +11,7 @@ import CreateDeck from './components/createDeck/CreateDeck';
 import NotFound from './components/notFound/NotFound';
 import Register from './pages/Register';
 import Login from './pages/Login';
+
 
 import './app.scss';
 
@@ -23,18 +24,43 @@ function App() {
         <Header/>
 
         <Routes>
+
           {/* Public Decks */}
           <Route exact path='/decks' element = {
-            <DeckContainer />
+            <DeckContainer
+              showMyDecksButton = {true}
+              showCreateButton = {true}
+              showYourDecksButton = {true}
+            />
           } />
-          <Route path={`/decks/:id`} element = {<DeckDetails />} />
+
+          <Route path={`/decks/:id`} element = {
+            <DeckDetails
+              showHomeButton = {true}
+              showMyDecksButton = {true}
+              showCreateButton = {true}
+              showYourDecksButton = {true}
+            />
+          } />
 
           {/* Private Decks */}
           <Route exact path='/decks/privateDecks' element = {
-            <DeckContainer privateDecks={true} />
+            <DeckContainer
+              showHomeButton = {true}
+              showCreateButton = {true}
+            />
           } />
+
           <Route path={`/decks/privateDecks/:id`} element = {
-            <DeckDetails privateDeck={true}/>
+            <DeckDetails
+              showHomeButton = {true}
+              showCreateButton = {true}
+              showEditButton = {true}
+              showUploadButton = {true}
+              showYourDecksButton = {true}
+              showDeleteButton = {true}
+              showPublishButton = {true}
+            />
           } />
 
           <Route path='/createDeck' element = {<CreateDeck />} />

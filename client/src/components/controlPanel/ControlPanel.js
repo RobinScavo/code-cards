@@ -1,118 +1,45 @@
-import React, { useState } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { logout, reset } from '../../redux/auth/authSlice';
-import { deleteDeck, editDeck, createDeck } from '../../redux/decks/decksSlice';
-import { toast } from 'react-toastify';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-import EditModal from '../editModal/EditModal';
+
+// import EditModal from '../editModal/EditModal';
 
 import './controlPanel.scss';
 
-const ControlPanel = ({ deck }) => {
-    const [editModalVisible, setEditModalVisible] =  useState(false);
-
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const {user} = useSelector((state) => state.auth);
-    const location = useLocation();
-    const userLocation = location.pathname.split('/')[2];
-    const userSubLocation = location.pathname.split('/')[3];
-
-    const toggleEditModal = () => setEditModalVisible(!editModalVisible);
-
-    // const handleLogout = () => {
-    //     dispatch(logout())
-    //     dispatch(reset())
-    //     navigate('/decks')
-    // }
-
-    const handleDelete = () => {
-        dispatch(deleteDeck(deck._id));
-        navigate('/decks/privateDecks')
-    }
-
-    const handleEdit = () => {
-        setEditModalVisible(true)
-    }
-
-    const handlePublish = () => {
-        const pojo = { id: deck._id, data: {published: true}}
-
-        try {
-            navigate('/decks/privateDecks')
-            dispatch(editDeck(pojo))
-            dispatch(reset())
-            toast.success('This deck has been published!')
-        } catch {
-            toast.error('Publishing failed.')
-        }
-    }
-
-    const handleUpload = () => {
-        const uploadsPojo = {id: deck._id, data: {likes: deck.likes + 1}};
-
-        const myCopy = {...deck};
-        delete myCopy._id;
-        myCopy.likes = 0;
-        myCopy.published = false;
-        myCopy.user = user;
-
-        navigate('/decks');
-        try {
-            dispatch(editDeck(uploadsPojo));
-            dispatch(reset());
-
-            dispatch(createDeck(myCopy));
-            dispatch(reset());
-
-            toast.success('This deck now exists in your library!');
-        } catch {
-            toast.error('Upload failed.');
-        }
-    }
+const ControlPanel = ({
+    showHomeButton,
+    showCreateButton,
+    showEditButton,
+    showUploadButton,
+    showYourDecksButton,
+    showDeleteButton,
+    showPublishButton,
+    handleDelete,
+    handleEdit,
+    handlePublish,
+    handleUpload
+}) => {
 
     return (
         <div className="control-panel" role='navigation'>
-            {editModalVisible &&
-                <EditModal
-                    toggleEditModal={toggleEditModal}
-                    deck={deck}/>
-            }
-
             {/* HOME */}
-            {userLocation  &&
+            {showHomeButton  &&
                 <Link
                     className='btn control-button'
                     to='/decks'
                 >Home</Link>
             }
 
-            {/* LOG OUT/ CREATE DECK */}
-            {user &&
-                <>
-                {/* <button
-                    className='btn'
-                    onClick={handleLogout}
-                >Log Out</button> */}
-
+            {/* CREATE DECK */}
+            {showCreateButton &&
                 <Link
                     className='btn'
                     to='/createDeck'
                 >Create Deck</Link>
-                </>
             }
 
-            {/* LOG IN */}
-            {/* {!user &&
-                <Link
-                    className='btn control-button'
-                    to='/login'
-                >Log In</Link>
-            } */}
-
             {/* DELETE DECK */}
-            {userSubLocation &&
+            {showDeleteButton &&
                 <button
                     className='btn'
                     onClick={handleDelete}
@@ -120,7 +47,7 @@ const ControlPanel = ({ deck }) => {
             }
 
             {/* EDIT DECK */}
-            {userSubLocation  &&
+            {showEditButton  &&
                 <button
                     className='btn'
                     onClick={handleEdit}
@@ -128,7 +55,7 @@ const ControlPanel = ({ deck }) => {
             }
 
             {/* PRIVATE DECKS */}
-            {user && (userLocation !== 'privateDecks' || userSubLocation) &&
+            {showYourDecksButton &&
                 <Link
                     className='btn'
                     to='/decks/privateDecks'
@@ -136,7 +63,7 @@ const ControlPanel = ({ deck }) => {
             }
 
             {/* PUBLISH */}
-            {deck && !deck.published &&
+            {showPublishButton &&
                 <button
                     className="btn"
                     onClick={handlePublish}
@@ -144,7 +71,7 @@ const ControlPanel = ({ deck }) => {
             }
 
             {/* UPLOAD DECK */}
-            {user && userLocation && userLocation !== 'privateDecks' && user._id !== deck.user &&
+            {showUploadButton &&
                 <button
                     className="btn"
                     onClick={handleUpload}
