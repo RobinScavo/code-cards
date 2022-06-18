@@ -1,3 +1,5 @@
+import { checkPropTypes } from "prop-types";
+
 export const mockDeck = {
     id:"62a48da7d4bc59a6a9e4b218",
     user:"62a3e29355b141644ea07f31",
@@ -21,3 +23,8 @@ export const findByTestAtrr = (component, attr) => {
     const wrapper = component.find(`[data-test='${attr}']`);
     return wrapper;
 };
+
+export const checkProps = (component, expectedProps) => {
+    const propsErr = checkPropTypes(component.propTypes, expectedProps, 'props', component.name);
+    return propsErr
+}

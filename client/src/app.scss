@@ -11,6 +11,13 @@ body {
     background-color: rgb(251, 250, 248);
 }
 
+:root {
+    --darkish-color: rgb(0, 0, 0, 0.2);
+    --dark-color: rgb(128, 122, 134);
+    --light-color: rgb(251, 250, 248);
+    --accent-color: rgb(182, 21, 21);
+}
+
 .App {
     display: flex;
     flex-direction: column;

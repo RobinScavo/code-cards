@@ -5,12 +5,12 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import Header from './components/header/Header';
 import Footer from './components/footer/Footer';
-import DeckContainer from './components/deckContainer/DeckContainer';
-import DeckDetails from './components/deckDetails/DeckDetails';
+import DeckContainer from './pages/deckContainer/DeckContainer';
+import DeckDetails from './pages/cardContainer/CardContainer';
 import CreateDeck from './components/createDeck/CreateDeck';
 import NotFound from './components/notFound/NotFound';
-import Register from './pages/Register';
-import Login from './pages/Login';
+import Register from './pages/register/Register';
+import Login from './pages/login/Login';
 
 
 import './app.scss';

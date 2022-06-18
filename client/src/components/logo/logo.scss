@@ -9,7 +9,7 @@
     height: 9rem;
     width: 7rem;
     // background-color: rgb(244, 242, 238);
-    background-color: rgb(251, 250, 248);
+    background-color: var(--light-color);
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
@@ -19,13 +19,12 @@
 
     .logo-image {
         font-size: 80px;
-
+        color: var(--accent-color);
     }
 
     .logo-title {
         font-family: 'Dosis', sans-serif;
         font-size: 30px;
         margin-top: -15px;
-        color: rgb(182, 21, 21);
     }
 }

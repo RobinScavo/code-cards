@@ -14,13 +14,12 @@
         align-items: center;
         height: 50%;
         width: 100vw;
-        border-bottom: 1.5px solid rgba($color: #000000, $alpha: 0.2);
+        border-bottom: 1.5px solid var(--darkish-color);
     }
 
     .lower-header {
         height: 50%;
         width: 100vw;
-        // background-color: rgb(244, 242, 238);
     }
 
     .navigation-icon {
@@ -34,8 +33,8 @@
     .login-link {
         width: 8rem;
         margin-right: .4rem;
-        color: rgb(182, 21, 21);
+        color: var(--accent-color);
         font-size: 17px;
-        background-color: rgb(251, 250, 248);
+        background-color: var(--light-color);
     }
 }

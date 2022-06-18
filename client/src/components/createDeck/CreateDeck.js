@@ -4,7 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { createDeck } from '../../redux/decks/decksSlice';
 
-import './createDeck.css';
+import './createDeck.scss';
 
 const CreateDeck = () => {
     const {user} = useSelector((state) => state.auth);

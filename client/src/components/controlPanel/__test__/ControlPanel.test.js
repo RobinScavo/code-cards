@@ -2,7 +2,8 @@ import React from "react";
 import { shallow } from 'enzyme';
 import ControlPanel from '../ControlPanel';
 
-import { mockUser, findByTestAtrr, mockDeck } from "../../../../tools/utils";
+
+import { mockUser, findByTestAtrr, mockDeck, checkProps } from "../../../../tools/utils";
 
 
 const setUp = (props={}) => {
@@ -11,6 +12,26 @@ const setUp = (props={}) => {
 }
 
 describe('ControlPanel Component', () => {
+
+    describe('Checking Proptypes', () => {
+        test('Should not throw a warning', () => {
+            const expectedProps = {
+                showHomeButton: true,
+                showCreateButton: true,
+                showEditButton: true,
+                showUploadButton: true,
+                showYourDecksButton: true,
+                showDeleteButton: true,
+                showPublishButton: true,
+                handleDelete: jest.fn(),
+                handleEdit: jest.fn(),
+                handlePublish: jest.fn(),
+                handleUpload: jest.fn()
+            }
+            const propsErr = checkProps(ControlPanel, expectedProps)
+            expect(propsErr).toBeUndefined();
+        });
+    })
 
     describe('Have correct props: Home page no user', () => {
         let wrapper;
@@ -268,7 +289,6 @@ describe('ControlPanel Component', () => {
         let wrapper;
         const unpublishedDeck = {...mockDeck}
         unpublishedDeck.published = false
-        console.log(unpublishedDeck.published)
 
         beforeEach(() => {
             const props = {

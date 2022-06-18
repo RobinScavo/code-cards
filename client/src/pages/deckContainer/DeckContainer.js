@@ -7,9 +7,9 @@ import {
     reset
   } from '../../redux/decks/decksSlice';
 
-import Deck from '../deck/Deck';
-import ControlPanel from '../controlPanel/ControlPanel';
-import Spinner from '../spinner/Spinner';
+import Deck from '../../components/deck/Deck';
+import ControlPanel from '../../components/controlPanel/ControlPanel';
+import Spinner from '../../components/spinner/Spinner';
 
 import './deckContainer.scss';
 
