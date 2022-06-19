@@ -19,7 +19,7 @@ const Header = () => {
     }
 
     return (
-        <div className="header-container">
+        <div className="header-container" data-testid='header-container'>
             <div className="upper-header">
                 <button className="navigation-icon"><i className="fas fa-bars"></i></button>
                 {!user &&

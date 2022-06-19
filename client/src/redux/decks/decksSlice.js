@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import decksService from './decksService';
 
-const initialState = {
+export const initialState = {
     decks: [],
     isError: false,
     isSuccess: false,
