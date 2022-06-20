@@ -8,7 +8,7 @@ const Deck = ({ deck, userLocation }) => {
     const publicDeck = published ? 'Public' : 'Private';
 
     return (
-        <div className="deck">
+        <div className="deck" data-testid='deck'>
             <h1 data-test='subjectText'>{subject}</h1>
             <h2 data-test='titleText'>{title}</h2>
             <p data-test='authorText'>{author}</p>

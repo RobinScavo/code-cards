@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^14.2.0",
     "axios": "^0.27.2",
     "axios-mock-adapter": "^1.21.1",
+    "msw": "^0.42.1",
     "node-sass": "^7.0.1",
     "prop-types": "^15.8.1",
     "react": "^18.1.0",
