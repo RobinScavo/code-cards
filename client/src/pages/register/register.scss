@@ -1,42 +1,23 @@
-.form-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    width: 100%;
-    height: 86vh;
-    background-color: blueviolet;
+#login-button {
+    color: var(--black-color);
+    background-color: var(--light-color);
 }
 
-.form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    background-color: green;
-    height: 100%;
-    width: 100%;
+#login-button:hover {
+    background-color: rgba(182, 21, 21, 0.7);
+    color: var(--light-color);
+    border-right: 2px solid var(--light-color);
+    border-bottom: 2px solid var(--light-color);
+    font-size: 22px;
 }
 
-.form-heading {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    height: 20%;
-    width: 100%;
-    background-color: wheat;
+#signUp-button:hover {
+    border-left: none;
+    border-bottom: 2px solid var(--dark-color);
+    font-size: 20px;
 }
 
-.form-group {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 10rem;
-    width: 20rem;
-}
-
-.form-control {
-    height: 2rem;
-    text-align: center;
+#signUp-button {
+    background-color: var(--light-accent-color);
+    color: var(--light-color);
 }

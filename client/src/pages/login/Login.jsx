@@ -1,13 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom'
-import { FaSignInAlt } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { login, reset } from '../../redux/auth/authSlice';
 
 import  Spinner from '../../components/spinner/Spinner';
-import ControlPanel from '../../components/controlPanel/ControlPanel';
 
 // import '../register/register.scss';
 import './login.scss'
@@ -63,16 +61,11 @@ function Login() {
     return (
         <section className="login-container">
             {/* <ControlPanel /> */}
-            {/* <section className="form-heading">
-                <h1>
-                    <FaSignInAlt /> Log In
-                </h1>
-                <p>Log in to access your decks!</p>
-            </section> */}
+
             <div className="form-container">
                 <div className="toggle-login-div">
                     <button id='logIn-button' className="toggle-button">Log In</button>
-                    <button id='signUp-button' className="toggle-button">Sign Up</button>
+                    <Link to='/signup' id='signup-button' className="toggle-button">Sign Up</Link>
                 </div>
 
                 <div className="login-form">
@@ -100,26 +93,15 @@ function Login() {
                             />
                         </div>
                         <div className="login-input-div">
-                            <button type='submit' id='login-button' className="btn">
-                                Submit
-                            </button>
+                            <button
+                                type='submit'
+                                id='submit-button'
+                                className="btn"
+                            > Submit </button>
                         </div>
                     </form>
                 </div>
             </div>
-
-
-                {/* <section className="form-heading">
-                    <h1>
-                        <FaSignInAlt /> Sign Up
-                    </h1>
-                    <p>Not a member yet? Sign up!</p>
-                    <Link
-                        to='/signup'
-                        className="btn"
-                    >Sign Up</Link>
-                </section> */}
-
         </section>
     )
 }

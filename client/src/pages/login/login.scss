@@ -9,6 +9,7 @@
 
 .form-container {
     display: flex;
+    flex-direction: column;
     height: 80%;
     width: 70vw;
     border-radius: 20px;
@@ -22,7 +23,6 @@
     width: 100%;
     height: 100%;
     background-color: var(--light-color);
-    border-top: 2px solid var(--dark-color);
 }
 
 .toggle-login-div {
@@ -32,19 +32,30 @@
 }
 
 .toggle-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 35vw;
     height: 100%;
     background-color: var(--light-color);
     cursor: pointer;
+    font-size: 20px;
+    border-bottom: 2px solid var(--dark-color);
+    color: var(--black-color)
 }
 
-#signUp-button {
-    width: 35vw;
-    border-left: 2px solid var(--dark-color);
+#signup-button:hover {
+    background-color: rgba(182, 21, 21, 0.7);
+    color: var(--light-color);
+    border-left: 2px solid var(--light-color);
+    border-bottom: 2px solid var(--light-color);
+    font-size: 22px;
 }
 
 #logIn-button {
     width: 35vw;
+    background-color: var(--light-accent-color);
+    color: var(--light-color);
 }
 
 .login-input-div {
@@ -58,8 +69,14 @@
     height: 2.5rem;
     background-color: rgba(0, 0, 0, 0.1);
     border: 2px solid var(--dark-color);
+}
 
+.login-input:focus {
+    outline: none;
+}
 
+.login-input:focus::placeholder {
+    color: transparent;
 }
 
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
@@ -75,6 +92,6 @@
     color: var(--dark-color);
   }
 
-#login-button {
+#submit-button {
     width: 12rem;
 }

@@ -26,9 +26,9 @@ import Header from './components/header/Header';
 // }
 
 
-// describe('initial load', () => {
+describe('initial load', () => {
 
-    test('should display log-in or sign up on initial load', () => {
+    test('header should display "log-in or sign up"', () => {
         render(<Header />)
 
         expect(screen.getByText(/log in or sign up/i)).toBeInTheDocument()
@@ -51,4 +51,13 @@ import Header from './components/header/Header';
 
         expect(await screen.findAllByTestId('deck')).toHaveLength(2)
     })
-// })
+})
+
+describe('log in', () => {
+    test('upon clicking "log in/sign up" should render login page', async () => {
+        render(<App />)
+
+        let label = await screen.findByLabelText('URL Status');
+        expect(label).toHaveTextContent('decks')
+    })
+})

@@ -12,10 +12,12 @@ body {
 }
 
 :root {
+    --black-color: rgb(15, 12, 1);
     --darkish-color: rgb(0, 0, 0, 0.2);
     --dark-color: rgb(128, 122, 134);
     --light-color: rgb(251, 250, 248);
     --accent-color: rgb(182, 21, 21);
+    --light-accent-color: rgb(182, 21, 21, 0.7);
 }
 
 .App {
@@ -39,7 +41,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgb(15, 12, 1);
+    background-color: var(--black-color);
     height: 2.5rem;
     width: 7rem;
     font-size: 20px;

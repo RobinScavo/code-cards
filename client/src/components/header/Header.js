@@ -33,7 +33,7 @@ const Header = () => {
                         to='/login'
                         className='login-link'
                         onClick={handleLogout}
-                    >{`Log out ${user.name}`}</button>
+                    >{`Log out: ${user.name}`}</button>
                 }
             </div>
 

@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify'
-import { FaUser } from 'react-icons/fa';
 import { register, reset } from '../../redux/auth/authSlice';
 
-import ControlPanel from '../../components/controlPanel/ControlPanel';
 import Spinner from '../../components/spinner/Spinner';
 
+import '../login/login.scss';
 import './register.scss';
 
 
@@ -62,60 +62,61 @@ function Register() {
 
 
         return (
-            <>
-            <section className='form-container'>
-                <ControlPanel />
-                <section className="form-heading">
-                    <h1>
-                        < FaUser /> Sign Up
-                    </h1>
-                    <p>Sign up to create and save decks!</p>
-                </section>
+            <section className='login-container'>
+                {/* <ControlPanel /> */}
 
-                <section className="form">
-                    <form onSubmit={handleSubmit}>
-                        <div className="form-group">
-                            <input
-                                type="text"
-                                className='form-control'
-                                id='name'
-                                name='name'
-                                value={name}
-                                placeholder='Enter your name'
-                                onChange={handleInput}
-                            />
-                        </div>
-                        <div className="form-group">
-                            <input
-                                type="password"
-                                className='form-control'
-                                id='password'
-                                name='password'
-                                value={password}
-                                placeholder='Enter a password'
-                                onChange={handleInput}
-                            />
-                        </div>
-                        <div className="form-group">
-                            <input
-                                type="password"
-                                className='form-control'
-                                id='confirmPassword'
-                                name='confirmPassword'
-                                value={confirmPassword}
-                                placeholder='Confirm password'
-                                onChange={handleInput}
-                            />
-                        </div>
-                        <div className="form-group">
-                            <button type='submit' className="btn">
-                                Submit
-                            </button>
-                        </div>
-                    </form>
-                </section>
+                <div className="form-container">
+                    <div className="toggle-login-div">
+                        <Link to='/login' id='login-button' className="toggle-button">Log In</Link>
+                        <button id='signUp-button' className="toggle-button">Sign Up</button>
+                    </div>
+
+                    <div className="login-form">
+                        <form onSubmit={handleSubmit}>
+                            <div className="login-input-div">
+                                <input
+                                    type="text"
+                                    className='login-input'
+                                    id='name'
+                                    name='name'
+                                    value={name}
+                                    placeholder='Enter your name'
+                                    onChange={handleInput}
+                                />
+                            </div>
+                            <div className="login-input-div">
+                                <input
+                                    type="password"
+                                    className='login-input'
+                                    id='password'
+                                    name='password'
+                                    value={password}
+                                    placeholder='Enter a password'
+                                    onChange={handleInput}
+                                />
+                            </div>
+                            <div className="login-input-div">
+                                <input
+                                    type="password"
+                                    className='login-input'
+                                    id='confirmPassword'
+                                    name='confirmPassword'
+                                    value={confirmPassword}
+                                    placeholder='Confirm password'
+                                    onChange={handleInput}
+                                />
+                            </div>
+                            <div className="login-input-div">
+                                <button
+                                    type='submit'
+                                    id='submit-button'
+                                    className="btn"
+                                > Submit </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </section>
-            </>
     )
 }
 

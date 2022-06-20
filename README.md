@@ -4,7 +4,11 @@
 ## To run in local development
 
 ## Testing
-npm run test for Jest testing
+from root:
+```js
+cd client
+npm run test
+```
 
 
 
