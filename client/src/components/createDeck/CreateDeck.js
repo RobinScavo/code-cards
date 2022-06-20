@@ -63,11 +63,11 @@ const CreateDeck = () => {
     return (
         <div className="create-deck">
             <Link
-                className="btn"
+                className="btn create-button"
                 to='/decks/privateDecks'
             >Cancel</Link>
 
-            <h2 className='create-title'>Create a new deck:</h2>
+            <h2 className='create-title'>Create a new deck</h2>
 
             <form className='create-form' onSubmit={handleSubmit}>
                 <label className='create-label'>Author</label>
@@ -90,17 +90,18 @@ const CreateDeck = () => {
 
                 <label className='create-label'>Subject</label>
                 <select
+                    className='create-selector'
                     name="subject"
                     id="subject"
                     required
                     value={subject}
                     onChange={(e) => setSubject(e.target.value)}
                 >
-                    <option value="Javascript">Javascript</option>
-                    <option value="React">React</option>
-                    <option value="CSS">CSS</option>
-                    <option value="Web Technologies">Web Technologies</option>
-                    <option value="Node.js">Node.js</option>
+                    <option className='create-option' value="Javascript">Javascript</option>
+                    <option className='create-option' value="React">React</option>
+                    <option className='create-option' value="CSS">CSS</option>
+                    <option className='create-option' value="Web Technologies">Web Technologies</option>
+                    <option className='create-option' value="Node.js">Node.js</option>
                 </select>
 
                 <label className='create-label'>Question</label>

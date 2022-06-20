@@ -23,7 +23,7 @@ function render (
     } = {}
     ) {
     function Wrapper({ children }) {
-        return <Provider store={store}><Router>{children}</Router></Provider>
+        return <Provider store={store}>{children}</Provider>
     }
     return rtlRender(ui, {wrapper: Wrapper, ...renderOptions})
 }

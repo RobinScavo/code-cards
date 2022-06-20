@@ -4,7 +4,6 @@
     align-items: center;
     height: 86vh;
     width: 100%;
-    background-color: rgb(125, 221, 125);
     padding: 10px;
 }
 
@@ -12,24 +11,60 @@
     display: flex;
     align-items: center;
     flex-direction: column;
+    font-family: 'Dosis', sans-serif;
 }
 
 .create-label {
-    margin-top: 20px;
+    margin-top: 17px;
     margin-bottom: 10px;
+    font-size: 20px;
+
 }
 
 .create-input {
-    height: 30px;
-    width: 60vw;
+    text-align: center;
+    border-radius: 5px;
+    width: 70vw;
+    height: 2.5rem;
+    background-color: rgba(0, 0, 0, 0.1);
+    border: 2px solid var(--dark-color);
+    font-family: 'Dosis', sans-serif;
+    font-size: 22px;
+}
+
+.create-input:focus {
+    outline: none;
+}
+
+.create-input:focus::placeholder {
+    color: transparent;
+}
+
+.QA {
+    height: 5rem;
 }
 
 .create-button {
-    width: 200px;
+    width: 12rem !important;
     margin-top: 20px;
 }
 
 .create-title {
     margin-top: 20px;
-    font-size: 20px;
+    font-size: 24px;
+    color: var(--light-accent-color)
+}
+
+.create-selector {
+    text-align: center;
+    width: 12rem;
+    height: 2.5rem;
+    background-color: rgba(0, 0, 0, 0.1);
+    border: 2px solid var(--dark-color);
+    font-size: 18px;
+    border-radius: 5px;
+}
+
+.create-selector:focus {
+    outline: none;
 }

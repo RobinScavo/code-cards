@@ -2,8 +2,23 @@ import { render, screen } from '@testing-library/react';
 import  userEvent from  "@testing-library/user-event"
 import Card from '../Card';
 
+import { checkProps } from "../../../../tools/utils";
+
 describe('card renders text and can be edited', () => {
     const card = { question: 'test question', answer: 'test answer'}
+
+    describe('Checking Proptypes', () => {
+        test('Should not throw a warning', () => {
+            const expectedProps = {
+                card: card,
+                handleQuickEdit: jest.fn(),
+                index: 1,
+                userLocation: 'privateDecks',
+            }
+            const propsErr = checkProps(Card, expectedProps)
+            expect(propsErr).toBeUndefined();
+        });
+    })
 
     test('renders Card component', () => {
         render(<Card card={card} userLocation='privateDecks'/>)
@@ -37,8 +52,6 @@ describe('card renders text and can be edited', () => {
 
         expect(editedQuestionInput).toBeInTheDocument();
         expect(editedAnswerInput).toBeInTheDocument();
-
-        // TODO test POST request
     })
 
 })

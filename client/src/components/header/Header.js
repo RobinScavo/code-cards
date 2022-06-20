@@ -26,6 +26,7 @@ const Header = () => {
                     <Link
                         to='/login'
                         className='login-link'
+                        data-testid='login-link'
                     >Log In or Sign up</Link>
                 }
                 {user &&

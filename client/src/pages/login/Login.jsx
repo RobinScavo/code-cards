@@ -59,7 +59,7 @@ function Login() {
     }
 
     return (
-        <section className="login-container">
+        <section className="login-container" data-testid='login-page'>
             {/* <ControlPanel /> */}
 
             <div className="form-container">
@@ -79,6 +79,7 @@ function Login() {
                                 value={name}
                                 placeholder='Enter your name'
                                 onChange={handleInput}
+                                data-testid='login-name-input'
                             />
                         </div>
                         <div className="login-input-div">
@@ -90,6 +91,7 @@ function Login() {
                                 value={password}
                                 placeholder='Enter a password'
                                 onChange={handleInput}
+                                data-testid='login-password-input'
                             />
                         </div>
                         <div className="login-input-div">
@@ -97,6 +99,7 @@ function Login() {
                                 type='submit'
                                 id='submit-button'
                                 className="btn"
+                                name='login-button'
                             > Submit </button>
                         </div>
                     </form>
