@@ -5,9 +5,9 @@ import { useDispatch } from 'react-redux';
 import { editDeck, reset } from '../../redux/decks/decksSlice';
 import { toast } from 'react-toastify';
 
-import './editModal.css';
+import './editDeck.scss';
 
-const EditModal = ({ deck, toggleEditModal }) => {
+const EditModal = ({ deck, toggleEditDeck }) => {
     const [author, setAuthor] = useState(deck.author);
     const [title, setTitle] = useState(deck.title);
     const [subject, setSubject] = useState(deck.subject);
@@ -44,7 +44,7 @@ const EditModal = ({ deck, toggleEditModal }) => {
             dispatch(editDeck(newDeck));;
             dispatch(reset());
 
-            toggleEditModal();
+            toggleEditDeck();
             dispatch(reset());
 
             toast.success('Deck has been updated.');
@@ -67,7 +67,7 @@ const EditModal = ({ deck, toggleEditModal }) => {
         if (addingNewCard) {handleCardWasEdited()};
 
         let newCard = {'question': '', 'answer': ''};
-        newCards = cards;
+        newCards = [...cards];
         newCards.push(newCard);
 
         setCards(newCards);
@@ -99,11 +99,11 @@ const EditModal = ({ deck, toggleEditModal }) => {
     }
 
     return (
-        <div className="edit-modal-overlay">
-            <div className="edit-modal">
+        <div className="edit-container">
+            <div className="edit-form-container">
                 <button
                     className="btn"
-                    onClick={toggleEditModal}
+                    onClick={toggleEditDeck}
                 >Cancel</button>
 
                 <h2 className='create-title'>Edit deck:</h2>
@@ -130,22 +130,21 @@ const EditModal = ({ deck, toggleEditModal }) => {
 
                     <label className='create-label'>Subject</label>
                     <select
+                        className='create-selector'
                         name="subject"
                         id="subject"
                         required
                         value={subject}
                         onChange={(e) => setSubject(e.target.value)}
                     >
-                        <option value="Javascript">Javascript</option>
-                        <option value="React">React</option>
-                        <option value="CSS">CSS</option>
-                        <option value="Web Technologies">Web Technologies</option>
-                        <option value="Node.js">Node.js</option>
+                        <option className='create-option' value="Javascript">Javascript</option>
+                        <option className='create-option' value="React">React</option>
+                        <option className='create-option' value="CSS">CSS</option>
+                        <option className='create-option' value="Web Technologies">Web Technologies</option>
+                        <option className='create-option' value="Node.js">Node.js</option>
                     </select>
 
                     <div className="card-toggle-div">
-                        <h2>Card {cardIndex + 1}</h2>
-
                         {cardIndex > 0 && <button
                             className='btn card-toggle-button'
                             onClick = {(e) => {
@@ -168,6 +167,8 @@ const EditModal = ({ deck, toggleEditModal }) => {
                             }}
                         >Next</button>}
                     </div>
+
+                    <h2 className='card-index-text'>Card {cardIndex + 1}</h2>
 
                     <label className='create-label'>Question</label>
                     <input

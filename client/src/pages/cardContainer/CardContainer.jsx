@@ -15,7 +15,7 @@ import {
 import Card from '../../components/card/Card';
 import ControlPanel from '../../components/controlPanel/ControlPanel';
 import Spinner from '../../components/spinner/Spinner';
-import EditModal from '../../components/editModal/EditModal'
+import EditDeck from '../../components/editDeck/EditDeck'
 
 import './cardContainer.scss';
 
@@ -29,7 +29,7 @@ const DeckDetails = ({
     showPublishButton
 }) => {
 
-    const [editModalVisible, setEditModalVisible] =  useState(false);
+    const [editDeckVisible, setEditDeckVisible] =  useState(false);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -67,7 +67,7 @@ const DeckDetails = ({
       }
 
       const handleEdit = () => {
-        setEditModalVisible(true)
+        setEditDeckVisible(true)
       }
 
       const handleUpload = () => {
@@ -106,7 +106,7 @@ const DeckDetails = ({
         }
       }
 
-      const toggleEditModal = () => setEditModalVisible(!editModalVisible);
+      const toggleEditDeck = () => setEditDeckVisible(!editDeckVisible);
 
 
     const handleQuickEdit = ({ editQuestionValue, editAnswerValue, index }) => {
@@ -143,39 +143,42 @@ const DeckDetails = ({
                 user={user}
                 decks={decks}
                 handleDelete={handleDelete}
-                toggleEditModal={toggleEditModal}
+                toggleEditDeck={toggleEditDeck}
                 handleUpload={handleUpload}
                 handlePublish={handlePublish}
                 handleEdit={handleEdit}
             />
 
-            {editModalVisible &&
-                <EditModal
-                    toggleEditModal={toggleEditModal}
-                    deck={decks}/>
+            {editDeckVisible &&
+                <EditDeck
+                    toggleEditDeck={toggleEditDeck}
+                    deck={decks}
+                />
             }
 
-            <div className="card-container">
-                <section className='deck-container-heading'>
-                    {user && <p className='deck-container-title'
-                        >Private Library</p>
-                    }
+            {!editDeckVisible &&
+                <div className="card-container">
+                    <section className='deck-container-heading'>
+                        {user && <p className='deck-container-title'
+                            >Private Library</p>
+                        }
 
-                    {!user && <p className='deck-container-title'
-                        >Public Library</p>
-                    }
-                </section>
+                        {!user && <p className='deck-container-title'
+                            >Public Library</p>
+                        }
+                    </section>
 
-                {decks.cards && decks.cards.map((card, index) => (
-                    <Card
-                        index={index}
-                        key={`${decks._id}index${index}`}
-                        card={card}
-                        userLocation={userLocation}
-                        handleQuickEdit={handleQuickEdit}
-                    />
-                ))}
-            </div>
+                    {decks.cards && decks.cards.map((card, index) => (
+                        <Card
+                            index={index}
+                            key={`${decks._id}index${index}`}
+                            card={card}
+                            userLocation={userLocation}
+                            handleQuickEdit={handleQuickEdit}
+                        />
+                    ))}
+                </div>
+            }
         </div>
      );
 }

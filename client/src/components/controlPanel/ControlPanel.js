@@ -52,7 +52,7 @@ const ControlPanel = ({
             {/* EDIT DECK */}
             {showEditButton  &&
                 <button
-                    className='btn control-button'
+                    className="btn control-button"
                     onClick={handleEdit}
                     data-test='edit-button'
                 >Edit Deck</button>

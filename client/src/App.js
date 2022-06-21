@@ -6,8 +6,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import Header from './components/header/Header';
 import Footer from './components/footer/Footer';
 import DeckContainer from './pages/deckContainer/DeckContainer';
-import DeckDetails from './pages/cardContainer/CardContainer';
+import CardContainer from './pages/cardContainer/CardContainer';
 import CreateDeck from './components/createDeck/CreateDeck';
+// import EditDeck from './components/editDeck/EditDeck';
 import NotFound from './components/notFound/NotFound';
 import Register from './pages/register/Register';
 import Login from './pages/login/Login';
@@ -34,7 +35,7 @@ function App() {
           } />
 
           <Route path={`/decks/:id`} element = {
-            <DeckDetails
+            <CardContainer
               showHomeButton = {true}
               showCreateButton = {true}
               showYourDecksButton = {true}
@@ -51,7 +52,7 @@ function App() {
           } />
 
           <Route path={`/decks/privateDecks/:id`} element = {
-            <DeckDetails
+            <CardContainer
               showHomeButton = {true}
               showCreateButton = {true}
               showEditButton = {true}
