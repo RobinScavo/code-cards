@@ -1,17 +1,34 @@
 import React from "react";
 import { shallow } from 'enzyme';
 import Deck from '../Deck';
-import { mockDeck } from "../../../../tools/utils";
-import { findByTestAtrr } from "../../../../tools/utils";
+import { mockDeck, findByTestAtrr, checkProps } from "../../../../tools/utils";
 
 const setUp = (props={}) => {
     const component = shallow(<Deck {...props} />);
     return component;
 }
 
-describe('Private Deck Component', () => {
-    describe('Have correct props: Private', () => {
+describe('Checking Proptypes', () => {
 
+    const testDeck = {
+        subject: 'test subject',
+        title: 'test title',
+        author: 'test author',
+        uploads: 3,
+    }
+    test('Should not throw a warning', () => {
+        const expectedProps = {
+            deck: testDeck,
+            userLocation: 'privateDecks'
+        }
+        const propsErr = checkProps(Deck, expectedProps)
+        expect(propsErr).toBeUndefined();
+    });
+});
+
+describe('Private Deck Component', () => {
+
+    describe('Have correct props: Private', () => {
         let wrapper;
         beforeEach(() => {
             const props = {

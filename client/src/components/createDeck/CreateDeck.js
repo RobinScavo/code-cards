@@ -9,7 +9,7 @@ import './createDeck.scss';
 const CreateDeck = () => {
     const {user} = useSelector((state) => state.auth);
 
-    const [author, setAuthor] = useState(user.name);
+    const [author, setAuthor] = useState('');
     const [title, setTitle] = useState('');
     const [subject, setSubject] = useState('Javascript');
     const [question, setQuestion] = useState('');
@@ -25,7 +25,7 @@ const CreateDeck = () => {
             handleAddCard(e);
         }
         const deck = {
-            user: user._id,
+            user: user._id ,
             author,
             title,
             subject,
@@ -77,6 +77,7 @@ const CreateDeck = () => {
                     required
                     value={author}
                     onChange={(e) => setAuthor(e.target.value)}
+                    data-testid='author-input'
                 />
 
                 <label className='create-label'>Title</label>
@@ -86,6 +87,7 @@ const CreateDeck = () => {
                     required
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
+                    data-testid='title-input'
                 />
 
                 <label className='create-label'>Subject</label>
@@ -96,6 +98,7 @@ const CreateDeck = () => {
                     required
                     value={subject}
                     onChange={(e) => setSubject(e.target.value)}
+                    data-testid='subject-input'
                 >
                     <option className='create-option' value="Javascript">Javascript</option>
                     <option className='create-option' value="React">React</option>
@@ -111,6 +114,7 @@ const CreateDeck = () => {
                     required
                     value={question}
                     onChange={(e) => setQuestion(e.target.value)}
+                    data-testid='question-input'
                 />
 
                 <label className='create-label'>Answer</label>
@@ -120,11 +124,13 @@ const CreateDeck = () => {
                     required
                     value={answer}
                     onChange={(e) => setAnswer(e.target.value)}
+                    data-testid='answer-input'
                 />
 
                 <button
                     className="btn create-button"
                     onClick={handleAddCard}
+                    data-testid='add-card-button'
                 >Add Card</button>
 
                 <button
