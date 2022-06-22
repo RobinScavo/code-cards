@@ -1,11 +1,22 @@
 import { render, screen } from '../../../../tools/test-utils';
 import  userEvent from  "@testing-library/user-event";
-import { BrowserRouter as Router } from 'react-router-dom'
+import { BrowserRouter as Router } from 'react-router-dom';
+
 import EditDeck from '../EditDeck';
-import { mockDeck } from '../../../../tools/utils';
+import { mockDeck, checkProps } from '../../../../tools/utils';
 
 
-describe('create deck page', () => {
+describe('EditDeck component', () => {
+    describe('Checking Proptypes', () => {
+        test('Should not throw a warning', () => {
+            const expectedProps = {
+                deck: mockDeck,
+                handleToggleEditDeck: jest.fn(),
+            }
+            const propsErr = checkProps(EditDeck, expectedProps)
+            expect(propsErr).toBeUndefined();
+        });
+    })
 
     test('renders EditDeck component', () => {
         render(<Router><EditDeck deck={mockDeck} /></Router>)
@@ -75,26 +86,20 @@ describe('create deck page', () => {
 
         await user.click(screen.getByRole('button', {name: /add card/i}));
 
-        expect(screen.getByTestId('edit-question')).toHaveTextContent('');
-        expect(screen.getByTestId('edit-answer')).toHaveTextContent('');
+        expect(screen.getByTestId('edit-question')).toHaveValue('');
+        expect(screen.getByTestId('edit-answer')).toHaveValue('');
         expect(screen.getByText(/card 3/i)).toBeInTheDocument();
+
+        await user.click(screen.getByRole('button', {name: /remove card/i}));
+
+        expect(screen.getByTestId('edit-question')).toHaveValue('second test question');
+        expect(screen.getByTestId('edit-answer')).toHaveValue('second test answer');
+        expect(screen.getByText(/card 2/i)).toBeInTheDocument();
+
+        await user.click(screen.getByRole('button', {name: /remove card/i}));
+
+        expect(screen.getByTestId('edit-question')).toHaveValue('test question');
+        expect(screen.getByTestId('edit-answer')).toHaveValue('test answer');
+        expect(screen.getByText(/card 1/i)).toBeInTheDocument();
     })
-
-    // test('add card button should clear question and answer inputs', async () => {
-    //     const user = userEvent.setup()
-
-    //     render(<Router><EditDeck/></Router>)
-
-    //     const  questionInput = screen.getByTestId('question-input')
-    //     const  answerInput = screen.getByTestId('answer-input')
-
-    //     await user.type(questionInput, 'created test question');
-    //     await user.type(answerInput, 'created test answer');
-
-    //     user.click(screen.getByTestId('add-card-button'));
-
-    //     expect(questionInput).toHaveTextContent('');
-    //     expect(answerInput).toHaveTextContent('');
-    // })
-
 })

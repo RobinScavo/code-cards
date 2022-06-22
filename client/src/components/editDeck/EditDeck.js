@@ -92,11 +92,11 @@ const EditDeck = ({ deck, toggleEditDeck }) => {
 
         let newCards = [...cards];
 
-        console.log(newCards, cardIndex)
-        if (!currentAnswer || !currentQuestion) {
+        if (addingNewCard && (!currentAnswer || !currentQuestion)) {
             setCardIndex(cardIndex -1)
             return;
         }
+
         // Remove the card and display the previous card if one exists,
         // otherwise display the next card.
         if (cardIndex > 0) {
@@ -105,13 +105,12 @@ const EditDeck = ({ deck, toggleEditDeck }) => {
             setCards(newCards);
             setCurrentQuestion(cards[cardIndex -1].question);
             setCurrentAnswer(cards[cardIndex -1].answer);
-        } else if (cards.length > 1) {
+        } else if (cardIndex === 0) {
             newCards.splice(cardIndex, 1);
-            setCardIndex(cardIndex +1);
             setCards(newCards);
             setCurrentQuestion(cards[cardIndex +1].question);
             setCurrentAnswer(cards[cardIndex +1].answer);
-        } else {
+        } else if (cards.length <= 1) {
             toast.error('Cannot remove last card in deck.')
         }
     }
