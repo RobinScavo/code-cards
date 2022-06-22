@@ -1,33 +1,45 @@
-import  React  from 'react';
+import  React, { useEffect }  from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { editDeck, reset } from '../../redux/decks/decksSlice';
 import { toast } from 'react-toastify';
+import PropTypes from 'prop-types';
 
 import './editDeck.scss';
 
-const EditModal = ({ deck, toggleEditDeck }) => {
+const EditDeck = ({ deck, toggleEditDeck }) => {
     const [author, setAuthor] = useState(deck.author);
     const [title, setTitle] = useState(deck.title);
     const [subject, setSubject] = useState(deck.subject);
     const [cards, setCards] = useState(deck.cards);
     const [cardIndex, setCardIndex ] = useState(0);
-    const [currentQuestion, setCurrentQuestion] = useState(cards[cardIndex].question);
-    const [currentAnswer, setCurrentAnswer] = useState(cards[cardIndex].answer);
+    const [currentQuestion, setCurrentQuestion] = useState('');
+    const [currentAnswer, setCurrentAnswer] = useState('');
     const [cardWasEdited, setCardWasEdited] = useState(false);
     const [addingNewCard, setAddingNewCard] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    useEffect(() => {
+        if (cards[cardIndex]) {
+            setCurrentQuestion(cards[cardIndex].question)
+            setCurrentAnswer(cards[cardIndex].answer)
+        }
+    }, [cardIndex])
+
     const handleSubmit = (e) => {
         e.preventDefault();
 
+        let newCards = [...cards];
+
         if (addingNewCard && currentQuestion && currentAnswer) {
-            handleAddCard();
+            let newCard = {question: currentQuestion, answer: currentAnswer}
+            newCards.push(newCard)
         }
 
-        const newDeckCards = cards.filter((card => card.question && card.answer));
+        newCards.filter(card => card.question && card.answer)
+
         const newDeck = {
             id: deck._id,
             data: {
@@ -36,7 +48,7 @@ const EditModal = ({ deck, toggleEditDeck }) => {
                 author,
                 title,
                 subject,
-                cards: newDeckCards
+                cards: newCards
             }
         };
 
@@ -55,37 +67,53 @@ const EditModal = ({ deck, toggleEditDeck }) => {
     }
 
     const handleAddCard = () => {
-        let newCards;
-
         if (!currentAnswer || !currentQuestion) {
-            alert('Please complete the current card first.');
+            toast.error('Please complete the current card first.');
             return;
-        } else {
-            setAddingNewCard(true);
         }
 
-        if (addingNewCard) {handleCardWasEdited()};
+        if (addingNewCard) {
+            let newCards = [...cards];
+            let newCard = {question: currentQuestion, answer: currentAnswer}
+            newCards.push(newCard)
+            setCards(newCards);
+            setCardIndex(cardIndex+1)
+            setAddingNewCard(false)
+        }
 
-        let newCard = {'question': '', 'answer': ''};
-        newCards = [...cards];
-        newCards.push(newCard);
-
-        setCards(newCards);
         setCurrentQuestion('');
         setCurrentAnswer('');
-        setCardIndex(cards.length-1);
+        setCardIndex(cards.length);
+        setAddingNewCard(true)
     }
 
     const handleDeleteCard = () => {
         if (!cards.length) return;
 
-        let newCards = cards;
-        newCards.splice(cardIndex, 1);
+        let newCards = [...cards];
 
-        setCardIndex(cardIndex -1);
-        setCards(newCards);
-        setCurrentQuestion(cards[cardIndex -1].question);
-        setCurrentAnswer(cards[cardIndex -1].answer);
+        console.log(newCards, cardIndex)
+        if (!currentAnswer || !currentQuestion) {
+            setCardIndex(cardIndex -1)
+            return;
+        }
+        // Remove the card and display the previous card if one exists,
+        // otherwise display the next card.
+        if (cardIndex > 0) {
+            newCards.splice(cardIndex, 1);
+            setCardIndex(cardIndex -1);
+            setCards(newCards);
+            setCurrentQuestion(cards[cardIndex -1].question);
+            setCurrentAnswer(cards[cardIndex -1].answer);
+        } else if (cards.length > 1) {
+            newCards.splice(cardIndex, 1);
+            setCardIndex(cardIndex +1);
+            setCards(newCards);
+            setCurrentQuestion(cards[cardIndex +1].question);
+            setCurrentAnswer(cards[cardIndex +1].answer);
+        } else {
+            toast.error('Cannot remove last card in deck.')
+        }
     }
 
     const handleCardWasEdited = () => {
@@ -106,7 +134,7 @@ const EditModal = ({ deck, toggleEditDeck }) => {
                     onClick={toggleEditDeck}
                 >Cancel</button>
 
-                <h2 className='create-title'>Edit deck:</h2>
+                <h2 className='create-title'>Edit deck</h2>
 
                 <form className='create-form'>
                     <label className='create-label' htmlFor='author'>Author</label>
@@ -117,6 +145,7 @@ const EditModal = ({ deck, toggleEditDeck }) => {
                         value={author}
                         onChange={(e) => setAuthor(e.target.value)}
                         id='author'
+                        data-testid='edit-author'
                     />
 
                     <label className='create-label'>Title</label>
@@ -126,6 +155,7 @@ const EditModal = ({ deck, toggleEditDeck }) => {
                         required
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
+                        data-testid='edit-title'
                     />
 
                     <label className='create-label'>Subject</label>
@@ -136,6 +166,7 @@ const EditModal = ({ deck, toggleEditDeck }) => {
                         required
                         value={subject}
                         onChange={(e) => setSubject(e.target.value)}
+                        data-testid='edit-subject'
                     >
                         <option className='create-option' value="Javascript">Javascript</option>
                         <option className='create-option' value="React">React</option>
@@ -152,6 +183,7 @@ const EditModal = ({ deck, toggleEditDeck }) => {
                                 setCardIndex(cardIndex -1)
                                 setCurrentQuestion(cards[cardIndex -1].question)
                                 setCurrentAnswer(cards[cardIndex -1].answer)
+                                setAddingNewCard(false)
                                 handleCardWasEdited()
                             }}
                         >Previous</button>}
@@ -163,12 +195,13 @@ const EditModal = ({ deck, toggleEditDeck }) => {
                                 setCardIndex(cardIndex +1)
                                 setCurrentQuestion(cards[cardIndex +1].question)
                                 setCurrentAnswer(cards[cardIndex +1].answer)
+                                setAddingNewCard(false)
                                 handleCardWasEdited()
                             }}
                         >Next</button>}
                     </div>
 
-                    <h2 className='card-index-text'>Card {cardIndex + 1}</h2>
+                    <h2 className='card-index-text'>Card {cardIndex +1}</h2>
 
                     <label className='create-label'>Question</label>
                     <input
@@ -180,6 +213,7 @@ const EditModal = ({ deck, toggleEditDeck }) => {
                             setCurrentQuestion(e.target.value)
                             setCardWasEdited(true)
                         }}
+                        data-testid='edit-question'
                     />
 
                     <label className='create-label'>Answer</label>
@@ -192,6 +226,7 @@ const EditModal = ({ deck, toggleEditDeck }) => {
                             setCurrentAnswer(e.target.value)
                             setCardWasEdited(true)
                         }}
+                        data-testid='edit-answer'
                     />
 
                     <button
@@ -221,5 +256,16 @@ const EditModal = ({ deck, toggleEditDeck }) => {
         );
 }
 
+EditDeck.propTypes = {
+    deck: PropTypes.shape({
+        author: PropTypes.string,
+        title: PropTypes.string,
+        subject: PropTypes.string,
+        question: PropTypes.string,
+        answer: PropTypes.string,
+    }),
+    toggleEditDeck: PropTypes.func,
+}
 
-export default EditModal;
+
+export default EditDeck;

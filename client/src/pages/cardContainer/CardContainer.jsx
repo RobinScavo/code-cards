@@ -43,7 +43,7 @@ const DeckDetails = ({
 
     useEffect(() => {
         if (isError) {
-            console.log(message);
+            toast.error('Deck retrieval failed.');
         }
 
         // if (!user) {
