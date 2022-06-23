@@ -26,7 +26,7 @@ const EditDeck = ({ deck, toggleEditDeck }) => {
             setCurrentQuestion(cards[cardIndex].question)
             setCurrentAnswer(cards[cardIndex].answer)
         }
-    }, [cardIndex])
+    }, [cardIndex, cards])
 
     const handleSubmit = (e) => {
         e.preventDefault();

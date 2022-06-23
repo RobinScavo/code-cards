@@ -20,7 +20,7 @@ npm run test
 ```
 
 ## Stack
-- React
+- React/ Redux
 - SASS
 - Node.js
 - MongoDB
@@ -32,7 +32,6 @@ npm run test
 - Express
 - JSON Web Tokens
 - MVC
-- Redux
 - Redux Toolkit
 - NPM React Icons
 - Jest

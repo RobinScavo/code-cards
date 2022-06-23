@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Navigate } from 'react-router-dom';
 
 import Header from './components/header/Header';
 import Footer from './components/footer/Footer';
@@ -22,37 +23,51 @@ function App() {
     <>
     <Router>
       <div className="App">
-        <Header/>
+        {/* <Header/> */}
 
         <Routes>
+          <Route exact path='/' element={<Navigate to='/decks' />} />
 
           {/* Public Decks */}
           <Route exact path='/decks' element = {
-            <DeckContainer
+            <>
+            <Header
               showCreateButton = {true}
               showYourDecksButton = {true}
             />
+
+            <DeckContainer />
+            </>
           } />
 
           <Route path={`/decks/:id`} element = {
-            <CardContainer
+            <>
+            <Header
               showHomeButton = {true}
               showCreateButton = {true}
               showYourDecksButton = {true}
               showUploadButton={true}
             />
+
+            <CardContainer />
+            </>
           } />
 
           {/* Private Decks */}
           <Route exact path='/decks/privateDecks' element = {
-            <DeckContainer
+            <>
+            <Header
               showHomeButton = {true}
               showCreateButton = {true}
             />
+
+            <DeckContainer />
+            </>
           } />
 
           <Route path={`/decks/privateDecks/:id`} element = {
-            <CardContainer
+            <>
+            <Header
               showHomeButton = {true}
               showCreateButton = {true}
               showEditButton = {true}
@@ -61,6 +76,9 @@ function App() {
               showDeleteButton = {true}
               showPublishButton = {true}
             />
+
+            <CardContainer />
+            </>
           } />
 
           <Route path='/createDeck' element = {<CreateDeck />} />

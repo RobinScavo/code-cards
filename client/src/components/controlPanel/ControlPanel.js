@@ -17,11 +17,14 @@ const ControlPanel = ({
     handleDelete,
     handleEdit,
     handlePublish,
-    handleUpload
+    handleUpload,
+    toggleControlPanel
 }) => {
 
+    const visible = toggleControlPanel ? 'open' : 'closed';
+
     return (
-        <div className="control-panel" data-test='control-panel'>
+        <div className={`control-panel ${visible}`} data-test='control-panel'>
             {/* HOME */}
             {showHomeButton  &&
                 <Link

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import PropTypes from 'prop-types';
 import {
     getPublicDeck,
     getPrivateDeck,
@@ -19,14 +20,14 @@ import EditDeck from '../../components/editDeck/EditDeck'
 
 import './cardContainer.scss';
 
-const DeckDetails = ({
-    showHomeButton,
-    showCreateButton,
-    showEditButton,
-    showUploadButton,
-    showYourDecksButton,
-    showDeleteButton,
-    showPublishButton
+const CardContainer = ({
+    // showHomeButton,
+    // showCreateButton,
+    // showEditButton,
+    // showUploadButton,
+    // showYourDecksButton,
+    // showDeleteButton,
+    // showPublishButton
 }) => {
 
     const [editDeckVisible, setEditDeckVisible] =  useState(false);
@@ -45,10 +46,6 @@ const DeckDetails = ({
         if (isError) {
             toast.error('Deck retrieval failed.');
         }
-
-        // if (!user) {
-        //     navigate('/login');
-        // }
 
         if (userLocation !== 'privateDecks') {
           dispatch(getPublicDeck(deckID));
@@ -132,7 +129,7 @@ const DeckDetails = ({
     return (
         <div className="deck-detail">
 
-            <ControlPanel
+            {/* <ControlPanel
                 showHomeButton={showHomeButton}
                 showCreateButton={showCreateButton}
                 showEditButton={showEditButton}
@@ -147,7 +144,7 @@ const DeckDetails = ({
                 handleUpload={handleUpload}
                 handlePublish={handlePublish}
                 handleEdit={handleEdit}
-            />
+            /> */}
 
             {editDeckVisible &&
                 <EditDeck
@@ -183,4 +180,14 @@ const DeckDetails = ({
      );
 }
 
-export default DeckDetails;
+// CardContainer.propTypes = {
+//     showHomeButton: PropTypes.bool,
+//     showCreateButton: PropTypes.bool,
+//     showEditButton: PropTypes.bool,
+//     showUploadButton: PropTypes.bool,
+//     showYourDecksButton: PropTypes.bool,
+//     showDeleteButton: PropTypes.bool,
+//     showPublishButton: PropTypes.bool,
+// }
+
+export default CardContainer;

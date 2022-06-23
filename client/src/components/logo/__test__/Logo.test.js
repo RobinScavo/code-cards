@@ -2,7 +2,6 @@ import { shallow } from 'enzyme'
 
 import Logo from '../Logo';
 
-
 const setUp = () => {
     const component = shallow(<Logo />);
     return component;

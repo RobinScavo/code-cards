@@ -13,7 +13,12 @@ import Spinner from '../../components/spinner/Spinner';
 
 import './deckContainer.scss';
 
-const DeckContainer = ({ showHomeButton, showCreateButton, showMyDecksButton, showYourDecksButton }) => {
+const DeckContainer = ({
+    // showHomeButton,
+    // showCreateButton,
+    // showMyDecksButton,
+    // showYourDecksButton
+}) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const location = useLocation();
@@ -52,14 +57,14 @@ const DeckContainer = ({ showHomeButton, showCreateButton, showMyDecksButton, sh
 
     return (
         <div className="deck-detail">
-            <ControlPanel
+            {/* <ControlPanel
                 showHomeButton={showHomeButton}
                 showMyDecksButton={showMyDecksButton}
                 showCreateButton={showCreateButton}
                 showYourDecksButton = {showYourDecksButton}
                 user={user}
                 decks={decks}
-            />
+            /> */}
 
             <div className="deck-container">
                 <section className='deck-container-heading'>

@@ -1,29 +1,13 @@
 import React from 'react';
-import { rest } from 'msw';
-import { setupServer } from 'msw/node'
 
 // Import custom render function and built-in methods
 import  { render, fireEvent, screen } from '../tools/test-utils';
-import { mockDeck, secondMockDeck, thirdMockDeck } from '../tools/utils';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import App from './App';
-import Login from './pages/login/Login';
 import DeckContainer from './pages/deckContainer/DeckContainer';
 import Spinner from './components/spinner/Spinner';
 import Header from './components/header/Header';
-
-// const textFinder = (content, node) => {
-//     screen.getByText(() => {
-//         const hasText = (node) => node.textContent === content;
-//         const nodeHasText = hasText(node);
-//         const childrenDontHaveText = Array.from(node.children).every(
-//             (child) => !hasText(child)
-//         )
-
-//         return nodeHasText && childrenDontHaveText;
-//     })
-// }
 
 
 describe('initial load', () => {
@@ -31,7 +15,7 @@ describe('initial load', () => {
     test('header should display "log-in or sign up"', () => {
         render(<Router><Header /></Router>)
 
-        expect(screen.getByText(/log in or sign up/i)).toBeInTheDocument()
+        expect(screen.getByText(/~ log in ~ ~ sign up ~/i)).toBeInTheDocument()
     });
 
     test('should display spinner while fetching public decks', () => {
@@ -69,6 +53,5 @@ describe('log in', () => {
         fireEvent.change(screen.getByTestId('login-password-input'), {password: 'first'})
         fireEvent.click(screen.getByRole('button', {name: /submit/i}))
         expect(screen.getByTestId('spinner')).toBeInTheDocument()
-        // expect(await screen.findAllByTestId('deck')).toHaveLength(1)
     })
 })

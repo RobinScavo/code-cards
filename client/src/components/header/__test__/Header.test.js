@@ -1,39 +1,23 @@
-// import { shallow } from 'enzyme'
-
-import { render, screen } from '@testing-library/react';
+import { render, screen } from '../../../../tools/test-utils';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import configureStore  from 'redux-mock-store';
-// import { store } from '../../../app/store';
-import { login, initialState } from '../../../redux/auth/authSlice';
+import React from 'react';
 
 import Header from '../Header';
 
-const MockHeader = () => {
-    const mockStore = configureStore([]);
-    const store = mockStore(initialState);
-    console.log(store.getState().user)
-    // const state = store.getState();
-
-    return (
-        <Provider store={store}>
-            <Router>
-                <Header />
-            </Router>
-        </Provider>
-    )
-}
 
 describe('Header Component', () => {
-    // beforeEach(() => {});
-
 
     test('renders Header component without errors', () => {
+        render(<Router><Header /></Router>)
 
-        // render(<MockHeader />)
+        expect(screen.getByTestId('header-container')).toBeInTheDocument();
+    })
 
-        // const headerComponent = screen.getByTestId('header-container');
-        // expect(headerComponent ).toBeInTheDocument();
+    test('should render nav button and log in link', () => {
+        render(<Router><Header /></Router>)
+
+        expect(screen.getByTestId('navigation-button')).toBeInTheDocument();
+        expect(screen.getByTestId('login-link')).toBeInTheDocument();
     })
 
 })
