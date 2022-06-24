@@ -5,6 +5,7 @@
     height: 9rem;
     width: 100%;
     box-shadow: 0px 1px 9px 1px rgba($color: #000000, $alpha: 0.2);
+    // z-index: 100;
 
     .upper-header {
         display: flex;
@@ -13,11 +14,16 @@
         height: 50%;
         width: 100vw;
         border-bottom: 1.5px solid var(--darkish-color);
+        background-color: var(--light-color);
+        z-index: 3;
     }
 
     .lower-header {
+        position: relative;
         height: 50%;
         width: 100vw;
+        background-color: var(--light-color);
+        z-index: 3;
     }
 
     .navigation-icon {
@@ -27,14 +33,44 @@
         font-size: 30px;
         background-color: transparent;
         cursor: pointer;
+        transition: transform 500ms ease-in-out;
+    }
+
+    .rotated {
+        transform: rotate(90deg);
     }
 
     .login-link {
-        width: 5rem;
-        line-height: 1.3;
-        margin-right: .4rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        // height: 3.5rem;
+        width: 3.9rem;
+        // line-height: 1.3;
         color: var(--accent-color);
-        font-size: 17px;
+        font-size: 19px;
         background-color: var(--light-color);
+        // background-color: cadetblue;
+        margin-right: 5px;
+    }
+
+    .icon-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 30px;
+        width: 30px;
+        // background-color: antiquewhite;
+    }
+
+    .my-icon {
+        height: 25px;
+        width: 25px;
+        color: var(--black-color);
+    }
+
+    .logout-name {
+        color: var(--black-color)
     }
 }

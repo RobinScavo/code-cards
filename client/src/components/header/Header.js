@@ -5,11 +5,13 @@ import { logout, reset } from '../../redux/auth/authSlice';
 
 import Logo from '../logo/Logo';
 import ControlPanel from '../controlPanel/ControlPanel';
+import { ImEnter } from 'react-icons/im'
 
 import './header.scss';
 
 const Header = (props) => {
     const [toggleControlPanel, setToggleControlPanel] = useState(false);
+    const rotated = toggleControlPanel ? 'rotated' : '';
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -27,15 +29,9 @@ const Header = (props) => {
 
     return (
         <div className="header-container" data-testid='header-container'>
-            < ControlPanel
-                {...props}
-                toggleControlPanel={toggleControlPanel}
-            />
-
-
             <div className="upper-header">
                 <button
-                    className="navigation-icon"
+                    className={`navigation-icon ${rotated}`}
                     data-testid='navigation-button'
                     onClick={handleOpenControlPanel}
                 ><i className="fas fa-bars"></i></button>
@@ -45,21 +41,40 @@ const Header = (props) => {
                         to='/login'
                         className='login-link'
                         data-testid='login-link'
-                    >~ Log In ~ ~ Sign up ~</Link>
+                    >
+                        <div className="icon-container">
+                            < ImEnter className='my-icon'/>
+                        </div>
+                        <h2 className="login-text">Log In</h2>
+
+                    </Link>
                 }
 
                 {user &&
                     <button
-                        to='/login'
-                        className='login-link'
+                        className="login-link"
                         onClick={handleLogout}
                         data-testid='logout-link'
-                    >{`~ Log out ~ ${user.name}`}</button>
+                    >
+                        <h2 className="logout-name">{`${user.name}`}</h2>
+                        <h2 className="login-text">{`Log out`}</h2>
+                    </button>
+                    // <div className='login-link'>
+                    //     <button
+                    //         className='login-text'
+                    //         onClick={handleLogout}
+                    //         data-testid='logout-link'
+                    //     >{`Log out`}</button>
+                    // </div>
                 }
             </div>
 
             <div className="lower-header"></div>
             <Logo />
+            < ControlPanel
+                {...props}
+                toggleControlPanel={toggleControlPanel}
+            />
         </div>
      );
 }
