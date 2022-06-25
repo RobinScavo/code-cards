@@ -3,34 +3,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import PropTypes from 'prop-types';
 import {
     getPublicDeck,
     getPrivateDeck,
     editDeck,
-    createDeck,
-    deleteDeck,
     reset
 } from '../../redux/decks/decksSlice';
 
 import Card from '../../components/card/Card';
-import ControlPanel from '../../components/controlPanel/ControlPanel';
 import Spinner from '../../components/spinner/Spinner';
-import EditDeck from '../../components/editDeck/EditDeck'
 
 import './cardContainer.scss';
 
-const CardContainer = ({
-    // showHomeButton,
-    // showCreateButton,
-    // showEditButton,
-    // showUploadButton,
-    // showYourDecksButton,
-    // showDeleteButton,
-    // showPublishButton
-}) => {
-
-    const [editDeckVisible, setEditDeckVisible] =  useState(false);
+const CardContainer = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -43,8 +28,9 @@ const CardContainer = ({
     const {decks, isLoading, isError, message} = useSelector((state) => state.decks);
 
     useEffect(() => {
+        console.log('use effect')
         if (isError) {
-            toast.error('Deck retrieval failed.');
+            toast.error(`Deck retrieval failed: ${message}`);
         }
 
         if (userLocation !== 'privateDecks') {
@@ -58,52 +44,9 @@ const CardContainer = ({
         }
     }, [user, navigate, isError, message, dispatch, userLocation]);
 
-    const handleDelete = () => {
-        dispatch(deleteDeck(deckID));
-        navigate('/decks/privateDecks')
-      }
+    //   const toggleEditDeck = () => setEditDeckVisible(!editDeckVisible);
 
-      const handleEdit = () => {
-        setEditDeckVisible(true)
-      }
 
-      const handleUpload = () => {
-        const uploadsPojo = {id: deckID, data: {likes: decks.likes + 1}};
-
-        const myCopy = {...decks};
-        delete myCopy._id;
-        myCopy.likes = 0;
-        myCopy.published = false;
-        myCopy.user = user;
-
-        navigate('/decks');
-        try {
-            dispatch(editDeck(uploadsPojo));
-            dispatch(reset());
-
-            dispatch(createDeck(myCopy));
-            dispatch(reset());
-
-            toast.success('This deck now exists in your library!');
-        } catch {
-            toast.error('Upload failed.');
-        }
-      }
-
-      const handlePublish = () => {
-        const pojo = { id: decks._id, data: {published: true}}
-
-        try {
-            navigate('/decks/privateDecks')
-            dispatch(editDeck(pojo))
-            dispatch(reset())
-            toast.success('This deck has been published!')
-        } catch {
-            toast.error('Publishing failed.')
-        }
-      }
-
-      const toggleEditDeck = () => setEditDeckVisible(!editDeckVisible);
 
 
     const handleQuickEdit = ({ editQuestionValue, editAnswerValue, index }) => {
@@ -129,53 +72,32 @@ const CardContainer = ({
     return (
         <div className="deck-detail">
 
-            {/* <ControlPanel
-                showHomeButton={showHomeButton}
-                showCreateButton={showCreateButton}
-                showEditButton={showEditButton}
-                showUploadButton={showUploadButton}
-                showYourDecksButton={showYourDecksButton}
-                showDeleteButton={showDeleteButton}
-                showPublishButton={showPublishButton}
-                user={user}
-                decks={decks}
-                handleDelete={handleDelete}
+            {/* <EditDeck
                 toggleEditDeck={toggleEditDeck}
-                handleUpload={handleUpload}
-                handlePublish={handlePublish}
-                handleEdit={handleEdit}
+                deck={decks}
             /> */}
 
-            {editDeckVisible &&
-                <EditDeck
-                    toggleEditDeck={toggleEditDeck}
-                    deck={decks}
-                />
-            }
+            <div className="card-container">
+                <section className='deck-container-heading'>
+                    {user && <p className='deck-container-title'
+                        >Private Library</p>
+                    }
 
-            {!editDeckVisible &&
-                <div className="card-container">
-                    <section className='deck-container-heading'>
-                        {user && <p className='deck-container-title'
-                            >Private Library</p>
-                        }
+                    {!user && <p className='deck-container-title'
+                        >Public Library</p>
+                    }
+                </section>
 
-                        {!user && <p className='deck-container-title'
-                            >Public Library</p>
-                        }
-                    </section>
-
-                    {decks.cards && decks.cards.map((card, index) => (
-                        <Card
-                            index={index}
-                            key={`${decks._id}index${index}`}
-                            card={card}
-                            userLocation={userLocation}
-                            handleQuickEdit={handleQuickEdit}
-                        />
-                    ))}
-                </div>
-            }
+                {decks.cards && decks.cards.map((card, index) => (
+                    <Card
+                        index={index}
+                        key={`${decks._id}index${index}`}
+                        card={card}
+                        userLocation={userLocation}
+                        handleQuickEdit={handleQuickEdit}
+                    />
+                ))}
+            </div>
         </div>
      );
 }

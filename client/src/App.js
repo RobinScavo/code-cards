@@ -9,11 +9,10 @@ import Footer from './components/footer/Footer';
 import DeckContainer from './pages/deckContainer/DeckContainer';
 import CardContainer from './pages/cardContainer/CardContainer';
 import CreateDeck from './components/createDeck/CreateDeck';
-// import EditDeck from './components/editDeck/EditDeck';
 import NotFound from './components/notFound/NotFound';
 import Register from './pages/register/Register';
 import Login from './pages/login/Login';
-
+import EditDeck from './components/editDeck/EditDeck';
 
 import './app.scss';
 
@@ -23,7 +22,6 @@ function App() {
     <>
     <Router>
       <div className="App">
-        {/* <Header/> */}
 
         <Routes>
           <Route exact path='/' element={<Navigate to='/decks' />} />
@@ -71,7 +69,7 @@ function App() {
               showHomeButton = {true}
               showCreateButton = {true}
               showEditButton = {true}
-              showUploadButton = {false}
+              // showUploadButton = {false}
               showYourDecksButton = {true}
               showDeleteButton = {true}
               showPublishButton = {true}
@@ -81,10 +79,57 @@ function App() {
             </>
           } />
 
-          <Route path='/createDeck' element = {<CreateDeck />} />
-          <Route path='/signup' element={<Register />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='*' element = {<NotFound />}/>
+          <Route path='/createDeck' element = {
+            <>
+            <Header
+              showHomeButton = {true}
+              showYourDecksButton = {true}
+            />
+            <CreateDeck />
+            </>
+          } />
+
+          <Route path='/editDeck/:id' element = {
+            <>
+            <Header
+              showHomeButton = {true}
+              showYourDecksButton = {true}
+            />
+
+            <EditDeck />
+            </>
+          } />
+
+          <Route path='/signup' element={
+            <>
+            <Header
+              showHomeButton = {true}
+            />
+
+            <Register />
+            </>
+
+          } />
+
+          <Route path='/login' element={
+            <>
+            <Header
+              showHomeButton = {true}
+            />
+
+            <Login />
+            </>
+          } />
+
+          <Route path='*' element = {
+            <>
+            <Header
+              showHomeButton = {true}
+            />
+
+            <NotFound />
+            </>
+          }/>
         </Routes>
 
         <Footer />

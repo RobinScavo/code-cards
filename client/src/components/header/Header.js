@@ -59,13 +59,6 @@ const Header = (props) => {
                         <h2 className="logout-name">{`${user.name}`}</h2>
                         <h2 className="login-text">{`Log out`}</h2>
                     </button>
-                    // <div className='login-link'>
-                    //     <button
-                    //         className='login-text'
-                    //         onClick={handleLogout}
-                    //         data-testid='logout-link'
-                    //     >{`Log out`}</button>
-                    // </div>
                 }
             </div>
 

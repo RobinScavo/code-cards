@@ -1,32 +1,62 @@
 import  React, { useEffect }  from 'react';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { editDeck, reset } from '../../redux/decks/decksSlice';
+import { useNavigate, Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
+import {
+    getPrivateDeck,
+    editDeck,
+    reset
+} from '../../redux/decks/decksSlice';
+
+import Spinner from '../spinner/Spinner';
 
 import './editDeck.scss';
 
-const EditDeck = ({ deck, toggleEditDeck }) => {
-    const [author, setAuthor] = useState(deck.author);
-    const [title, setTitle] = useState(deck.title);
-    const [subject, setSubject] = useState(deck.subject);
-    const [cards, setCards] = useState(deck.cards);
+const EditDeck = () => {
+    const {decks, isLoading, isError, message} = useSelector((state) => state.decks);
+
+    const [author, setAuthor] = useState('');
+    const [title, setTitle] = useState('');
+    const [subject, setSubject] = useState('');
+    const [cards, setCards] = useState('');
     const [cardIndex, setCardIndex ] = useState(0);
     const [currentQuestion, setCurrentQuestion] = useState('');
     const [currentAnswer, setCurrentAnswer] = useState('');
     const [cardWasEdited, setCardWasEdited] = useState(false);
     const [addingNewCard, setAddingNewCard] = useState(false);
+
+    const deckID = useParams().id;
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (isError) {
+            toast.error(`Deck retrieval failed: ${message}`);
+        }
+
+        dispatch(getPrivateDeck(deckID))
+
+        return () => {
+            dispatch(reset());
+        }
+    }, [isError]);
+
+    useEffect(() => {
+        setAuthor(decks.author || '')
+        setTitle(decks.title || '')
+        setSubject(decks.subject || '')
+        setCards(decks.cards || '')
+    }, [decks])
 
     useEffect(() => {
         if (cards[cardIndex]) {
             setCurrentQuestion(cards[cardIndex].question)
             setCurrentAnswer(cards[cardIndex].answer)
         }
-    }, [cardIndex, cards])
+    }, [cards])
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -41,10 +71,10 @@ const EditDeck = ({ deck, toggleEditDeck }) => {
         newCards.filter(card => card.question && card.answer)
 
         const newDeck = {
-            id: deck._id,
+            id: decks._id,
             data: {
-                _id: deck._id,
-                user: deck.user,
+                _id: decks._id,
+                user: decks.user,
                 author,
                 title,
                 subject,
@@ -54,9 +84,6 @@ const EditDeck = ({ deck, toggleEditDeck }) => {
 
         try {
             dispatch(editDeck(newDeck));;
-            dispatch(reset());
-
-            toggleEditDeck();
             dispatch(reset());
 
             toast.success('Deck has been updated.');
@@ -75,20 +102,21 @@ const EditDeck = ({ deck, toggleEditDeck }) => {
         if (addingNewCard) {
             let newCards = [...cards];
             let newCard = {question: currentQuestion, answer: currentAnswer}
-            newCards.push(newCard)
+            newCards.push(newCard);
+
             setCards(newCards);
-            setCardIndex(cardIndex+1)
+            setCardIndex(cardIndex +1)
             setAddingNewCard(false)
         }
 
         setCurrentQuestion('');
         setCurrentAnswer('');
-        setCardIndex(cards.length);
+        setCardIndex(cards.length +1);
         setAddingNewCard(true)
     }
 
     const handleDeleteCard = () => {
-        if (!cards.length) return;
+        if (cards && !cards.length) return;
 
         let newCards = [...cards];
 
@@ -125,13 +153,19 @@ const EditDeck = ({ deck, toggleEditDeck }) => {
         setCardWasEdited(false)
     }
 
+    if (isLoading) {
+        return (
+            <Spinner />
+        )
+    }
+
     return (
         <div className="edit-container">
             <div className="edit-form-container">
-                <button
+                <Link
                     className="btn"
-                    onClick={toggleEditDeck}
-                >Cancel</button>
+                    to='/decks/privateDecks'
+                >Cancel</Link>
 
                 <h2 className='create-title'>Edit deck</h2>
 
@@ -187,7 +221,7 @@ const EditDeck = ({ deck, toggleEditDeck }) => {
                             }}
                         >Previous</button>}
 
-                        {cardIndex < cards.length-1 && <button
+                        {cards && cardIndex < cards.length-1 && <button
                             className='btn card-toggle-button'
                             onClick = {(e) => {
                                 e.preventDefault()

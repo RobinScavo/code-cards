@@ -6,19 +6,12 @@ import {
     getPrivateDecks,
     reset
   } from '../../redux/decks/decksSlice';
-
 import Deck from '../../components/deck/Deck';
-import ControlPanel from '../../components/controlPanel/ControlPanel';
 import Spinner from '../../components/spinner/Spinner';
 
 import './deckContainer.scss';
 
-const DeckContainer = ({
-    // showHomeButton,
-    // showCreateButton,
-    // showMyDecksButton,
-    // showYourDecksButton
-}) => {
+const DeckContainer = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const location = useLocation();
@@ -33,10 +26,6 @@ const DeckContainer = ({
         if (isError) {
             console.log(message);
         }
-
-        // if (!user) {
-        //     navigate('/login');
-        // }
 
         if (userLocation !== 'privateDecks') {
           dispatch(getPublicDecks());
@@ -56,15 +45,7 @@ const DeckContainer = ({
     }
 
     return (
-        <div className="deck-detail">
-            {/* <ControlPanel
-                showHomeButton={showHomeButton}
-                showMyDecksButton={showMyDecksButton}
-                showCreateButton={showCreateButton}
-                showYourDecksButton = {showYourDecksButton}
-                user={user}
-                decks={decks}
-            /> */}
+        // <div className="deck-detail">
 
             <div className="deck-container">
                 <section className='deck-container-heading'>
@@ -90,7 +71,7 @@ const DeckContainer = ({
                     </Link>
                 ))}
             </div>
-        </div>
+        // </div>
      );
 }
 

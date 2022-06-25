@@ -1,6 +1,15 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import {
+    editDeck,
+    createDeck,
+    deleteDeck,
+    reset
+} from '../../redux/decks/decksSlice';
 
 import './controlPanel.scss';
 
@@ -12,16 +21,68 @@ const ControlPanel = ({
     showYourDecksButton,
     showDeleteButton,
     showPublishButton,
-    user,
-    decks,
-    handleDelete,
-    handleEdit,
-    handlePublish,
-    handleUpload,
+    // user,
+    // decks,
     toggleControlPanel
 }) => {
+    // const [editDeckVisible, setEditDeckVisible] =  useState(false);
+
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const deckID = useParams().id;
+
+    const {user} = useSelector((state) => state.auth);
+
+    const { decks } = useSelector((state) => state.decks);
 
     const visible = toggleControlPanel ? 'open' : 'closed';
+
+    // const toggleEditDeck = () => setEditDeckVisible(!editDeckVisible);
+
+    const handleDelete = () => {
+        dispatch(deleteDeck(deckID));
+        navigate('/decks/privateDecks')
+      }
+
+    // const handleEdit = () => {
+    //     navigate('/decks/editDeck')
+    // }
+
+      const handleUpload = () => {
+        const uploadsPojo = {id: deckID, data: {likes: decks.likes + 1}};
+
+        const myCopy = {...decks};
+        delete myCopy._id;
+        myCopy.likes = 0;
+        myCopy.published = false;
+        myCopy.user = user;
+
+        navigate('/decks');
+        try {
+            dispatch(editDeck(uploadsPojo));
+            dispatch(reset());
+
+            dispatch(createDeck(myCopy));
+            dispatch(reset());
+
+            toast.success('This deck now exists in your library!');
+        } catch {
+            toast.error('Upload failed.');
+        }
+      }
+
+      const handlePublish = () => {
+        const pojo = { id: decks._id, data: {published: true}}
+
+        try {
+            navigate('/decks/privateDecks')
+            dispatch(editDeck(pojo))
+            dispatch(reset())
+            toast.success('This deck has been published!')
+        } catch {
+            toast.error('Publishing failed.')
+        }
+      }
 
     return (
         <div className={`control-panel ${visible}`} data-test='control-panel'>
@@ -54,11 +115,11 @@ const ControlPanel = ({
 
             {/* EDIT DECK */}
             {showEditButton  &&
-                <button
+                <Link
                     className="btn control-button"
-                    onClick={handleEdit}
+                    to={`/editDeck/${deckID}`}
                     data-test='edit-button'
-                >Edit Deck</button>
+                >Edit Deck</Link>
             }
 
             {/* PRIVATE DECKS */}
@@ -100,10 +161,6 @@ ControlPanel.propTypes = {
     showYourDecksButton: PropTypes.bool,
     showDeleteButton: PropTypes.bool,
     showPublishButton: PropTypes.bool,
-    handleDelete: PropTypes.func,
-    handleEdit: PropTypes.func,
-    handlePublish: PropTypes.func,
-    handleUpload: PropTypes.func
 }
 
 export default ControlPanel;
