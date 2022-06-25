@@ -7,7 +7,7 @@
     width: 100%;
     background-color: var(--background);
     overflow-y: scroll;
-    padding-left: 11rem;
+    padding: 1rem;
 }
 
 .card-container::-webkit-scrollbar {
@@ -17,9 +17,4 @@
 .card-container.scrollbar-hidden {
     -ms-overflow-style: none;
     scrollbar-width: none; /* Firefox */
-}
-
-.deck-detail {
-    width: 100vw;
-    display: flex;
 }

@@ -44,11 +44,6 @@ const CardContainer = () => {
         }
     }, [user, navigate, isError, message, dispatch, userLocation]);
 
-    //   const toggleEditDeck = () => setEditDeckVisible(!editDeckVisible);
-
-
-
-
     const handleQuickEdit = ({ editQuestionValue, editAnswerValue, index }) => {
         const newCard = {'question': editQuestionValue, 'answer': editAnswerValue};
         const newCards = [...decks.cards];
@@ -70,46 +65,28 @@ const CardContainer = () => {
     }
 
     return (
-        <div className="deck-detail">
+        <div className="card-container">
+            <section className='deck-container-heading'>
+                {user && <p className='deck-container-title'
+                    >Private Library</p>
+                }
 
-            {/* <EditDeck
-                toggleEditDeck={toggleEditDeck}
-                deck={decks}
-            /> */}
+                {!user && <p className='deck-container-title'
+                    >Public Library</p>
+                }
+            </section>
 
-            <div className="card-container">
-                <section className='deck-container-heading'>
-                    {user && <p className='deck-container-title'
-                        >Private Library</p>
-                    }
-
-                    {!user && <p className='deck-container-title'
-                        >Public Library</p>
-                    }
-                </section>
-
-                {decks.cards && decks.cards.map((card, index) => (
-                    <Card
-                        index={index}
-                        key={`${decks._id}index${index}`}
-                        card={card}
-                        userLocation={userLocation}
-                        handleQuickEdit={handleQuickEdit}
-                    />
-                ))}
-            </div>
+            {decks.cards && decks.cards.map((card, index) => (
+                <Card
+                    index={index}
+                    key={`${decks._id}index${index}`}
+                    card={card}
+                    userLocation={userLocation}
+                    handleQuickEdit={handleQuickEdit}
+                />
+            ))}
         </div>
      );
 }
-
-// CardContainer.propTypes = {
-//     showHomeButton: PropTypes.bool,
-//     showCreateButton: PropTypes.bool,
-//     showEditButton: PropTypes.bool,
-//     showUploadButton: PropTypes.bool,
-//     showYourDecksButton: PropTypes.bool,
-//     showDeleteButton: PropTypes.bool,
-//     showPublishButton: PropTypes.bool,
-// }
 
 export default CardContainer;

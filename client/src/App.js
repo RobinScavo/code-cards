@@ -69,7 +69,6 @@ function App() {
               showHomeButton = {true}
               showCreateButton = {true}
               showEditButton = {true}
-              // showUploadButton = {false}
               showYourDecksButton = {true}
               showDeleteButton = {true}
               showPublishButton = {true}
@@ -102,9 +101,7 @@ function App() {
 
           <Route path='/signup' element={
             <>
-            <Header
-              showHomeButton = {true}
-            />
+            <Header showHomeButton = {true} />
 
             <Register />
             </>
@@ -113,9 +110,7 @@ function App() {
 
           <Route path='/login' element={
             <>
-            <Header
-              showHomeButton = {true}
-            />
+            <Header showHomeButton = {true} />
 
             <Login />
             </>
@@ -123,9 +118,7 @@ function App() {
 
           <Route path='*' element = {
             <>
-            <Header
-              showHomeButton = {true}
-            />
+            <Header showHomeButton = {true} />
 
             <NotFound />
             </>

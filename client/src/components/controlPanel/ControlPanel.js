@@ -96,10 +96,19 @@ const ControlPanel = ({
             }
 
             {/* CREATE DECK */}
-            {showCreateButton &&
+            {showCreateButton && user &&
                 <Link
                     className='btn control-button'
                     to='/createDeck'
+                    data-test='create-button'
+                >Create Deck</Link>
+            }
+
+            {/* CREATE DECK NO USER */}
+            {showCreateButton && !user &&
+                <Link
+                    className='btn control-button'
+                    to='/login'
                     data-test='create-button'
                 >Create Deck</Link>
             }

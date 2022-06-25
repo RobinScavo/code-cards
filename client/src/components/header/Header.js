@@ -5,7 +5,7 @@ import { logout, reset } from '../../redux/auth/authSlice';
 
 import Logo from '../logo/Logo';
 import ControlPanel from '../controlPanel/ControlPanel';
-import { ImEnter } from 'react-icons/im'
+import {  RiUserSmileFill } from 'react-icons/ri'
 
 import './header.scss';
 
@@ -43,7 +43,7 @@ const Header = (props) => {
                         data-testid='login-link'
                     >
                         <div className="icon-container">
-                            < ImEnter className='my-icon'/>
+                            <  RiUserSmileFill className='my-icon'/>
                         </div>
                         <h2 className="login-text">Log In</h2>
 

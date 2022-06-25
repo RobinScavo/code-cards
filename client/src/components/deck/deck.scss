@@ -3,9 +3,53 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 10rem;
-    width: 18rem;
-    background-color: rgb(251, 250, 248);
+    height: 15rem;
+    width: 25rem;
+    background-color: var(--light-color);
     margin: 10px;
     box-shadow: -2px 2px 9px 1px rgba($color: #000000, $alpha: 0.2);
+    border-radius: 5px;
+}
+
+.upper-deck {
+    display: flex;
+    width: 100%;
+    height: 55%;
+}
+
+.deck-icon-container {
+    width: 30%;
+}
+
+.deck-info {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: .5rem;
+}
+
+.deck-subject {
+    font-size: 35px;
+    margin-bottom: 1rem;
+}
+
+.deck-title {
+    font-size: 25px;
+    margin-bottom: 1rem;
+}
+
+.deck-author {
+    font-size: 20px;
+    margin-bottom: 11rem;
+}
+
+.deck-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    font-size: 20px;
+    width: 90%;
+    height: 35%;
+    padding: 5px;
 }

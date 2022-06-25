@@ -1,4 +1,4 @@
-import  React  from 'react';
+import  React, { useEffect }  from 'react';
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -38,6 +38,10 @@ const CreateDeck = () => {
 
         navigate('/decks/privateDecks');
     }
+
+    useEffect(() => {
+        setAuthor(user.name || '')
+    }, [user])
 
     const handleAddCard = (e) => {
         const questionInput = document.querySelectorAll('.QA');
@@ -105,6 +109,12 @@ const CreateDeck = () => {
                     <option className='create-option' value="CSS">CSS</option>
                     <option className='create-option' value="Web Technologies">Web Technologies</option>
                     <option className='create-option' value="Node.js">Node.js</option>
+                    <option className='create-option' value="Drupal">Drupal</option>
+                    <option className='create-option' value="HTML5">HTML5</option>
+                    <option className='create-option' value="SASS">SASS</option>
+                    <option className='create-option' value="NPM">NPM</option>
+                    <option className='create-option' value="Wordpress">Wordpress</option>
+                    <option className='create-option' value="Mongo">Mongo</option>
                 </select>
 
                 <label className='create-label'>Question</label>
