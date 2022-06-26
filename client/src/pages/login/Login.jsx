@@ -7,7 +7,6 @@ import { login, reset } from '../../redux/auth/authSlice';
 
 import  Spinner from '../../components/spinner/Spinner';
 
-// import '../register/register.scss';
 import './login.scss'
 
 
@@ -60,8 +59,6 @@ function Login() {
 
     return (
         <section className="login-container" data-testid='login-page'>
-            {/* <ControlPanel /> */}
-
             <div className="form-container">
                 <div className="toggle-login-div">
                     <button id='logIn-button' className="toggle-button">Log In</button>

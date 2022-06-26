@@ -9,29 +9,40 @@
     margin: 10px;
     box-shadow: -2px 2px 9px 1px rgba($color: #000000, $alpha: 0.2);
     border-radius: 5px;
+    color: var(--black-color)
 }
 
 .upper-deck {
     display: flex;
     width: 100%;
     height: 55%;
+    margin-left: 1rem;
 }
 
 .deck-icon-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 30%;
 }
 
+.deck-icon {
+    font-size: 6.5rem;
+    color: var(--accent-color)
+}
+
 .deck-info {
-    width: 70%;
+    width: 50%;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    padding-left: .5rem;
+    align-items: center;
+    padding-top: .5rem;
 }
 
 .deck-subject {
     font-size: 35px;
     margin-bottom: 1rem;
+    text-align: center;
 }
 
 .deck-title {

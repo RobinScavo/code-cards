@@ -1,14 +1,4 @@
-import reducer, {
-    initialState,
-    getPrivateDeck,
-    getPrivateDecks,
-    getPublicDeck,
-    getPublicDecks,
-    createDeck,
-    editDeck,
-    deleteDeck
-} from '../decksSlice';
-import { getState} from 'react-redux'
+import reducer, { getPublicDecks } from '../decksSlice';
 import { mockDeck, secondMockDeck, thirdMockDeck } from '../../../../tools/utils';
 
 describe('decks slice', () => {

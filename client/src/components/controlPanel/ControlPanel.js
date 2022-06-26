@@ -21,11 +21,8 @@ const ControlPanel = ({
     showYourDecksButton,
     showDeleteButton,
     showPublishButton,
-    // user,
-    // decks,
-    toggleControlPanel
+    controlPanelDisplay
 }) => {
-    // const [editDeckVisible, setEditDeckVisible] =  useState(false);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -35,18 +32,12 @@ const ControlPanel = ({
 
     const { decks } = useSelector((state) => state.decks);
 
-    const visible = toggleControlPanel ? 'open' : 'closed';
-
-    // const toggleEditDeck = () => setEditDeckVisible(!editDeckVisible);
+    const visible = controlPanelDisplay ? 'open' : 'closed';
 
     const handleDelete = () => {
         dispatch(deleteDeck(deckID));
         navigate('/decks/privateDecks')
       }
-
-    // const handleEdit = () => {
-    //     navigate('/decks/editDeck')
-    // }
 
       const handleUpload = () => {
         const uploadsPojo = {id: deckID, data: {likes: decks.likes + 1}};
@@ -170,6 +161,7 @@ ControlPanel.propTypes = {
     showYourDecksButton: PropTypes.bool,
     showDeleteButton: PropTypes.bool,
     showPublishButton: PropTypes.bool,
+    controlPanelDisplay: PropTypes.bool
 }
 
 export default ControlPanel;

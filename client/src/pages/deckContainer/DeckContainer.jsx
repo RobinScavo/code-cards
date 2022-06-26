@@ -45,33 +45,30 @@ const DeckContainer = () => {
     }
 
     return (
-        // <div className="deck-detail">
+        <div className="deck-container">
+            <section className='deck-container-heading'>
+                {user && <p className='deck-container-title'
+                    >Private Library</p>
+                }
 
-            <div className="deck-container">
-                <section className='deck-container-heading'>
-                    {user && <p className='deck-container-title'
-                        >Private Library</p>
-                    }
+                {!user && <p className='deck-container-title'
+                    >Public Library</p>
+                }
+            </section>
 
-                    {!user && <p className='deck-container-title'
-                        >Public Library</p>
-                    }
-                </section>
-
-                {decks && decks.length > 0 && decks.map((deck) => (
-                    <Link
-                        to={`/decks/${route}${deck._id}`}
+            {decks && decks.length > 0 && decks.map((deck) => (
+                <Link
+                    to={`/decks/${route}${deck._id}`}
+                    key={deck._id}
+                >
+                    <Deck
                         key={deck._id}
-                    >
-                        <Deck
-                            key={deck._id}
-                            deck={deck}
-                            userLocation={userLocation}
-                        />
-                    </Link>
-                ))}
-            </div>
-        // </div>
+                        deck={deck}
+                        userLocation={userLocation}
+                    />
+                </Link>
+            ))}
+        </div>
      );
 }
 

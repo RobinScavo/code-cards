@@ -1,8 +1,6 @@
 import configureStore from 'redux-mock-store';
-// import { login, logout, register } from '../authService';
-import MockAdapter from 'axios-mock-adapter';
 
-import { initialState, login } from '../../auth/authSlice';
+import { initialState } from '../../auth/authSlice';
 
 const userData = {
     name: 'first',
@@ -22,14 +20,4 @@ describe('auth slice', () => {
         expect(state.isLoading).toEqual(false);
         expect(state.message).toEqual('');
     });
-
-    test('should update state upon successful login', async () => {
-        // const mockStore = configureStore([]);
-        // const store = mockStore(initialState);
-
-        // store.dispatch(login(userData))
-        // const state = store.getState();
-
-        // console.log(state)
-    })
 })

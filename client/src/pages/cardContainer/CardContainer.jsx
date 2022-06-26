@@ -54,8 +54,6 @@ const CardContainer = () => {
         dispatch(reset());
 
         window.location.reload();
-
-        //TODO dispatch on window location change
     }
 
     if (isLoading) {
@@ -65,7 +63,7 @@ const CardContainer = () => {
     }
 
     return (
-        <div className="card-container">
+        <div className="card-container" data-testid='card-container'>
             <section className='deck-container-heading'>
                 {user && <p className='deck-container-title'
                     >Private Library</p>
@@ -79,8 +77,18 @@ const CardContainer = () => {
             {decks.cards && decks.cards.map((card, index) => (
                 <Card
                     index={index}
-                    key={`${decks._id}index${index}`}
-                    card={card}
+                    key={`${decks._id}question${index}`}
+                    text={card.question}
+                    userLocation={userLocation}
+                    handleQuickEdit={handleQuickEdit}
+                />
+            ))}
+
+            {decks.cards && decks.cards.map((card, index) => (
+                <Card
+                    index={index}
+                    key={`${decks._id}answer${index}`}
+                    text={card.answer}
                     userLocation={userLocation}
                     handleQuickEdit={handleQuickEdit}
                 />

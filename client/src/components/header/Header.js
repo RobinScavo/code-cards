@@ -10,8 +10,8 @@ import {  RiUserSmileFill } from 'react-icons/ri'
 import './header.scss';
 
 const Header = (props) => {
-    const [toggleControlPanel, setToggleControlPanel] = useState(false);
-    const rotated = toggleControlPanel ? 'rotated' : '';
+    const [controlPanelDisplay, setcontrolPanelDisplay] = useState(false);
+    const rotated = controlPanelDisplay ? 'rotated' : '';
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -23,8 +23,8 @@ const Header = (props) => {
         navigate('/decks')
     }
 
-    const handleOpenControlPanel = () => {
-        setToggleControlPanel(!toggleControlPanel)
+    const toggleControlPanel = () => {
+        setcontrolPanelDisplay(!controlPanelDisplay)
     }
 
     return (
@@ -33,7 +33,7 @@ const Header = (props) => {
                 <button
                     className={`navigation-icon ${rotated}`}
                     data-testid='navigation-button'
-                    onClick={handleOpenControlPanel}
+                    onClick={toggleControlPanel}
                 ><i className="fas fa-bars"></i></button>
 
                 {!user &&
@@ -66,7 +66,7 @@ const Header = (props) => {
             <Logo />
             < ControlPanel
                 {...props}
-                toggleControlPanel={toggleControlPanel}
+                controlPanelDisplay={controlPanelDisplay}
             />
         </div>
      );

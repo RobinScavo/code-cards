@@ -36,3 +36,6 @@ npm run test
 - NPM React Icons
 - Jest
 - Enzyme
+
+## Features
+- Custom dropdown and navigation icon animation

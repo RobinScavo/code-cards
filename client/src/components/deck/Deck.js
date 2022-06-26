@@ -19,7 +19,7 @@ import {
 import './deck.scss';
 
 const Deck = ({ deck, userLocation }) => {
-    const { subject, title, author, likes, published } = deck
+    const { subject, title, author, likes, published, cards } = deck
     const publicDeck = published ? 'Published' : 'Private';
 
     return (
@@ -27,18 +27,20 @@ const Deck = ({ deck, userLocation }) => {
             <div className="upper-deck">
 
                 <div className="deck-icon-container">
-                    {subject === 'React' && <DiReact />}
-                    {subject === 'Javascript' && <DiJsBadge />}
-                    {subject === 'Drupal' && <DiDrupal />}
-                    {subject === 'Github' && <DiGithubBadge />}
-                    {subject === 'HTML5' && <DiHtml5 />}
-                    {subject === 'SASS' && <DiSass />}
-                    {subject === 'NPM' && <DiNpm />}
-                    {subject === 'Node.js' && <DiNodejs />}
-                    {subject === 'Wordpress' && <DiWordpress />}
-                    {subject === 'Web Technologies' && <DiAtom />}
-                    {subject === 'CSS' && <DiCssTricks />}
-                    {subject === 'Mongo' && <DiDatabase />}
+                    <div className="deck-icon">
+                        {subject === 'React' && <DiReact />}
+                        {subject === 'Javascript' && <DiJsBadge />}
+                        {subject === 'Drupal' && <DiDrupal />}
+                        {subject === 'Github' && <DiGithubBadge />}
+                        {subject === 'HTML5' && <DiHtml5 />}
+                        {subject === 'SASS' && <DiSass />}
+                        {subject === 'NPM' && <DiNpm />}
+                        {subject === 'Node.js' && <DiNodejs />}
+                        {subject === 'Wordpress' && <DiWordpress />}
+                        {subject === 'Web Technologies' && <DiAtom />}
+                        {subject === 'CSS' && <DiCssTricks />}
+                        {subject === 'Mongo' && <DiDatabase />}
+                    </div>
                 </div>
 
                 <div className="deck-info">
@@ -53,6 +55,7 @@ const Deck = ({ deck, userLocation }) => {
                     <p className='deck-published' data-test='publishedText'>{publicDeck}</p>
                 }
                 <p className='deck-uploads' data-test='uploadText'>Uploads: {likes}</p>
+                <p className="deck-card-count">Cards: {cards.length}</p>
             </div>
         </div>
      );
@@ -63,7 +66,8 @@ Deck.propTypes = {
         subject: PropTypes.string,
         title: PropTypes.string,
         author: PropTypes.string,
-        uploads: PropTypes.number,
+        likes: PropTypes.number,
+        cards: PropTypes.array,
     }),
     userLocation: PropTypes.string
 }
