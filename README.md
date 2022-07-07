@@ -15,7 +15,10 @@ npm run test
 ## Development
 
 ```js
-    npm init
+    cd backend
+    nodemon start
+
+
     npm run start
 ```
 
