@@ -28,7 +28,6 @@ const CardContainer = () => {
     const {decks, isLoading, isError, message} = useSelector((state) => state.decks);
 
     useEffect(() => {
-        console.log('use effect')
         if (isError) {
             toast.error(`Deck retrieval failed: ${message}`);
         }
@@ -75,24 +74,17 @@ const CardContainer = () => {
             </section>
 
             {decks.cards && decks.cards.map((card, index) => (
+
                 <Card
                     index={index}
                     key={`${decks._id}question${index}`}
-                    text={card.question}
+                    question={card.question}
+                    answer={card.answer}
                     userLocation={userLocation}
                     handleQuickEdit={handleQuickEdit}
                 />
             ))}
 
-            {decks.cards && decks.cards.map((card, index) => (
-                <Card
-                    index={index}
-                    key={`${decks._id}answer${index}`}
-                    text={card.answer}
-                    userLocation={userLocation}
-                    handleQuickEdit={handleQuickEdit}
-                />
-            ))}
         </div>
      );
 }

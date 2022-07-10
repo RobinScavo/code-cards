@@ -4,18 +4,23 @@ import PropTypes from 'prop-types';
 
 import './card.scss'
 
-const Card = ({ text, handleQuickEdit, index, userLocation }) => {
-    const [editQuestionValue, setEditQuestionValue] = useState(text);
-    const [editAnswerValue, setEditAnswerValue] = useState(text);
+const Card = ({ question, answer, handleQuickEdit, index, userLocation }) => {
+    const [editQuestionValue, setEditQuestionValue] = useState(question);
+    const [editAnswerValue, setEditAnswerValue] = useState(answer);
     const [editMode, setEditMode] = useState(false);
+    const [flipped, setFlipped] = useState(false);
 
     const handleEditMode = () => setEditMode(true);
-    console.log(userLocation)
+
+    const flippedClass = flipped ? 'flipped' : '';
+
     return (
-        <div className="card">
+        <div className={`card ${flippedClass}`} onClick={() => setFlipped(!flipped)}>
+
+        <div className={`question`}>
 
             {/* TEXT AND EDIT BUTTON */}
-            {!editMode && <h1>{text}</h1>}
+            {!editMode &&  <h1>{question}</h1>}
             {!editMode && userLocation === 'privateDecks' && <button
                 index={index}
                 className="edit-button"
@@ -23,23 +28,45 @@ const Card = ({ text, handleQuickEdit, index, userLocation }) => {
             >Edit Card</button>}
 
             {/* EDIT INPUTS AND SAVE BUTTON */}
-            {editMode && <input
-                defaultValue={text}
+            {editMode && !flipped && <input
+                defaultValue={question}
                 onChange={(e) => setEditQuestionValue(e.target.value)}
-            />}
-
-            {editMode && <input
-                defaultValue={text}
-                onChange={(e) => setEditAnswerValue(e.target.value)}
             />}
 
             {editMode && <button
                 className="edit-button btn"
                 onClick={() => {
-                    handleQuickEdit ({ editQuestionValue, editAnswerValue, index })
+                    handleQuickEdit ({ editQuestionValue, index })
                     setEditMode(false)
                 }}
             >Save Changes</button>}
+            </div>
+            {/* Answer */}
+            <div className={`answer`}>
+
+                {/* TEXT AND EDIT BUTTON */}
+                {!editMode &&  <h1>{answer}</h1>}
+                {!editMode && userLocation === 'privateDecks' && <button
+                    index={index}
+                    className="edit-button"
+                    onClick={handleEditMode}
+                >Edit Card</button>}
+
+                {/* EDIT INPUTS AND SAVE BUTTON */}
+                {editMode && flipped && <input
+                    defaultValue={answer}
+                    onChange={(e) => setEditAnswerValue(e.target.value)}
+                />}
+
+                {editMode && <button
+                    className="edit-button btn"
+                    onClick={() => {
+                        handleQuickEdit ({ editAnswerValue, index })
+                        setEditMode(false)
+                    }}
+                >Save Changes</button>}
+            </div>
+
         </div>
      );
 }
