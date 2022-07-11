@@ -12,59 +12,104 @@ const Card = ({ question, answer, handleQuickEdit, index, userLocation }) => {
 
     const handleEditMode = () => setEditMode(true);
 
+    // If textarea focus it, otherwise flip card
+    const handleClick = (e) => {
+        console.log(e.target)
+        if ((e.target.id) === 'card-edit-textarea' || (e.target.className) === 'edit-button') return;
+        setFlipped(!flipped);
+    }
+
     const flippedClass = flipped ? 'flipped' : '';
 
     return (
-        <div className={`card ${flippedClass}`} onClick={() => setFlipped(!flipped)}>
+        <div className={`card ${flippedClass}`} onClick={handleClick}>
 
-        <div className={`question`}>
+            {/* QUESTION */}
+            <div className={`question`}>
+                {/* CARD HEADER */}
+                <div className="card-header">
+                    <button className="flag"></button>
+                    <h1 className="card-header-title">Q</h1>
+                    {!editMode && userLocation === 'privateDecks' && <button
+                        index={index}
+                        className="edit-button"
+                        onClick={handleEditMode}
+                    >Edit</button>}
+                </div>
 
-            {/* TEXT AND EDIT BUTTON */}
-            {!editMode &&  <h1>{question}</h1>}
-            {!editMode && userLocation === 'privateDecks' && <button
-                index={index}
-                className="edit-button"
-                onClick={handleEditMode}
-            >Edit Card</button>}
+                {/* TEXT AND EDIT BUTTON */}
+                {!editMode &&  <h1>{question}</h1>}
 
-            {/* EDIT INPUTS AND SAVE BUTTON */}
-            {editMode && !flipped && <input
-                defaultValue={question}
-                onChange={(e) => setEditQuestionValue(e.target.value)}
-            />}
+                {/* EDIT INPUTS AND SAVE BUTTON */}
+                {editMode && !flipped && <textarea
+                    id='card-edit-textarea'
+                    className='create-input'
+                    defaultValue={question}
+                    onChange={(e) => setEditQuestionValue(e.target.value)}
+                />}
 
-            {editMode && <button
-                className="edit-button btn"
-                onClick={() => {
-                    handleQuickEdit ({ editQuestionValue, index })
-                    setEditMode(false)
-                }}
-            >Save Changes</button>}
+                <div className="card-edit-buttons">
+                    {/* SAVE */}
+                    {editMode && <button
+                        className="edit-button"
+                        onClick={() => {
+                            handleQuickEdit ({ editQuestionValue, editAnswerValue, index })
+                            setEditMode(false)
+                        }}
+                    >Save Changes</button>}
+
+                    {/* CANCEL */}
+                    {editMode && <button
+                        className="edit-button"
+                        onClick={() => {
+                            setEditMode(false)
+                        }}
+                    >Cancel</button>}
+                </div>
             </div>
-            {/* Answer */}
+
+            {/* ANSWER */}
             <div className={`answer`}>
+                {/* CARD HEADER */}
+                <div className="card-header">
+                    <button className="flag"></button>
+                    <h1 className="card-header-title">A</h1>
+                    {!editMode && userLocation === 'privateDecks' && <button
+                        index={index}
+                        className="edit-button"
+                        onClick={handleEditMode}
+                    >Edit</button>}
+                </div>
 
                 {/* TEXT AND EDIT BUTTON */}
                 {!editMode &&  <h1>{answer}</h1>}
-                {!editMode && userLocation === 'privateDecks' && <button
-                    index={index}
-                    className="edit-button"
-                    onClick={handleEditMode}
-                >Edit Card</button>}
 
                 {/* EDIT INPUTS AND SAVE BUTTON */}
-                {editMode && flipped && <input
+                {editMode && flipped && <textarea
+                    id='card-edit-textarea'
+                    className='create-input'
                     defaultValue={answer}
                     onChange={(e) => setEditAnswerValue(e.target.value)}
                 />}
 
-                {editMode && <button
-                    className="edit-button btn"
-                    onClick={() => {
-                        handleQuickEdit ({ editAnswerValue, index })
-                        setEditMode(false)
-                    }}
-                >Save Changes</button>}
+                <div className="card-edit-buttons">
+                    {/* SAVE */}
+                    {editMode && <button
+                        className="edit-button"
+                        onClick={() => {
+                            handleQuickEdit ({ editQuestionValue, editAnswerValue, index })
+                            setEditMode(false)
+                        }}
+                    >Save Changes</button>}
+
+                    {/* CANCEL */}
+                    {editMode && <button
+                        className="edit-button"
+                        onClick={() => {
+                            setEditMode(false)
+                        }}
+                    >Cancel</button>}
+                </div>
             </div>
 
         </div>

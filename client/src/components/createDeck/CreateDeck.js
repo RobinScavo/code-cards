@@ -73,9 +73,9 @@ const CreateDeck = () => {
 
             <h2 className='create-title'>Create a new deck</h2>
 
-            <form className='create-form' onSubmit={handleSubmit}>
+            <form className='create-form'>
                 <label className='create-label'>Author</label>
-                <input
+                <textarea
                     className='create-input'
                     type="text"
                     required
@@ -85,13 +85,14 @@ const CreateDeck = () => {
                 />
 
                 <label className='create-label'>Title</label>
-                <input
+                <textarea
                     className='create-input'
                     type="text"
                     required
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                     data-testid='title-input'
+                    onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}
                 />
 
                 <label className='create-label'>Subject</label>
@@ -118,17 +119,18 @@ const CreateDeck = () => {
                 </select>
 
                 <label className='create-label'>Question</label>
-                <input
+                <textarea
                     className='create-input QA'
                     type="text"
                     required
                     value={question}
                     onChange={(e) => setQuestion(e.target.value)}
                     data-testid='question-input'
+                    // onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}
                 />
 
                 <label className='create-label'>Answer</label>
-                <input
+                <textarea
                     className='create-input QA'
                     type="text"
                     required
@@ -146,6 +148,7 @@ const CreateDeck = () => {
                 <button
                     type='submit'
                     className="btn create-button"
+                    onClick={handleSubmit}
                 >Submit Deck</button>
 
             </form>
