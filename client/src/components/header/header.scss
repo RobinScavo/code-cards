@@ -14,7 +14,7 @@
         height: 50%;
         width: 100vw;
         border-bottom: 1.5px solid var(--darkish-color);
-        background-color: var(--light-color);
+        background-color: var(--yellow-color);
         z-index: 3;
     }
 
@@ -22,7 +22,7 @@
         position: relative;
         height: 50%;
         width: 100vw;
-        background-color: var(--light-color);
+        background-color: var(--yellow-color);
         z-index: 3;
     }
 
@@ -48,7 +48,7 @@
         width: 6.9rem;
         color: var(--accent-color);
         font-size: 19px;
-        background-color: var(--light-color);
+        background-color: var(--yellow-color);
         cursor: pointer;
         margin-right: 1rem;
     }
@@ -69,5 +69,14 @@
 
     .logout-name {
         color: var(--black-color)
+    }
+}
+
+@media only screen and (max-device-width: 600px) {
+    .header-container {
+        .login-link {
+            font-size: 16px;
+            margin-right: 0px;
+        }
     }
 }

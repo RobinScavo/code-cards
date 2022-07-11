@@ -23,7 +23,7 @@ const iconColors = {
         color: 'rgb(97,219,251)',
         backgroundColor: 'var(--black-color)',
         top: '7px',
-        right: '10px',
+        left: '8px',
         height: '100px',
         width: '100px',
         borderRadius: '50%'
@@ -32,44 +32,43 @@ const iconColors = {
         color: 'rgb(232,212,77)',
         backgroundColor: 'var(--black-color)',
         top: '25px',
-        right: '10px',
+        left: '25px',
         height: '80px',
         width: '80px',
         borderRadius: '0%'
     },
-    'Drupal': {
+    Drupal: {
         color: 'rgb(25,138,200)',
         backgroundColor: '',
         top: '0',
-        right: '0',
+        left: '0',
         height: '0px',
         width: '0px',
         borderRadius: '0%'
     },
-    'Github': {},
-    'HTML5': {
+    HTML5: {
         color: 'rgb(221,75,37)',
         backgroundColor: 'var(--black-color)',
         top: '25px',
-        right: '35px',
+        left: '35px',
         height: '65px',
         width: '50px',
         borderRadius: '0%'
     },
-    'SASS': {
+    SASS: {
         color: 'rgb(201,97,149)',
         backgroundColor: '',
         top: '0',
-        right: '0',
+        left: '0',
         height: '0px',
         width: '0px',
         borderRadius: '0%'
     },
-    'NPM': {
+    NPM: {
         color: 'rgb(220,45,53)',
         backgroundColor: '',
         top: '0',
-        right: '0',
+        left: '0',
         height: '0px',
         width: '0px',
         borderRadius: '0%'
@@ -77,17 +76,17 @@ const iconColors = {
     'Node.js': {
         color: 'var(--black-color)',
         backgroundColor: 'rgb(84,161,67)',
-        top: '25px',
-        right: '0px',
-        height: '70px',
-        width: '120px',
+        top: '35px',
+        left: '0px',
+        height: '50px',
+        width: '117px',
         borderRadius: '10%'
     },
-    'Wordpress': {
+    Wordpress: {
         color: 'rgb(32,113,149)',
         backgroundColor: '',
         top: '0',
-        right: '0',
+        left: '0',
         height: '0px',
         width: '0px',
         borderRadius: '0%'
@@ -96,25 +95,25 @@ const iconColors = {
         color: 'var(--black-color)',
         backgroundColor: '',
         top: '0',
-        right: '0',
+        left: '0',
         height: '0px',
         width: '0px',
         borderRadius: '0%'
     },
-    'CSS': {
+    CSS: {
         color: 'var(--light-color)',
         backgroundColor: 'linear-gradient(to top, rgb(241,133,9) 0%, rgb(210,24,93) 100%)',
         top: '8px',
-        right: '11px',
+        left: '8px',
         height: '100px',
         width: '100px',
         borderRadius: '50%'
     },
-    'Mongo': {
+    Mongo: {
         color: 'rgb(65,230,97)',
         backgroundColor: 'var(--black-color)',
         top: '27px',
-        right: '30px',
+        left: '28px',
         height: '60px',
         width: '60px',
         borderRadius: '10%'
@@ -135,7 +134,7 @@ const Deck = ({ deck, userLocation }) => {
                         style={{
                             background: iconColors[subject].backgroundColor,
                             top: iconColors[subject].top,
-                            right: iconColors[subject].right,
+                            left: iconColors[subject].left,
                             height: iconColors[subject].height,
                             width: iconColors[subject].width,
                             borderRadius: iconColors[subject].borderRadius,
@@ -169,8 +168,8 @@ const Deck = ({ deck, userLocation }) => {
                 {userLocation === 'privateDecks' &&
                     <p className='deck-published' data-test='publishedText'>{publicDeck}</p>
                 }
-                <p className='deck-uploads' data-test='uploadText'>Uploads: {likes}</p>
-                <p className="deck-card-count">Cards: {cards.length}</p>
+                <p className='deck-uploads' data-test='uploadText'>Uploads <span className='deck-number'>{likes}</span></p>
+                <p className="deck-uploads">Cards <span className='deck-number'>{cards.length}</span></p>
             </div>
         </div>
      );

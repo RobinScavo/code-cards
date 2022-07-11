@@ -14,7 +14,6 @@ const Card = ({ question, answer, handleQuickEdit, index, userLocation }) => {
 
     // If textarea focus it, otherwise flip card
     const handleClick = (e) => {
-        console.log(e.target)
         if ((e.target.id) === 'card-edit-textarea' || (e.target.className) === 'edit-button') return;
         setFlipped(!flipped);
     }

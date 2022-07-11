@@ -42,3 +42,4 @@ npm run test
 
 ## Features
 - Custom dropdown and navigation icon animation
+- Subject icons were created with the react-icons npm package and were spruced up with dynamic inline styling.

@@ -44,7 +44,6 @@ const CardContainer = () => {
     }, [user, navigate, isError, message, dispatch, userLocation]);
 
     const handleQuickEdit = ({ editQuestionValue, editAnswerValue, index }) => {
-        console.log(editQuestionValue, editAnswerValue)
         const newCard = {'question': editQuestionValue, 'answer': editAnswerValue};
         const newCards = [...decks.cards];
         newCards.splice(index, 1, newCard);

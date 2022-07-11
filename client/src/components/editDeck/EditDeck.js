@@ -171,7 +171,7 @@ const EditDeck = () => {
 
                 <form className='create-form'>
                     <label className='create-label' htmlFor='author'>Author</label>
-                    <input
+                    <textarea
                         className='create-input'
                         type="text"
                         required
@@ -182,7 +182,7 @@ const EditDeck = () => {
                     />
 
                     <label className='create-label'>Title</label>
-                    <input
+                    <textarea
                         className='create-input'
                         type="text"
                         required
@@ -237,7 +237,7 @@ const EditDeck = () => {
                     <h2 className='card-index-text'>Card {cardIndex +1}</h2>
 
                     <label className='create-label'>Question</label>
-                    <input
+                    <textarea
                         className='create-input QA'
                         type="text"
                         required
@@ -250,7 +250,7 @@ const EditDeck = () => {
                     />
 
                     <label className='create-label'>Answer</label>
-                    <input
+                    <textarea
                         className='create-input QA'
                         type="text"
                         required
