@@ -18,6 +18,109 @@ import {
 
 import './deck.scss';
 
+const iconColors = {
+    React: {
+        color: 'rgb(97,219,251)',
+        backgroundColor: 'var(--black-color)',
+        top: '7px',
+        right: '10px',
+        height: '100px',
+        width: '100px',
+        borderRadius: '50%'
+    },
+    Javascript: {
+        color: 'rgb(232,212,77)',
+        backgroundColor: 'var(--black-color)',
+        top: '25px',
+        right: '10px',
+        height: '80px',
+        width: '80px',
+        borderRadius: '0%'
+    },
+    'Drupal': {
+        color: 'rgb(25,138,200)',
+        backgroundColor: '',
+        top: '0',
+        right: '0',
+        height: '0px',
+        width: '0px',
+        borderRadius: '0%'
+    },
+    'Github': {},
+    'HTML5': {
+        color: 'rgb(221,75,37)',
+        backgroundColor: 'var(--black-color)',
+        top: '25px',
+        right: '35px',
+        height: '65px',
+        width: '50px',
+        borderRadius: '0%'
+    },
+    'SASS': {
+        color: 'rgb(201,97,149)',
+        backgroundColor: '',
+        top: '0',
+        right: '0',
+        height: '0px',
+        width: '0px',
+        borderRadius: '0%'
+    },
+    'NPM': {
+        color: 'rgb(220,45,53)',
+        backgroundColor: '',
+        top: '0',
+        right: '0',
+        height: '0px',
+        width: '0px',
+        borderRadius: '0%'
+    },
+    'Node.js': {
+        color: 'var(--black-color)',
+        backgroundColor: 'rgb(84,161,67)',
+        top: '25px',
+        right: '0px',
+        height: '70px',
+        width: '120px',
+        borderRadius: '10%'
+    },
+    'Wordpress': {
+        color: 'rgb(32,113,149)',
+        backgroundColor: '',
+        top: '0',
+        right: '0',
+        height: '0px',
+        width: '0px',
+        borderRadius: '0%'
+    },
+    'Web Technologies': {
+        color: 'var(--black-color)',
+        backgroundColor: '',
+        top: '0',
+        right: '0',
+        height: '0px',
+        width: '0px',
+        borderRadius: '0%'
+    },
+    'CSS': {
+        color: 'var(--light-color)',
+        backgroundColor: 'linear-gradient(to top, rgb(241,133,9) 0%, rgb(210,24,93) 100%)',
+        top: '8px',
+        right: '11px',
+        height: '100px',
+        width: '100px',
+        borderRadius: '50%'
+    },
+    'Mongo': {
+        color: 'rgb(65,230,97)',
+        backgroundColor: 'var(--black-color)',
+        top: '27px',
+        right: '30px',
+        height: '60px',
+        width: '60px',
+        borderRadius: '10%'
+    },
+}
+
 const Deck = ({ deck, userLocation }) => {
     const { subject, title, author, likes, published, cards } = deck
     const publicDeck = published ? 'Published' : 'Private';
@@ -27,7 +130,19 @@ const Deck = ({ deck, userLocation }) => {
             <div className="upper-deck">
 
                 <div className="deck-icon-container">
-                    <div className="deck-icon">
+                    <div
+                        className="icon-background"
+                        style={{
+                            background: iconColors[subject].backgroundColor,
+                            top: iconColors[subject].top,
+                            right: iconColors[subject].right,
+                            height: iconColors[subject].height,
+                            width: iconColors[subject].width,
+                            borderRadius: iconColors[subject].borderRadius,
+                        }}
+                    ></div>
+
+                    <div className="deck-icon" style={{color: iconColors[subject].color}}>
                         {subject === 'React' && <DiReact />}
                         {subject === 'Javascript' && <DiJsBadge />}
                         {subject === 'Drupal' && <DiDrupal />}

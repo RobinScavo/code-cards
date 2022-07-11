@@ -19,16 +19,27 @@
     margin-left: 1rem;
 }
 
+
 .deck-icon-container {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 30%;
 }
 
+.icon-background {
+    position: absolute;
+    background-color: var(--black-color);
+    width: 60px;
+    height: 60px;
+    top: 10;
+}
+
 .deck-icon {
     font-size: 6.5rem;
-    color: var(--accent-color)
+    color: var(--accent-color);
+    z-index: 1;
 }
 
 .deck-info {
