@@ -1,5 +1,3 @@
-
-
 .logo {
     position: absolute;
     display: flex;
@@ -8,14 +6,12 @@
     align-items: center;
     height: 9rem;
     width: 7rem;
-    // background-color: rgb(244, 242, 238);
     background-color: var(--yellow-color);
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
     font-family: 'Great Vibes', cursive;
     z-index: 4;
-    // font-family: 'Sacramento', cursive;
 
 
     .logo-image {

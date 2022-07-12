@@ -75,6 +75,10 @@
     outline: none;
 }
 
+.login-input::placeholder {
+
+}
+
 .login-input:focus::placeholder {
     color: transparent;
 }

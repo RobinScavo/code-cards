@@ -166,7 +166,7 @@ const Deck = ({ deck, userLocation }) => {
 
             <div className="deck-footer">
                 {userLocation === 'privateDecks' &&
-                    <p className='deck-published' data-test='publishedText'>{publicDeck}</p>
+                    <p className='deck-uploads' data-test='publishedText'>{publicDeck}</p>
                 }
                 <p className='deck-uploads' data-test='uploadText'>Uploads <span className='deck-number'>{likes}</span></p>
                 <p className="deck-uploads">Cards <span className='deck-number'>{cards.length}</span></p>

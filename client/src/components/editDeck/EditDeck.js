@@ -63,13 +63,19 @@ const EditDeck = () => {
 
         let newCards = [...cards];
 
+        // If the user edited the current card, push it first
+        if (cardWasEdited) {
+            newCards.splice(cardIndex, 1, {'question': currentQuestion, 'answer': currentAnswer})
+        }
+
+        // If the user was adding a card and completed it, push it first
         if (addingNewCard && currentQuestion && currentAnswer) {
             let newCard = {question: currentQuestion, answer: currentAnswer}
             newCards.push(newCard)
         }
 
-        newCards.filter(card => card.question && card.answer)
 
+        // Create a new deck with the original deck ID and user ID
         const newDeck = {
             id: decks._id,
             data: {
@@ -94,24 +100,29 @@ const EditDeck = () => {
     }
 
     const handleAddCard = () => {
+
+        // Remind user to complete the current card first
         if (!currentAnswer || !currentQuestion) {
             toast.error('Please complete the current card first.');
             return;
         }
 
+        let newCards = [...cards];
+
+        // If the user is adding multiple cards, push the current one first
         if (addingNewCard) {
-            let newCards = [...cards];
             let newCard = {question: currentQuestion, answer: currentAnswer}
             newCards.push(newCard);
 
             setCards(newCards);
-            setCardIndex(cardIndex +1)
-            setAddingNewCard(false)
+            setAddingNewCard(false);
+            setCardIndex(newCards.length)
         }
 
+        // Clear the textareas and create a new card at the end of the deck
         setCurrentQuestion('');
         setCurrentAnswer('');
-        setCardIndex(cards.length +1);
+        setCardIndex(newCards.length);
         setAddingNewCard(true)
     }
 
@@ -120,8 +131,9 @@ const EditDeck = () => {
 
         let newCards = [...cards];
 
-        if (addingNewCard && (!currentAnswer || !currentQuestion)) {
-            setCardIndex(cardIndex -1)
+        // If the user was adding a card simply go to the previous
+        if (addingNewCard) {
+            setCardIndex(cardIndex -2)
             return;
         }
 
@@ -150,7 +162,7 @@ const EditDeck = () => {
         newCards.splice(cardIndex, 1, {'question': currentQuestion, 'answer': currentAnswer})
 
         setCards(newCards);
-        setCardWasEdited(false)
+        setCardWasEdited(false);
     }
 
     if (isLoading) {
@@ -234,7 +246,7 @@ const EditDeck = () => {
                         >Next</button>}
                     </div>
 
-                    <h2 className='card-index-text'>Card {cardIndex +1}</h2>
+                    <h2 className='card-index-text'>Card #{cardIndex +1}</h2>
 
                     <label className='create-label'>Question</label>
                     <textarea

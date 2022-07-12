@@ -1,4 +1,5 @@
 .deck-container {
+    position: relative;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
@@ -6,6 +7,7 @@
     width: 100vw;
     overflow: scroll;
     padding: 1rem;
+    padding-top: 3rem;
     background-color: var(--background);
 }
 
@@ -19,14 +21,19 @@
 }
 
 .deck-container-heading {
+    position: absolute;
+    top: 1px;
+    right: 0;
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: center;
-    width: 100%;
-    height: 3vh;
+    width: 130px;
+    height: 40px;
     flex-direction: column;
     margin-top: 0px;
     font-family: 'Dosis', sans-serif;
     font-size: 20px;
     margin-bottom: 10px;
+    background-color: var(--yellow-color);
+    border-bottom-left-radius: 5px;
 }
